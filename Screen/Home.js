@@ -117,9 +117,10 @@ const Home = ({}) => {
     }, []);
 
     const navigation = useNavigation();
-    const goToDetail = (id) => {
+    const goToDetail = (id, category) => {
         // console.log("ID", id)
-        navigation.navigate("Detail", {id})
+        navigation.navigate("Detail", {id, category})
+        console.log("112391283019283012983", category)
     };
 
     const [searchModal, setSearchModal] = useState(false);
@@ -138,7 +139,7 @@ const Home = ({}) => {
     const renderNCS = ({item, index}) => {
             return (
                 <NcsCard 
-                    onPress={() => goToDetail(item.id)}
+                    onPress={() => goToDetail(item.id, item.category)}
                     title={item.title}
                     // src={require('../images/Notice001.png')}
                 />
@@ -148,7 +149,7 @@ const Home = ({}) => {
     const renderNotice = ({item}) => {
         return (
             <NoticeCard 
-                onPress={() => goToDetail(item.id)}
+                onPress={() => goToDetail(item.id, item.category)}
                 name={item.title}
                 desc={item.desc}
                 src={item.thumbnail[0].url}
@@ -159,7 +160,7 @@ const Home = ({}) => {
     const renderPSAT = ({item}) => {
         return (
             <PsatCard 
-                onPress={() => goToDetail(item.id)}
+                onPress={() => goToDetail(item.id, item.category)}
                 name={item.title}
                 desc={item.desc}
                 src={item.thumbnail[0].url}

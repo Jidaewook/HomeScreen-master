@@ -28,8 +28,8 @@ const NcsCard = ({onPress, src, title}) => {
             }}> 
         <View>
             <Image
-            //  source={{uri: apiImage(src)}}
-            source={{uri: 'https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.spotvnews.co.kr%2F%3Fmod%3Dnews%26act%3DarticleView%26idxno%3D318254&psig=AOvVaw29ovpU7G_2rZ0EKbmgHQrM&ust=1607309642855000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOCNxJStuO0CFQAAAAAdAAAAABAJ'}}
+             source={{uri: apiImage(src)}}
+            // source={{uri: 'https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.spotvnews.co.kr%2F%3Fmod%3Dnews%26act%3DarticleView%26idxno%3D318254&psig=AOvVaw29ovpU7G_2rZ0EKbmgHQrM&ust=1607309642855000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOCNxJStuO0CFQAAAAAdAAAAABAJ'}}
              style={{
                  height:80,
                  width:60,

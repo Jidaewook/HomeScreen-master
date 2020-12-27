@@ -13,68 +13,78 @@ import Count from '../component/common/Count';
 import Desc from '../component/common/Desc';
 import DetailCard from '../component/common/DetailCard';
 import themes from '../config/themes';
-import GoBack from '../component/common/GoBack';
 import {lectureApi, noticeApi} from '../api';
+import {Ionicons} from '@expo/vector-icons';
 
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
-const Detail = ({route: {params: {id}}}) => {
+const Detail = ({route: {params: {id, category}}}) => {
 
     
     const [result, setResult] = useState({
+        loading: true,
         data: {}, 
         dataError: null
     });
 
-    const [lectures, setLectures] = useState({
-        loading: true,
-        ncs: [],
-        psat: [],
-        ncsError: null,
-        psatError: null
-    })
-
     const getData = async () => {
-        const [data, dataError] = await noticeApi.noticeDetail(id)
-        const [ncs, ncsError] = await lectureApi.ncs(id);
-        const [psat, psatError] = await lectureApi.psat(id);
+        console.log("xxxxxxxxx", category)
 
-        setLectures({
-            loading: false,
-            ncs,
-            ncsError,
-            psat,
-            psatError
-        });
+        if (category === "notice") {
+            const [notice, noticeError] = await noticeApi.noticeDetail(id)
+            setResult({
+                loading: false,
+                data: notice,
+                dataError: noticeError
+            })
+        } else if (category === "ncs") {
+            const [ncs, ncsError] = await lectureApi.ncsDetail(id);
+            console.log("ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ", ncs)
 
-        setResult({
-            data, dataError
-        })
-        console.log("Result+++++++++++++++", result.data)
+            setResult({
+                loading: false,
+                data: ncs,
+                dataError: ncsError
+            })
+        } else if (category === "psat") {
+            const [psat, psatError] = await lectureApi.psatDetail(id);
+            setResult({
+                loading: false,
+                data: psat,
+                dataError: psatError
+            })
+        };
+
+        // setLectures({
+            
+        // });
+
+        // setResult({
+        //     loading: false,
+        //     data,
+        //     dataError
+        // })
     }
 
     useEffect(() => {
         getData()
     }, {})
 
-    const navigation = useNavigation();
-    const goToDetail = (id) => {
-        console.log("ID", id)
-        navigation.navigate("Detail", {id})
-    };
+    // const navigation = useNavigation();
+    // const goToDetail = (id) => {
+    //     console.log("ID", id)
+    //     navigation.navigate("Detail", {id})
+    // };
 
     return (
     <>  
-        <GoBack 
-            icon="caretleft"
-        />
         <View
             style={styles.Container}
         >
             <StatusBar backgroundColor="#f58084" />
             <YoutubePlayer 
-                height={HEIGHT/3}
+                height={HEIGHT/3.6}
                 width={WIDTH}
                 play={false}
                 videoId={result.data.url}
@@ -128,7 +138,7 @@ const Detail = ({route: {params: {id}}}) => {
                     showsHorizontalScrollIndicator={false}
                     style={{backgroundColor: '#fff', paddingLeft: 20, paddingRight: 20}}
             >
-                {lectures.psat.map(item => (
+                {/* {lectures.psat.map(item => (
                     <DetailCard
                         onPress={() => goToDetail(item.id)}
                                 
@@ -137,7 +147,7 @@ const Detail = ({route: {params: {id}}}) => {
                         desc={item.desc}
                     />
                 ))}   
-            
+             */}
             
             </ScrollView>
         </ScrollView>
@@ -165,7 +175,7 @@ const styles = StyleSheet.create({
     Container: {
         backgroundColor: "white",
         justifyContent: "center",
-        marginTop: 0,
+        marginTop: 85,
         marginLeft: 0,
         marginRight: 0
     },
@@ -229,7 +239,7 @@ const styles = StyleSheet.create({
     ViewContainer : {
         flexDirection: 'row',
         width: '100%',
-        marginTop: 20,
+        marginTop: 0,
         alignItems: 'center',
         backgroundColor: '#fff'
     }, 

@@ -21,7 +21,7 @@ const ContentTitle = ({title, desc, addsize}) => {
         </View>
         <TouchableOpacity
                 style={{alignItems: 'flex-end', paddingRight: 15, width: '20%', justifyContent: 'center'}}
-                onPress={() => navigation.navigate("Detail")}
+                onPress={() => navigation.navigate("NoticeBbs")}
             >
                 <Text>
                     더보기

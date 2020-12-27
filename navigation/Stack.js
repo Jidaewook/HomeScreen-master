@@ -2,13 +2,15 @@ import React from 'react'
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from '../Screen/Home';
 import Detail from '../Screen/Detail';
+import NoticeBbs from '../Screen/Main/Detail/NoticeBbs';
 import Setting from '../Screen/Setting';
+import BackBtn from '../component/common/BackBtn';
 import AuthStack from '../navigation/AuthStack';
 import Tabs from './Tabs';
 
-import NoticeBbs from '../BBS/NoticeBbs';
 import NcsBbs from '../BBS/NcsBbs';
 import PsatBbs from '../BBS/PsatBbs';
+import { Ionicons } from '@expo/vector-icons';
 
 const HomeStack = createStackNavigator();
 
@@ -16,13 +18,31 @@ export default () => {
     return ( 
         <HomeStack.Navigator
             screenOptions={{
-                headerShown: false
+                headerBackTitleVisible: false,
+                headerTransparent: false,
+                headerBackImage: () => <BackBtn />
             }}
             initialRouteName="Main"
         >
-            <HomeStack.Screen name="Home" component={Home} />
+            <HomeStack.Screen 
+                options={{
+                    headerShown: false
+                }}
+                name="Home" component={Home} 
+            />
             <HomeStack.Screen name="Detail" component={Detail} />
             <HomeStack.Screen name="Setting" component={Setting}  />
+            <HomeStack.Screen 
+                options={{
+                    title: "",
+                    headerShown: true,
+                    headerStyle: {
+                        height: 100,
+                        // backgroundColor: "white"
+                    }
+                }}
+                name="NoticeBbs" component={NoticeBbs} 
+            />
             {/* <Stack.Screen name="AuthStack" component={AuthStack} /> */}
             {/* <Stack.Screen name="Ncs" component={NcsBbs}  /> */}
             {/* <Stack.Screen name="Psat" component={PsatBbs} /> */}

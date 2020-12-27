@@ -27,16 +27,16 @@ export default ({navigation, route}) => {
                     let iconName = Platform.OS === "ios" ? "ios-" : "md-";
                     if (route.name === "Home") {
                         iconName += "home";
-                    } else if (route.name === "Save") {
-                        iconName += "save";
+                    } else if (route.name === "Recommend") {
+                        iconName += "bulb";
                     } else if (route.name === "Profile") {
-                        iconName += "settings"
+                        iconName += "contact"
                     }
                     return (
                         <Ionicons 
                             name={iconName}
-                            color={focused ? "red" : "grey"}
-                            size={24}
+                            color={focused ? "green" : "grey"}
+                            size={28}
                         />  
                     );
                 }
