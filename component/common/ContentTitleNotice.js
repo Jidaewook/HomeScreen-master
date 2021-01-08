@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 
-const ContentTitle = ({title, desc, addsize}) => {
+const ContentTitleNotice = ({title, desc, addsize}) => {
 
     const navigation = useNavigation();
 
@@ -32,7 +32,7 @@ const ContentTitle = ({title, desc, addsize}) => {
     );
 };
 
-export default ContentTitle;
+export default ContentTitleNotice;
 
 const styles = StyleSheet.create({
     ViewContainer : {

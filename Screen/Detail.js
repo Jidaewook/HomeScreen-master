@@ -146,8 +146,8 @@ const Detail = ({route: {params: {id, category}}}) => {
                         src={item.thumbnail[0].url}
                         desc={item.desc}
                     />
-                ))}   
-             */}
+                ))}    */}
+            
             
             </ScrollView>
         </ScrollView>
@@ -175,7 +175,6 @@ const styles = StyleSheet.create({
     Container: {
         backgroundColor: "white",
         justifyContent: "center",
-        marginTop: 85,
         marginLeft: 0,
         marginRight: 0
     },

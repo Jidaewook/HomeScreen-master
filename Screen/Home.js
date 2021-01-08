@@ -13,7 +13,9 @@ import NcsCard from '../component/common/NcsCard';
 import PsatCard from '../component/common/PsatCard';
 import {colors} from '../config/themes';
 
-import ContentTitle from '../component/common/ContentTitle';
+import ContentTitleNotice from '../component/common/ContentTitleNotice';
+import ContentTitleNcs from '../component/common/ContentTitleNCS';
+import ContentTitlePsat from '../component/common/ContentTitlePSAT';
 import {H, H4, H1} from '../config/Typography';
 
 import {lectureApi, noticeApi} from '../api';
@@ -235,7 +237,7 @@ const Home = ({}) => {
                             </View> 
                     ) : (
                         <>
-                            <ContentTitle 
+                            <ContentTitleNotice
                                 title={"NOTICE"}
                             />
                                 <FlatList 
@@ -245,7 +247,7 @@ const Home = ({}) => {
                                     showsHorizontalScrollIndicator={false}
                                     renderItem={renderNotice}
                                 />
-                            <ContentTitle 
+                            <ContentTitleNcs
                                 title={"NCS"}
                             />
                             <FlatList 
@@ -255,7 +257,7 @@ const Home = ({}) => {
                                 showsHorizontalScrollIndicator={false}
                                 renderItem={renderNCS}
                             />
-                            <ContentTitle 
+                            <ContentTitlePsat 
                                 title={"PSAT"}
                             />
                             <FlatList 

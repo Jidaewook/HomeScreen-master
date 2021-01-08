@@ -3,13 +3,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Home from '../Screen/Home';
 import Detail from '../Screen/Detail';
 import NoticeBbs from '../Screen/Main/Detail/NoticeBbs';
+import NcsBbs from '../Screen/Main/Detail/NcsBbs';
+import PsatBbs from '../Screen/Main/Detail/PsatBbs';
 import Setting from '../Screen/Setting';
 import BackBtn from '../component/common/BackBtn';
 import AuthStack from '../navigation/AuthStack';
 import Tabs from './Tabs';
 
-import NcsBbs from '../BBS/NcsBbs';
-import PsatBbs from '../BBS/PsatBbs';
 import { Ionicons } from '@expo/vector-icons';
 
 const HomeStack = createStackNavigator();
@@ -42,6 +42,28 @@ export default () => {
                     }
                 }}
                 name="NoticeBbs" component={NoticeBbs} 
+            />
+            <HomeStack.Screen 
+                options={{
+                    title: "",
+                    headerShown: true,
+                    headerStyle: {
+                        height: 100,
+                        // backgroundColor: "white"
+                    }
+                }}
+                name="NcsBbs" component={NcsBbs} 
+            />
+            <HomeStack.Screen 
+                options={{
+                    title: "",
+                    headerShown: true,
+                    headerStyle: {
+                        height: 100,
+                        // backgroundColor: "white"
+                    }
+                }}
+                name="PsatBbs" component={PsatBbs} 
             />
             {/* <Stack.Screen name="AuthStack" component={AuthStack} /> */}
             {/* <Stack.Screen name="Ncs" component={NcsBbs}  /> */}
