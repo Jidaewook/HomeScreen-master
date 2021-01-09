@@ -13,7 +13,7 @@ const NcsBbs = () => {
                     NCS게시판
                 </Text>
                 <Text style={styles.subHeading}>
-                    게시판마다 알아서 이용해
+                    NCS 콘텐츠로 합격을 도와드립니다.
                 </Text>
             </View>
             <View
@@ -27,10 +27,10 @@ const NcsBbs = () => {
                     />
                     <View style={styles.cardContent}>
                         <Text style={[styles.cardTitle, {color: "white"}]}>
-                            공지사항
+                            의사소통능력
                         </Text>
                         <Text style={[styles.cardSubTitle, {color: "white"}]}>
-                            지금 지원하자
+                            기관별 출제비중 98%
                         </Text>
                     </View>
                     <View style={styles.cardFooterWrapper}>
@@ -57,10 +57,10 @@ const NcsBbs = () => {
                     />
                     <View style={styles.cardContent}>
                         <Text style={[styles.cardTitle, {color: "white"}]}>
-                            채용공고
+                            기초 수리능력
                         </Text>
                         <Text style={[styles.cardSubTitle, {color: "white"}]}>
-                            지금 지원하자
+                            수포자 탈출 비법
                         </Text>
                     </View>
                     <View style={styles.cardFooterWrapper}>
@@ -94,8 +94,8 @@ const NcsBbs = () => {
                 // source={require('../../../assets/bg3.png')}
                 />
                 <View>
-                <Text style={styles.dailyTitle}>칼럼</Text>
-                <Text style={styles.dailySubTitle}>MEDITATION - 3-10 MIN</Text>
+                <Text style={styles.dailyTitle}>고득점 하루 10분</Text>
+                <Text style={styles.dailySubTitle}>1일 10분씩 고득점 비법 습득</Text>
                 </View>
                 <View>
                 {/* <Image source={require('../../..')} /> */}
@@ -112,10 +112,11 @@ const NcsBbs = () => {
                     />
                     <View style={styles.cardContent}>
                         <Text style={[styles.cardTitle, {color: "black"}]}>
-                            보도자료
+                            문제해결능력
+                            /자원관리능력
                         </Text>
                         <Text style={[styles.cardSubTitle, {color: "black"}]}>
-                            지금 지원하자
+                            체계적인 문제풀이 방법
                         </Text>
                     </View>
                     <View style={styles.cardFooterWrapper}>
@@ -142,10 +143,10 @@ const NcsBbs = () => {
                     />
                     <View style={styles.cardContent}>
                         <Text style={[styles.cardTitle, {color: "black"}]}>
-                            자유게시판
+                            모듈형 과목
                         </Text>
                         <Text style={[styles.cardSubTitle, {color: "black"}]}>
-                            지금 지원하자
+                            기초이론부터 문제풀이까지
                         </Text>
                     </View>
                     <View style={styles.cardFooterWrapper}>

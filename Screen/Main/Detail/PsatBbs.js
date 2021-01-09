@@ -13,7 +13,7 @@ const PsatBbs = () => {
                     PSAT게시판
                 </Text>
                 <Text style={styles.subHeading}>
-                    게시판마다 알아서 이용해
+                    For 민경채/7급/5급 공채
                 </Text>
             </View>
             <View
@@ -27,10 +27,10 @@ const PsatBbs = () => {
                     />
                     <View style={styles.cardContent}>
                         <Text style={[styles.cardTitle, {color: "white"}]}>
-                            공지사항
+                            5급공채 기출해설
                         </Text>
                         <Text style={[styles.cardSubTitle, {color: "white"}]}>
-                            지금 지원하자
+                            시험의 기본
                         </Text>
                     </View>
                     <View style={styles.cardFooterWrapper}>
@@ -57,10 +57,10 @@ const PsatBbs = () => {
                     />
                     <View style={styles.cardContent}>
                         <Text style={[styles.cardTitle, {color: "white"}]}>
-                            채용공고
+                            민경채 기출해설
                         </Text>
                         <Text style={[styles.cardSubTitle, {color: "white"}]}>
-                            지금 지원하자
+                            For NCS/7급/민경채
                         </Text>
                     </View>
                     <View style={styles.cardFooterWrapper}>
@@ -94,8 +94,8 @@ const PsatBbs = () => {
                 // source={require('../../../assets/bg3.png')}
                 />
                 <View>
-                <Text style={styles.dailyTitle}>칼럼</Text>
-                <Text style={styles.dailySubTitle}>MEDITATION - 3-10 MIN</Text>
+                <Text style={styles.dailyTitle}>습관을 만드는 영상 칼럼</Text>
+                <Text style={styles.dailySubTitle}>조금씩 매일 앞으로</Text>
                 </View>
                 <View>
                 {/* <Image source={require('../../..')} /> */}
@@ -112,10 +112,10 @@ const PsatBbs = () => {
                     />
                     <View style={styles.cardContent}>
                         <Text style={[styles.cardTitle, {color: "black"}]}>
-                            보도자료
+                            5급공채 기본강의
                         </Text>
                         <Text style={[styles.cardSubTitle, {color: "black"}]}>
-                            지금 지원하자
+                            쉽고 빠르게 익히는 PSAT
                         </Text>
                     </View>
                     <View style={styles.cardFooterWrapper}>
@@ -142,10 +142,10 @@ const PsatBbs = () => {
                     />
                     <View style={styles.cardContent}>
                         <Text style={[styles.cardTitle, {color: "black"}]}>
-                            자유게시판
+                            7급공채 기본강의
                         </Text>
                         <Text style={[styles.cardSubTitle, {color: "black"}]}>
-                            지금 지원하자
+                            최고수준 + 무료강의
                         </Text>
                     </View>
                     <View style={styles.cardFooterWrapper}>
