@@ -5,6 +5,7 @@ import Detail from '../Screen/Detail';
 import NoticeBbs from '../Screen/Main/Detail/NoticeBbs';
 import NcsBbs from '../Screen/Main/Detail/NcsBbs';
 import PsatBbs from '../Screen/Main/Detail/PsatBbs';
+import CommunicationList from '../Screen/Main/Detail/NcsBbsList/CommunicationList';
 import Setting from '../Screen/Setting';
 import BackBtn from '../component/common/BackBtn';
 import AuthStack from '../navigation/AuthStack';
@@ -54,6 +55,17 @@ export default () => {
                 }}
                 name="NcsBbs" component={NcsBbs} 
             />
+                <HomeStack.Screen 
+                    options={{
+                        title: "",
+                        headerShown: true,
+                        headerStyle: {
+                            height: 100,
+                            // backgroundColor: "white"
+                        }
+                    }}
+                    name="CommunicationList" component={CommunicationList} 
+                />
             <HomeStack.Screen 
                 options={{
                     title: "",

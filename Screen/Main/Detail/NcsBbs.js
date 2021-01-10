@@ -3,7 +3,7 @@ import {View, Text, ScrollView ,Button, Modal, Dimensions, StyleSheet, StatusBar
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
-const NcsBbs = () => {
+const NcsBbs = ({navigation}) => {
     return (
         <ScrollView
             style={styles.container}
@@ -41,6 +41,7 @@ const NcsBbs = () => {
                                     styles.cardBtn,
                                     {backgroundColor: "white"}
                                 ]}
+                                onPress = {() => navigation.navigate("CommunicationList")}
                             >
                                 <Text style={styles.btnLabel}>
                                     바로가기
