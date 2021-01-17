@@ -12,7 +12,13 @@ const PostPage = () => {
     //게시판 초기 탭 설정
     const [active, setActive] = useState('QNA');
 
-    const [qna, setQna] = useState([]);
+    const [qna, setQna] = useState([
+        {
+            title: '질문1',
+            desc: '질문내용1',
+            
+        }
+    ]);
 
     const [free, setFree] = useState([]);
 
@@ -67,11 +73,13 @@ const PostPage = () => {
                 {tabs.map(tab => renderTab(tab))}
             </View>
             {active === 'QNA' ? (
-                <View>
-                    <Text>
-                        qna
-                    </Text>
-                </View>
+                <>
+                    {qna.map(q => (
+                        <TouchableOpacity>
+                            {q.title}
+                        </TouchableOpacity>
+                    ))}
+                </>
             ) : null}
             {active === '자유게시판' ? (
                 <View>
