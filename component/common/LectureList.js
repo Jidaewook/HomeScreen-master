@@ -24,7 +24,7 @@ const LectureList = ({image, title, bg, onPress, duration}) => {
             <View>
                 <Text style={{
                     color: "#345c74",
-                    fontFamily: 'Bold',
+                    fontWeight: 'bold',
                     fontSize: 13,
                     paddingHorizontal: 20,
                     width: 170
@@ -34,7 +34,7 @@ const LectureList = ({image, title, bg, onPress, duration}) => {
                 <Text
                     style={{
                         color: '#f58084', 
-                        fontFamily: 'Medium',
+                        fontWeight: 'bold',
                         fontSize: 12,
                         paddingHorizontal: 20
                     }}

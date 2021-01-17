@@ -82,6 +82,13 @@ const HeroText = styled.View`
     padding-bottom: 15px;
 `;
 
+const Heading = styled.View`
+        font-Family: 'HelveticaNeue';
+        font-Size: 28;
+        font-Weight: 'bold';
+        margin-Top: 5;
+`;
+
 const Home = ({}) => {
 
     const [lectures, setLectures] = useState({

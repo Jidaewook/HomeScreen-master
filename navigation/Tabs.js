@@ -28,8 +28,8 @@ export default ({navigation, route}) => {
                     let iconName = Platform.OS === "ios" ? "ios-" : "md-";
                     if (route.name === "Home") {
                         iconName += "home";
-                    } else if (route.name === "Post") {
-                        iconName += "add-circle-outline";
+                    } else if (route.name === "List") {
+                        iconName += "list";
                     } else if (route.name === "Recommend") {
                         iconName += "bulb";
                     } else if (route.name === "Profile") {
@@ -49,7 +49,7 @@ export default ({navigation, route}) => {
             }}
         >
             <Tabs.Screen name="Home" component={HomeStack} />
-            <Tabs.Screen name="Post" component={PostStack} />
+            <Tabs.Screen name="List" component={PostStack} />
             <Tabs.Screen name="Recommend" component={RecommendStack} />
             <Tabs.Screen name="Profile" component={ProfileStack} />
 

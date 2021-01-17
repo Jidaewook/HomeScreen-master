@@ -101,6 +101,7 @@ const HeadingMain = styled.Text`
 
 const Heading1 = styled.Text`
   font-size: ${Platform.OS === "ios" ? "24px" : "24px"};
+  
 `;
 
 // const Heading3 = styled.Text`
