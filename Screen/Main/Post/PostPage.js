@@ -1,7 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
 import {View, Text, TouchableOpacity, SafeAreaView, StyleSheet } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import themes from '../../../config/themes';
+import {FontAwesome} from '@expo/vector-icons';
+import PostModal from '../../../component/common/modal/Post';
 
 const PostPage = () => {
 
@@ -19,7 +21,24 @@ const PostPage = () => {
     //게시판 탭 설정
     const tabs = ['QNA', '자유게시판', '합격수기'];
 
-    
+    const [postModal, setPostModal] = useState(false);
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+          
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => setPostModal(true)}
+              style={{marginRight: 10}}>
+            <FontAwesome 
+                size={24}
+                color='black'
+                name='pencil-square-o'
+            />
+            </TouchableOpacity>
+          ),
+        });
+      }, [navigation]);
 
     const renderTab = (tab) => {
         const isActive = active === tab;
@@ -68,6 +87,8 @@ const PostPage = () => {
                     </Text>
                 </View>
             ) : null}
+            {postModal ? <PostModal visible={postModal} close={() => {setPostModal(false)}} /> : (null)}
+
         </SafeAreaView>
     );
 };

@@ -17,25 +17,23 @@ export default () => (
         <PostStack.Screen 
             name="PostPage" 
             component={PostPage}  
-            options={{
-                headerRight: () => (
-                    <TouchableOpacity
-                        onPress={() => alert('POSTPOST')}
-                        style={{marginRight: 15}}
-                    >
-                        <FontAwesome 
-                            size={24}
-                            color='black'
-                            name='pencil-square-o'
-                        />
-                    </TouchableOpacity>
-                ),
-              }}            
+            // options={{
+            //     headerRight: () => (
+            //         <TouchableOpacity
+            //             onPress={() => alert('POSTPOST')}
+            //             style={{marginRight: 15}}
+            //         >
+            //             <FontAwesome 
+            //                 size={24}
+            //                 color='black'
+            //                 name='pencil-square-o'
+            //             />
+            //         </TouchableOpacity>
+            //     ),
+            //   }}            
         />
         {/* <Stack.Screen name="Account" component={Account} />
         <Stack.Screen name="Agreement" component={Agreement} />
         <Stack.Screen name="Check" component={Check} /> */}
     </PostStack.Navigator>
-)
-
-;
+);
