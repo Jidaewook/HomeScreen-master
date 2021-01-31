@@ -1,10 +1,12 @@
 import React, {useState, useRef} from 'react';
-import {TextInput, TouchableOpacity, Modal, Text, View, ScrollView, Button, StyleSheet, SafeAreaView, Dimensions} from 'react-native';
+import {TextInput, TouchableOpacity, Modal, Text, View, ScrollView, Button, StyleSheet, SafeAreaView, Dimensions, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import {AntDesign, MaterialIcons} from '@expo/vector-icons';
 import themes from '../../../config/themes';
 import RegisterBtn from '../../common/RegisterBtn';
 import RBSheet from 'react-native-raw-bottom-sheet';
+import HLine from '../HLine';
 import Category from '../Category';
+import { color, set } from 'react-native-reanimated';
 
 const UselessTextInput = (props) => {
     return (
@@ -12,16 +14,26 @@ const UselessTextInput = (props) => {
             {...props}
             editable
             maxLength={2000}
-            multiline
+            multiline={true}
         />
     )
 };
 
-
+const DismissKeyboard = ({children}) => (
+    <TouchableWithoutFeedback
+        onPress={() => Keyboard.dismiss()}
+    >
+        {children}
+    </TouchableWithoutFeedback>
+);
 
 const {height} = Dimensions.get("window");
 
 const Post = ({visible, close}) => {
+
+    const [title, setTitle] = useState('');
+    const [desc, setDesc] = useState('');
+    const [tag, setTag] = useState([]);
 
     const [inquire, setInquire] = useState('문의구분');
     const [value, setValue] = useState('');
@@ -44,140 +56,190 @@ const Post = ({visible, close}) => {
     }
 
     return (
-        <Modal
-            animationType="slide"
-            visible={visible}
-            onRequestClose={close}
-        >
-            <SafeAreaView
-                style={{ marginLeft: 20, marginRight: 20}}
+        <DismissKeyboard>
+
+            <Modal
+                animationType="slide"
+                visible={visible}
+                onRequestClose={close}
             >
-                <View
-                    style={{marginTop: 20, flexDirection: 'row', justifyContent: 'space-between'}}
+                <SafeAreaView
+                    style={{ marginLeft: 20, marginRight: 20}}
                 >
-                    <Text
-                        style={{fontSize: 30, fontWeight: 'bold'}}
+                    <View
+                        style={{marginTop: 20, flexDirection: 'row', justifyContent: 'space-between'}}
                     >
-                        글쓰기
-                    </Text>
-                    
-                    <TouchableOpacity
-                        onPress={close}
-                        style={{marginRight: 15}}
-                    >
-                        <AntDesign name="close" size={24} color="black" />
-                    </TouchableOpacity>
+                        <Text
+                            style={{fontSize: 30, fontWeight: 'bold'}}
+                        >
+                            글쓰기
+                        </Text>
                         
-                </View>
-                <ScrollView
-                    showsVerticalScrollIndicator={false}
-                    style={{marginVertical: 20}}
-                >
-                    <View style={{flex: 1}}>
                         <TouchableOpacity
-                            style={styles.container}
-                            onPress={() => openBottom()}
+                            onPress={close}
+                            style={{marginRight: 15}}
                         >
-                            <Text
-                                style={{color: 'black', fontWeight: 'bold'}}
-                            >
-                                {inquire}
-                            </Text>
-                            <AntDesign name="down" size={12} color="black" 
-                                style={{opacity: 0.3}}
-                            />
+                            <AntDesign name="close" size={24} color="black" />
                         </TouchableOpacity>
-                        <RBSheet
-                            ref={refRBSheet}
-                            height={height/3.5}
-                            closeOnDragDown={true}
-                            closeOnPressMask={true}
-                            customStyles={{
-                                wrapper: {
-                                    backgroundColor: 'rgba(0, 0, 0, 0.2)'
-                                    
-                                },
-                                draggableIcon: {
-                                    backgroundColor: themes.colors.main,
-                                    
-                                },
-                                container: {
-                                    borderTopLeftRadius: 5,
-                                    borderTopRightRadius: 5,
-                                    paddingHorizontal: 10
-                                }
-                            }}
-                        >
-                            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                <Text
-                                    style={{flex: 1, paddingVertical: 10}}
-                                >
-                                    카테고리
-                                </Text>
-                                <TouchableOpacity
-                                    onPress={()=> closeBottom()}
-                                >
-                                    <AntDesign name="close" size={20} color="black" />
-                                </TouchableOpacity>
-                                
-
-                            </View>
-                            <View
-                                style={{alignItems: 'center'}}
-                            >
-                                {postCategory.map(category => (
-                                    <Text style={{color: 'black'}}
-                                        onPress={() => inquireMenu(category)}
-                                    >
-                                        {category}
-                                    </Text>
-                                ))}
-                            </View>
-
-                        </RBSheet>
-                        <View
-                            style={styles.textContainer}
-                        >
-                            <UselessTextInput 
-                                placeholder={`내용을 입력해주세요. ${`\n`}자유롭게 입력하시면 됩니다.`}
-                                placeholderText={{fontSize: 10}}
-                                value={value}
-                                style={{paddingVertical: 24, paddingHorizontal: 12}}
-                            />
-                        </View>
-                        <View >
+                            
+                    </View>
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        style={{marginVertical: 10, height: '80%'}}
+                    >
+                        <View style={{flex: 1}}>
                             <TouchableOpacity
-                                style={[styles.fileContainer, {marginTop: 15}]}
-                                onPress={() => alert('파일 업로드')}
+                                style={styles.container}
+                                onPress={() => openBottom()}
                             >
-                                <Text>
-                                    첨부파일 추가
+                                <Text
+                                    style={{color: 'black', fontWeight: 'bold'}}
+                                >
+                                    {inquire}
                                 </Text>
-                                <MaterialIcons name="add" size={24} color="black" 
-                                    style={{opacity:0.5}}
+                                <AntDesign name="down" size={12} color="black" 
+                                    style={{opacity: 0.3}}
                                 />
                             </TouchableOpacity>
-                            <Text>
-                                첨부파일 등록은 최대 5MB, 3장까지 등록가능합니다.
-                            </Text>
+                            <RBSheet
+                                ref={refRBSheet}
+                                height={height/3.5}
+                                closeOnDragDown={true}
+                                closeOnPressMask={true}
+                                customStyles={{
+                                    wrapper: {
+                                        backgroundColor: 'rgba(0, 0, 0, 0.2)'
+                                        
+                                    },
+                                    draggableIcon: {
+                                        backgroundColor: themes.colors.main,
+                                        
+                                    },
+                                    container: {
+                                        borderTopLeftRadius: 5,
+                                        borderTopRightRadius: 5,
+                                        paddingHorizontal: 10
+                                    }
+                                }}
+                            >
+                                <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10, marginLeft: 25}}>
+                                    <Text
+                                        style={{flex: 1, fontSize: 16, color: themes.colors.gray, fontWeight: 'bold', textAlign: 'center'}}
+                                    >
+                                        카테고리
+                                    </Text>
+                                    
+                                        <AntDesign 
+                                            name="close" 
+                                            size={20} 
+                                            color="black" 
+                                            style={{marginLeft: 'auto'}}
+                                            onPress={()=> closeBottom()}
+                                        />
+                                </View>
+                                <HLine />
+
+                                <View
+                                    style={{alignItems: 'center'}}
+                                >
+                                    {postCategory.map(category => (
+                                        <>
+                                            <Text style={{color: 'black', margin: 10, fontSize: 16, fontWeight: 'bold', color: themes.colors.buttonText}}
+                                                onPress={() => inquireMenu(category)}
+                                            >
+                                                {category}
+                                                
+                                            </Text>
+                                            <HLine />
+                                        </>
+                                    ))}
+                                </View>
+
+                            </RBSheet>
+                            <View
+                                style={styles.titleContainer}
+                            >
+                                <TextInput 
+                                    editable
+                                    maxLength={100}
+                                    placeholder={'제목을 입력해주세요'}
+                                    placeholderText={{fontSize: 10, color: 'black'}}
+                                    value={title}
+                                    style={{paddingHorizontal: 12}}
+                                    onChangeText={text => (
+                                        setTitle(text)
+                                    )}
+                                />
+                                
+                            </View>
+                            <View
+                                style={styles.textContainer}
+                            >
+                                <UselessTextInput 
+                                    placeholder={`내용을 입력해주세요. ${`\n`}자유롭게 입력하시면 됩니다.`}
+                                    placeholderText={{fontSize: 10}}
+                                    value={desc}
+                                    style={{paddingVertical: 24, paddingHorizontal: 12}}
+                                    onChangeText={text => (
+                                        setDesc(text)
+                                    )}
+                                />
+                            </View>
+                            <View
+                                style={styles.titleContainer}
+                            >
+                                <TextInput 
+                                    editable
+                                    maxLength={100}
+                                    placeholder={'태그를 입력해주세요'}
+                                    placeholderText={{fontSize: 10}}
+                                    value={tag}
+                                    style={{paddingHorizontal: 12}}
+                                    onChangeText={text => (
+                                        setTag(text)
+                                    )}
+                                />
+                                
+                            </View>
+                            <View >
+                                <TouchableOpacity
+                                    style={[styles.fileContainer, {marginTop: 15}]}
+                                    onPress={() => alert('파일 업로드')}
+                                >
+                                    <Text
+                                        style={{alignItems: 'center', justifyContent: 'center'}}
+                                    >
+                                        첨부파일 추가
+                                    </Text>
+                                    <MaterialIcons name="add" size={20} color="black" 
+                                        style={{opacity:0.5}}
+                                    />
+                                </TouchableOpacity>
+                                <Text style={{marginTop: 10, marginLeft: 5, fontSize: 12, color: themes.colors.gray}}>
+                                    첨부파일 등록은 최대 5MB, 3장까지 등록가능합니다.
+                                </Text>
+                            </View>
                         </View>
+                        
+                    </ScrollView>
+                    <View
+                        style={{marginBottom: 10}}
+                    >
+                        <RegisterBtn 
+                            title={'등록'}
+                            containerStyle={{
+                                backgroundColor: themes.colors.lightgray,
+                                borderColor: themes.colors.gray,
+                                borderRadius: 4
+                            }}
+                            // 인콰이어메뉴 참고해서 등록으로 모달이 닫히게끔 설정
+                        />
                     </View>
-                    
-                </ScrollView>
+                </SafeAreaView>
                 
-                <RegisterBtn 
-                    title={'등록'}
-                    containerStyle={{
-                        backgroundColor: themes.colors.lightgray,
-                        borderColor: themes.colors.gray,
-                        borderRadius: 4,
-                        marginBottom: 0
-                    }}
-                    // 인콰이어메뉴 참고해서 등록으로 모달이 닫히게끔 설정
-                />
-            </SafeAreaView>
-            
-        </Modal>
+            </Modal>
+        </DismissKeyboard>
+
     );
 };
 
@@ -192,8 +254,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: 30
+        marginTop: 20,
+        borderRadius: 5,
 
+    },
+    titleContainer: {
+        width: '100%',
+        height: 40,
+        borderWidth: 1,
+        borderColor: themes.colors.lightgray,
+        borderRadius: 5,
+        marginTop: 12,
+        paddingVertical: 12,
+        paddingHorizontal: 6,
+        color: 'black'
     },
     textContainer: {
         width: '100%',
@@ -202,7 +276,9 @@ const styles = StyleSheet.create({
         borderColor: themes.colors.lightgray,
         marginTop: 12,
         paddingVertical: 12,
-        paddingHorizontal: 6
+        paddingHorizontal: 6,
+        borderRadius: 5,
+
     },
     fileContainer: {
         paddingHorizontal: 12,

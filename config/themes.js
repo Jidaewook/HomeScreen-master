@@ -8,7 +8,10 @@ const colors={
     black: 'black',
     lightgray: 'lightgray',
     gray: 'gray',
-    faintgray: '#f4f4f4'
+    faintgray: '#f4f4f4',
+    buttonText: '#4b4d4c',
+    postList: '#faf7ed'
+
 }
 
 
