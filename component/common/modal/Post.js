@@ -7,6 +7,7 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import HLine from '../HLine';
 import Category from '../Category';
 import { color, set } from 'react-native-reanimated';
+import axios from 'axios';
 
 const UselessTextInput = (props) => {
     return (
@@ -29,11 +30,11 @@ const DismissKeyboard = ({children}) => (
 
 const {height} = Dimensions.get("window");
 
-const Post = ({visible, close}) => {
+const Post = ({visible, close, complete}) => {
 
     const [title, setTitle] = useState('');
     const [desc, setDesc] = useState('');
-    const [tag, setTag] = useState([]);
+    const [tag, setTag] = useState('');
 
     const [inquire, setInquire] = useState('문의구분');
     const [value, setValue] = useState('');
@@ -51,9 +52,36 @@ const Post = ({visible, close}) => {
     const postCategory = ['QNA', '자유게시판', '합격수기'];
 
     const inquireMenu = (param) => {
-        setInquire(param);
+
+        if(param === "QNA") {
+            setInquire("bbs")
+        } else if (param === "자유게시판") {
+            setInquire("qnas")
+        } else if (param === "합격수기") {
+            setInquire("pass")
+        }
         closeBottom();
     }
+
+    const registerPost = () => {   
+        
+        
+        if(inquire === "문의구분" || title === "" || desc === ""){
+            return alert("빈 칸이 있으면 등록할 수 없습니다.")
+        } 
+
+        axios.post(`https://hidden-earth-75958.herokuapp.com/${inquire}`, {
+            title: title,
+            desc: desc,
+            tag: [tag]
+        })
+            .then(result => complete)
+            .catch(err => console.log(err))
+            
+
+    }
+
+
 
     return (
         <DismissKeyboard>
@@ -191,7 +219,7 @@ const Post = ({visible, close}) => {
                                 <TextInput 
                                     editable
                                     maxLength={100}
-                                    placeholder={'태그를 입력해주세요'}
+                                    placeholder={'태그는 4글자 이내, 4개까지 입력 가능합니다.'}
                                     placeholderText={{fontSize: 10}}
                                     value={tag}
                                     style={{paddingHorizontal: 12}}
@@ -199,11 +227,10 @@ const Post = ({visible, close}) => {
                                         setTag(text)
                                     )}
                                 />
-                                
                             </View>
                             <View >
                                 <TouchableOpacity
-                                    style={[styles.fileContainer, {marginTop: 15}]}
+                                    style={[styles.fileContainer, {marginTop: 10}]}
                                     onPress={() => alert('파일 업로드')}
                                 >
                                     <Text
@@ -215,7 +242,7 @@ const Post = ({visible, close}) => {
                                         style={{opacity:0.5}}
                                     />
                                 </TouchableOpacity>
-                                <Text style={{marginTop: 10, marginLeft: 5, fontSize: 12, color: themes.colors.gray}}>
+                                <Text style={styles.footnote}>
                                     첨부파일 등록은 최대 5MB, 3장까지 등록가능합니다.
                                 </Text>
                             </View>
@@ -232,6 +259,7 @@ const Post = ({visible, close}) => {
                                 borderColor: themes.colors.gray,
                                 borderRadius: 4
                             }}
+                            onPress={registerPost} 
                             // 인콰이어메뉴 참고해서 등록으로 모달이 닫히게끔 설정
                         />
                     </View>
@@ -288,5 +316,11 @@ const styles = StyleSheet.create({
         marginTop: 12,
         flexDirection: 'row',
         justifyContent: 'space-between'
+    },
+    footnote: {
+        marginTop: 10, 
+        marginLeft: 5, 
+        fontSize: 12, 
+        color: themes.colors.gray
     }
 })
