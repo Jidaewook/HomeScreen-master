@@ -72,6 +72,8 @@ const NcsBbs = ({navigation}) => {
                                     styles.cardBtn,
                                     {backgroundColor: "white"}
                                 ]}
+                                onPress = {() => navigation.navigate("MathList")}
+
                             >
                                 <Text style={styles.btnLabel}>
                                     바로가기

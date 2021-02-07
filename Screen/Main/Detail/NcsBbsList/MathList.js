@@ -6,7 +6,7 @@ import themes from '../../../../config/themes';
 import icons from '../../../../config/Icons';
 import images from '../../../../config/Images';
 
-const CommunicationList = () => {
+const MathList = () => {
 
     const navigation = useNavigation();
 
@@ -477,7 +477,7 @@ const CommunicationList = () => {
     );
 };
 
-export default CommunicationList;
+export default MathList;
 
 const styles = StyleSheet.create({
     container: {
