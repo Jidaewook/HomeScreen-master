@@ -12,7 +12,7 @@ const Detail2 = () => {
             Detail2
             </Text>
             <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() => navigation.navigate()}
             >
                 <Text>
                     BBBBBBBBAKC

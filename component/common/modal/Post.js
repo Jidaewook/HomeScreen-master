@@ -37,6 +37,7 @@ const Post = ({visible, close, complete}) => {
     const [tag, setTag] = useState('');
 
     const [inquire, setInquire] = useState('문의구분');
+    const [list, setList] = useState('문의구분');
     const [value, setValue] = useState('');
 
     const refRBSheet = useRef();
@@ -49,16 +50,19 @@ const Post = ({visible, close, complete}) => {
         refRBSheet.current.close();
     }
 
-    const postCategory = ['QNA', '자유게시판', '합격수기'];
+    const postCategory = ['자유게시판', '질문게시판', '합격수기'];
 
     const inquireMenu = (param) => {
 
-        if(param === "QNA") {
+        if(param === "자유게시판") {
             setInquire("bbs")
-        } else if (param === "자유게시판") {
+            setList("자유게시판")
+        } else if (param === "질문게시판") {
             setInquire("qnas")
+            setList("질문게시판")
         } else if (param === "합격수기") {
             setInquire("pass")
+            setList("합격수기게시판")
         }
         closeBottom();
     }
@@ -123,7 +127,7 @@ const Post = ({visible, close, complete}) => {
                                 <Text
                                     style={{color: 'black', fontWeight: 'bold'}}
                                 >
-                                    {inquire}
+                                    {list}
                                 </Text>
                                 <AntDesign name="down" size={12} color="black" 
                                     style={{opacity: 0.3}}

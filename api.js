@@ -46,3 +46,12 @@ export const userApi = {
 // };
 
 export const apiImage = path => `https://hidden-earth-75958.herokuapp.com${path}`;
+
+export const postApi = {
+    bbs: () => getAnything("/bbs"),
+    qna: () => getAnything("/qnas"),
+    pass: () => getAnything("/reviews"),
+    bbsDetail: id => getAnything(`/bbs/${id}`),
+    qnaDetail: id => getAnything(`/qnas/${id}`)
+
+};

@@ -8,7 +8,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import BadgePill from '../../../component/common/BadgePill';
 import HLine from '../../../component/common/HLine';
 import axios from 'axios';
-import { ThemeConsumer } from 'styled-components';
+import PostDetail from './PostDetail';
+import { postApi } from '../../../api';
 
 const PostPage = () => {
 
@@ -21,7 +22,7 @@ const PostPage = () => {
     const [loading, setLoading] = useState(true);
 
     //게시판 초기 탭 설정
-    const [active, setActive] = useState('QNA');
+    const [active, setActive] = useState('자유게시판');
 
     const [qna, setQna] = useState([]);
 
@@ -30,7 +31,7 @@ const PostPage = () => {
     const [pass, setPass] = useState([]);
 
     const getQnaData = async () => {
-        axios.get("https://hidden-earth-75958.herokuapp.com/bbs")
+        axios.get("https://hidden-earth-75958.herokuapp.com/qnas")
             .then(qnas => {
                 setQna(qnas.data)
                 setLoading(false)
@@ -40,7 +41,7 @@ const PostPage = () => {
     }
 
     const getFreeData = async () => {
-        axios.get("https://hidden-earth-75958.herokuapp.com/qnas")
+        axios.get("https://hidden-earth-75958.herokuapp.com/bbs")
             .then(frees => {
                 setFree(frees.data)
                 setLoading(false)
@@ -56,15 +57,39 @@ const PostPage = () => {
             })
     }
 
+    const goToPostDetail = (id) => {
+        navigation.navigate("PostDetail", {id})
+        console.log("+++++++++++++", id)
+    };
+
+    const [posts, setPosts] = useState({
+        bbs: [],
+        qna: [],
+        bbsError: null,
+        qnaError: null
+    });
+    
+
+    const getPostData = async () => {
+        const [bbsData, bbsDataError] = await postApi.bbs();
+        const [qnaData, qnaDataError] = await postApi.qna();
+        
+        setPosts({
+            qna,
+            qnaError
+        });
+    }
+
     useEffect(() => {
         getQnaData();
         getFreeData();
         getPassData();
+        getPostData();
     }, [])
 
 
     //게시판 탭 설정
-    const tabs = ['QNA', '자유게시판', '합격수기'];
+    const tabs = ['자유게시판', '질문게시판', '합격수기'];
 
     const [postModal, setPostModal] = useState(false);
 
@@ -121,22 +146,28 @@ const PostPage = () => {
                     </View> 
                 ) : (
                     <> 
-                        {active === 'QNA' ? (
+                        {active === '자유게시판' ? (
                         
                             <View
                                 style={{backgroundColor: themes.colors.postListGray}}
                             >
-                                {qna.map(q => (
-                                    <View>
+                                {free.map(f => (
+                                    <TouchableOpacity
+                                        onPress={() => goToPostDetail(f._id)}
+                                    >
                                         <View
                                             style={styles.postList}
                                         >
-                                            <View style={{flexDirection: 'row'}}>
-                                                {q.tag.map(t => (
+                                            <View
+                                                style={{flexDirection: 'row'}}
+                                                // onPress={() => goToPostDetail(item.id)}
+                                            >
+                                                {f.tag.map(t => (
                                                     <View style={{paddingLeft: 10}}>
                                                         <BadgePill 
                                                             title={"#"+t}
                                                             textStyle={[styles.badgePill, {paddingVertical: 5, paddingHorizontal: 10, opacity: 1 }]}
+                    
                                                         />
                                                     </View>    
                                                 ))}
@@ -145,12 +176,12 @@ const PostPage = () => {
                                             <Text
                                                 style={styles.badgePill}
                                             >
-                                                {q.createdAt.slice(0,10)}
+                                                {f.createdAt.slice(0,10)}
                                             </Text>
                                         </View>
                                         <View style={{flexDirection: 'row'}}>
                                             <Text style={[styles.titleStyle, {width: '65%'}]}>
-                                                {q.Title}
+                                                {f.Title}
                                             </Text>
                                             <View style={{width: '35%', flexDirection: 'row', marginTop: 15}}>
                                                 <View style={{flexDirection: 'row'}}>
@@ -168,18 +199,22 @@ const PostPage = () => {
                                             </View>
                                         </View>
                                         <HLine color={{backgroundColor: '#bfbdb4'}} />
-                                    </View>
+                                    </TouchableOpacity>
                                 ))}
                             </View>
                         ) : null}
         
-                        {active === '자유게시판' ? (
+                        {active === '질문게시판' ? (
                             <View>
-                                {free.map(f => (
-                                    <View style={{backgroundColor: themes.colors.postListSky}}>
-                                        <View style={styles.postList} >
+                                {qna.map(q => (
+                                    <TouchableOpacity style={{backgroundColor: themes.colors.postListSky}}
+                                    onPress={() => goToPostDetail(q._id)}
+
+                                    >
+                                        <View style={styles.postList} 
+                                        >
                                             <View style={{flexDirection: 'row'}} >
-                                                {f.tag.map(t => (
+                                                {q.tag.map(t => (
                                                     <View style={{paddingLeft: 10}} >
                                                         <BadgePill 
                                                             title={'#'+t}
@@ -189,12 +224,12 @@ const PostPage = () => {
                                                 ))}
                                             </View>
                                             <Text style={styles.badgePill}>
-                                                {f.createdAt.slice(0, 10)}
+                                                {q.createdAt.slice(0, 10)}
                                             </Text>
                                         </View>
                                         <View style={{flexDirection: 'row'}}>
                                             <Text style={[styles.titleStyle, {width: '65%'}]}>
-                                                {f.title}
+                                                {q.title}
                                             </Text>
                                             <View style={{width: '35%', flexDirection: 'row', marginTop: 15}}>
                                                 <View style={{flexDirection: 'row'}}>
@@ -212,7 +247,7 @@ const PostPage = () => {
                                             </View>
                                         </View>
                                         <HLine color={{backgroundColor: '#bfbdb4'}} />
-                                    </View>
+                                    </TouchableOpacity>
                                 ))}
                             </View>
                         ) : null}
