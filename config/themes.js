@@ -9,10 +9,13 @@ const colors={
     lightgray: 'lightgray',
     gray: 'gray',
     faintgray: '#f4f4f4',
+    darkgray: '#363636',
     buttonText: '#4b4d4c',
     postListGray: '#e3e3e3',
     postListSky: '#e0f3ff',
-    postListOrange: '#ffefc4'
+    postListOrange: '#ffefc4',
+    line: '#e6e6e6',
+    brightGray: '#e8e8e8'
 
 }
 

@@ -5,8 +5,6 @@ import themes from '../../../config/themes';
 import RegisterBtn from '../../common/RegisterBtn';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import HLine from '../HLine';
-import Category from '../Category';
-import { color, set } from 'react-native-reanimated';
 import axios from 'axios';
 
 const UselessTextInput = (props) => {

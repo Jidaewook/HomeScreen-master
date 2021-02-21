@@ -8,7 +8,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import BadgePill from '../../../component/common/BadgePill';
 import HLine from '../../../component/common/HLine';
 import axios from 'axios';
-import PostDetail from './PostDetail';
 import { postApi } from '../../../api';
 
 const PostPage = () => {

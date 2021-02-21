@@ -1,27 +1,18 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, Alert, AsyncStorage,Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity} from 'react-native';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
+import {StyleSheet, Alert, AsyncStorage,Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, SectionList} from 'react-native';
+import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import { useNavigation } from '@react-navigation/native';
 import {ListItem} from '../../component/common/ListItem';
 import axios from 'axios';
+import { FlatList } from 'react-native-gesture-handler';
+import themes from '../../config/themes';
 
 
 const ProfilePage = () => {
-    // const state = {
-    //     image: null
-    // };
-    
-    // const getPermissionAsync = async () => {
-    //     if (Constants.platform.ios) {
-    //         const {status} = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    //         if (status !== 'granted') {
-    //             // alert('Sorry');
-    //         }
-    //     }
-    // };
+
 
     const [userData, setUserData] = useState({});
     
@@ -75,15 +66,37 @@ const ProfilePage = () => {
 
     const navigation = useNavigation();
     
-    // useEffect(() => {
-    //     getPermissionAsync();
-    //     getUserData();
-    //     // console.log("TOKEN", headers)
-    // }, []);
+    useLayoutEffect(() => {
+        navigation.setOptions({
+          
+          headerRight: () => (
+            <TouchableOpacity
+                onPress={() => navigation.navigate("Setting")}
+                style={{marginRight: 10}}>
+                <AntDesign name="setting" size={24} color="black" />
+            </TouchableOpacity>
+          ),
+        });
+      }, [navigation]);
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <SectionList
+                contentContainerStyle={{paddingVertical: 5, backgroundColor: themes.colors.line}}
+                ListHeaderComponent={
+                    <ListItem 
+                        title="관리자"
+                        subtitle="이메일 주소"
+                        image={require("../../images/profile_sample.jpeg")}
+                        onPress={() => {ProfilePage()}}
+                    />
+                }
+                ItemSeparatorComponent={() => <HLine />}
+            />
+
+
+
+            {/* <ScrollView showsVerticalScrollIndicator={false}>
                 <ListItem
                     title={userData.username}
                     subtitle="환영합니다."
@@ -179,7 +192,7 @@ const ProfilePage = () => {
                     </View>
                 </View>
 
-            </ScrollView>
+            </ScrollView> */}
         </SafeAreaView>
     );
 };

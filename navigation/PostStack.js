@@ -1,7 +1,5 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {View, Text, Button, TouchableOpacity} from 'react-native';
-import {FontAwesome} from '@expo/vector-icons';
 
 import PostPage from '../Screen/Main/Post/PostPage';
 import PostDatail from '../Screen/Main/Post/PostDetail';

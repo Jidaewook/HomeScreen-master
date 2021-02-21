@@ -3,9 +3,7 @@ import { TouchableOpacity } from "react-native";
 
 //import styles and assets
 import styled from "styled-components";
-import {colors} from "../../config/themes";
 import { EvilIcons } from "@expo/vector-icons";
-import themes from '../../config/themes';
 
 export const SearchTap = ({setSearch, icon, size, placeholder}) => {
     return (
@@ -36,8 +34,6 @@ const Container = styled.View`
   align-items: center;
   justify-content: center;
   padding: 10px;
-  margin-left: -60;
-  margin-right: -60;
 `;
 
 const SearchArea = styled.View`

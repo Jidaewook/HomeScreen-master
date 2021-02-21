@@ -6,9 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { Asset } from "expo-asset";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import Tabs from './navigation/Tabs';
-import Stack from "./navigation/Stack";
 import AuthStack from './navigation/AuthStack';
-import SigninScreen from './Screen/auth/SigninScreen';
 
 const cacheImages = images =>
     images.map(image => {

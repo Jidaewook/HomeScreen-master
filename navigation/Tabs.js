@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from 'react'
+import React from 'react'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeStack from '../navigation/Stack';
 import PostStack from '../navigation/PostStack';
@@ -6,20 +6,14 @@ import RecommendStack from '../navigation/RecommendStack';
 import ProfileStack from '../navigation/ProfileStack';
 import {Ionicons} from '@expo/vector-icons';
 import {Platform} from 'react-native';
-import NoticeStack from "../navigation/NoticeStack";
 
 const Tabs = createBottomTabNavigator();
 
 const getHeaderName = route =>
     route?.state?.routeNames[route.state.index] || "Movies";
 
-export default ({navigation, route}) => {
-    // useLayoutEffect(() => {
-    //     const name = getHeaderName(route);
-    //     navigation.setOptions({
-    //         title: name
-    //     });
-    // }, [route]);
+export default () => {
+    
 
     return (
         <Tabs.Navigator
@@ -48,10 +42,11 @@ export default ({navigation, route}) => {
                 showLabel: false
             }}
         >
+                        <Tabs.Screen name="Profile" component={ProfileStack} />
+
             <Tabs.Screen name="Home" component={HomeStack} />
             <Tabs.Screen name="List" component={PostStack} />
             <Tabs.Screen name="Recommend" component={RecommendStack} />
-            <Tabs.Screen name="Profile" component={ProfileStack} />
 
         </Tabs.Navigator>
     );

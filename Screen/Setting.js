@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {AsyncStorage, SectionList, StatusBar, ScrollView, Alert, StyleSheet} from 'react-native';
+import {AsyncStorage, SectionList, StatusBar, View, Alert, Text, StyleSheet} from 'react-native';
 import styled from 'styled-components';
 import {ListItem, SingleItem, ToggleList} from '../component/common/ListItem';
 import SettingSection from '../component/common/SettingSection';
 import TermsofService from '../component/common/modal/TermsofService';
 import Privacy from '../component/common/modal/Privacy';
 import axios from 'axios';
+import themes from '../config/themes';
 
 const Common = styled.SafeAreaView`
   background-color: white;
@@ -89,9 +90,9 @@ const Setting = ({navigation}) => {
       }
     } 
 
-    useEffect(() => {
-      getUserData();
-    }, {}) 
+    // useEffect(() => {
+    //   getUserData();
+    // }, {}) 
 
     const logout =  async () => {
       await Alert.alert(
@@ -113,110 +114,175 @@ const Setting = ({navigation}) => {
     }
 
     return (
-        <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={{backgroundColor: 'white'}}
-        >
-            <Common>
-                <Container>
-                    <SectionList 
-                        contentContainerStyle={{paddingVertical: 40}}
-                        ListHeaderComponent={
-                          
-                            <ListItem 
-                                title={userData.username}
-                                subtitle="View Profile"
-                                image={require("../images/13.png")}
-                                onPress={() => {ProfilePage()}}
-                            />
-                        }
-                        ItemSeparatorComponent={() => <HLine />}
-                    />
-                    
-                    <SettingSection
-                      title={"서비스 정보"}
-                      
-                    >
-                      <SingleItem   
-                        title={"버전정보"}
-                        subTitle={"1.0.0"}
-                      />
-                    </SettingSection>
-                    <HLine />
-                    <SettingSection
-                      title={"개인 정보"}
-                      
-                    >
-                      <SingleItem   
-                        title={"개인정보정책"}
-                        onPress={() => {setPrivacyModal(true)}}
-                      />
-                      <SingleItem   
-                        title={"서비스 이용약관"}
-                        onPress={() => {setTermsModal(true)}}
-                      />
-                    </SettingSection>
-                    <HLine />
+      <SectionList
+          sections={[
+            {
+              title: '알람설정',
+              data: [
+                '공지수신',
+                '학습알림',
+                '푸시알림'
+              ],
+            },
+            {
+              title: '개인정보',
+              data: [
+                '개인정보정책',
+                '서비스이용약관'
+              ],
+            },
+            {
+              title: '고객센터',
+              data: [
+                '서비스문의',
+                'FAQ',
+                '오류신고'
+              ],
+            },
+            {
+              title: '서비스정보',
+              data: [
+                '버전정보',
+                '구독문의'
+              ],
+            },
+            {
+              title: '',
+              data: [
+                '로그아웃'
+              ],
+            }
+          ]}
+          renderItem={({item}) => 
+            <View style={styles.itemBox}>
+              <Text style={styles.item}> 
+                {item}
+              </Text>
+           </View> 
+          }
+          renderSectionHeader={({section}) => (
+            <SettingSection
+              title={section.title}
+            />
+          )}
+          keyExtractor={(item, index) => index}
+        />
 
-                    <SettingSection
-                      title={"알람설정"}
-                      
-                    >
-                      <ToggleList 
-                        title={"공지수신"}
-                      />
-                      <ToggleList 
-                        title={"학습알람"}
-                      />
-                      <ToggleList 
-                        title={"푸시알림"}
-                      />
-                    </SettingSection>
-                    <HLine />
+        // <ScrollView
+        //     showsVerticalScrollIndicator={false}
+        //     style={{backgroundColor: 'white'}}
+        // >
+          
+        //     <Common>
+        //         <Container>
+        //         <HLine />
 
-                    <SettingSection
-                      title={"고객센터/도움말"}
+        //             <SettingSection
+        //               title={"서비스 정보"}
                       
-                    >
-                      <SingleItem   
-                        title={"고객센터/도움말"}
-                        icon={"mail"}
-                        // 누르면 고객센터페이지
-                        onPress={() => alert("MAIL")}
-                      />
+        //             >
+        //               <SingleItem   
+        //                 title={"버전정보"}
+        //                 subTitle={"1.0.0"}
+        //               />
+        //             </SettingSection>
+        //             <HLine />
+        //             <SettingSection
+        //               title={"개인 정보"}
                       
-                    </SettingSection>
-                    <HLine />
+        //             >
+        //               <SingleItem   
+        //                 title={"개인정보정책"}
+        //                 onPress={() => {setPrivacyModal(true)}}
+        //               />
+        //               <SingleItem   
+        //                 title={"서비스 이용약관"}
+        //                 onPress={() => {setTermsModal(true)}}
+        //               />
+        //             </SettingSection>
+        //             <HLine />
 
-                    <SettingSection
-                      title={"계정설정"}
+        //             <SettingSection
+        //               title={"알람설정"}
                       
-                    >
-                      <SingleItem   
-                        title={"로그아웃"}
-                        icon={"mail"}
-                        // 누르면 고객센터페이지
-                        onPress={ logout }
+        //             >
+        //               <ToggleList 
+        //                 title={"공지수신"}
+        //               />
+        //               <ToggleList 
+        //                 title={"학습알람"}
+        //               />
+        //               <ToggleList 
+        //                 title={"푸시알림"}
+        //               />
+        //             </SettingSection>
+        //             <HLine />
+
+        //             <SettingSection
+        //               title={"고객센터/도움말"}
+                      
+        //             >
+        //               <SingleItem   
+        //                 title={"고객센터/도움말"}
+        //                 icon={"mail"}
+        //                 // 누르면 고객센터페이지
+        //                 onPress={() => alert("MAIL")}
+        //               />
+                      
+        //             </SettingSection>
+        //             <HLine />
+
+        //             <SettingSection
+        //               title={"계정설정"}
+                      
+        //             >
+        //               <SingleItem   
+        //                 title={"로그아웃"}
+        //                 icon={"mail"}
+        //                 // 누르면 고객센터페이지
+        //                 onPress={ logout }
                         
-                      />
+        //               />
                       
-                    </SettingSection>
-                    <HLine />
+        //             </SettingSection>
+        //             <HLine />
 
-                    {termsModal ? <TermsofService visible={termsModal} close={() => {setTermsModal(false)}} /> : (null)}
-                    {privacyModal ? <Privacy visible={privacyModal} close={() => setPrivacyModal(false)} /> : (null)}
-                </Container>
-            </Common>
-        </ScrollView>
+        //             {termsModal ? <TermsofService visible={termsModal} close={() => {setTermsModal(false)}} /> : (null)}
+        //             {privacyModal ? <Privacy visible={privacyModal} close={() => setPrivacyModal(false)} /> : (null)}
+        //         </Container>
+        //     </Common>
+        // </ScrollView>
     );
 };
 
 export default Setting;
 
 const styles = StyleSheet.create({
-  
-  Scroll: {
-    marginVertical: 10, 
-    backgroundColor: '#1231'
-  }
-})
+    container: {
+      flex: 1,
+      paddingTop: 22,
+    },
+    sectionHeader: {
+      height: 30,
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: '#fff',
+      justifyContent: 'center',
+      alignItems: 'center',
+      // backgroundColor: themes.colors.gray,
+    },
+    sectionList: {
+      marginLeft: 10,
+      width: '100%',
+      justifyContent: 'center'
+    },
+    itemBox: {
+      paddingLeft: 20,
+      height: 40,
+      backgroundColor: 'white',
+      justifyContent: 'center'
+    },
+    item: {
+      fontSize: 20
+    }
+});

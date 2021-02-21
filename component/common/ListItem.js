@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { 
-    View, Text, TouchableHighlight, TouchableWithoutFeedback, Switch
+    View, Text, TouchableHighlight, TouchableWithoutFeedback, Switch, StyleSheet
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 
 
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -12,6 +12,8 @@ import themes from '../../config/themes';
 import Agreement from '../../Screen/ProfileDetail/Agreement';
 import Setting from '../../Screen/Setting';
 import ToggleSwitch from '../../Screen/ProfileDetail/ToggleSwitch';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ThemeConsumer } from 'styled-components';
 
 const Container = styled.View`
     background-color: white;
@@ -26,6 +28,7 @@ const Container = styled.View`
             fontFamily: "Roboto",
         },
     })};
+    padding: 10px;
 `;
 
 const TripContainer = styled.View`
@@ -50,10 +53,11 @@ const SingleContainer = styled.View`
 `;
 
 const Avatar = styled.Image`
-    width: 70px;
-    height: 70px;
-    border-radius: 35px;
-    margin-right: 15px;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
 `;
 
 const Marker = styled.View`
@@ -89,12 +93,11 @@ const FirstLine = styled.View`
 `;
 
 const ProfileTitle = styled.Text`
-    font-size: 14px;
+    font-size: 16px;
     color: ${themes.colors.view};
-    margin-bottom: 6px;
+    margin-bottom: 10px;
     font-weight: 600;
     margin-left: 10;
-    margin-bottom: 25;
     align-items: center;
     justify-content: center;
 `;
@@ -117,6 +120,7 @@ const ProfileSubTitle = styled.Text`
     color: ${themes.colors.view};
     align-items: center;
     width: 50%;
+    margin-left: 10px;
 `;
 
 
@@ -135,7 +139,6 @@ export const ListItem = ({
             <TouchableHighlight
                 underlayColor={themes.colors.view} 
                 onPress={onPress}
-                
             >
                 <Container>
                     {image && <Avatar source={image} /> }
@@ -149,6 +152,9 @@ export const ListItem = ({
                             </ProfileSubTitle>
                         )}
                     </ProfileContainerList>
+                    <View style={{marginRight: 10}}>
+                        <Ionicons name="ios-arrow-forward" size={24} color={themes.colors.gray} />
+                    </View>
                 </Container>
             </TouchableHighlight>
         </Swipeable>

@@ -8,10 +8,6 @@ import PsatBbs from '../Screen/Main/Detail/PsatBbs';
 import CommunicationList from '../Screen/Main/Detail/NcsBbsList/CommunicationList';
 import Setting from '../Screen/Setting';
 import BackBtn from '../component/common/BackBtn';
-import AuthStack from '../navigation/AuthStack';
-import Tabs from './Tabs';
-
-import { Ionicons } from '@expo/vector-icons';
 
 const HomeStack = createStackNavigator();
 
@@ -61,7 +57,6 @@ export default () => {
                         headerShown: true,
                         headerStyle: {
                             height: 100,
-                            // backgroundColor: "white"
                         }
                     }}
                     name="CommunicationList" component={CommunicationList} 
@@ -72,14 +67,11 @@ export default () => {
                     headerShown: true,
                     headerStyle: {
                         height: 100,
-                        // backgroundColor: "white"
                     }
                 }}
                 name="PsatBbs" component={PsatBbs} 
             />
-            {/* <Stack.Screen name="AuthStack" component={AuthStack} /> */}
-            {/* <Stack.Screen name="Ncs" component={NcsBbs}  /> */}
-            {/* <Stack.Screen name="Psat" component={PsatBbs} /> */}
+            
         </HomeStack.Navigator>
     );
 };

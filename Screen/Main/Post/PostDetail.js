@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {View, Text, StyleSheet, ScrollView, Modal, Dimensions} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import { postApi } from '../../../api';
 
 import themes from '../../../config/themes';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import HLine from '../../../component/common/HLine';
@@ -38,16 +38,43 @@ const PostDetail = ({
     const [comments, setComments] = useState([
         {
             comment: '1등',
-            name: '유저네임'
+            name: '유저네임',
+            date: '2021-01-21'
         },
-        // {
-        //     comment: '안녕하세요 댓글이벤트 당첨자입니다. 당첨된 댓글은 이메일을 보내주세요',
-        //     name: '관리자'
-        // },
-        // {
-        //     comment: '위에꺼 거짓말임',
-        //     name: '나도 관리자는 아님'
-        // }
+        {
+            comment: '안녕하세요 댓글이벤트 당첨자입니다. 당첨된 댓글은 이메일을 보내주세요',
+            name: '관리자',
+            date: '2021-01-21'
+
+        },
+        {
+            comment: '위에꺼 거짓말임',
+            name: '나도 관리자는 아님',
+            date: '2021-01-21'
+
+        },
+        {
+            comment: '1등',
+            name: '유저네임',
+            date: '2021-01-21'
+        },
+        {
+            comment: '안녕하세요 댓글이벤트 당첨자입니다. 당첨된 댓글은 이메일을 보내주세요',
+            name: '관리자',
+            date: '2021-01-21'
+
+        },
+        {
+            comment: '1등',
+            name: '유저네임',
+            date: '2021-01-21'
+        },
+        {
+            comment: '안녕하세요 댓글이벤트 당첨자입니다. 당첨된 댓글은 이메일을 보내주세요',
+            name: '관리자',
+            date: '2021-01-21'
+
+        },
     ])
 
     const getPostData = async () => {
@@ -106,7 +133,6 @@ const PostDetail = ({
             </View>
             <View>
                 <View>
-                    {comments.map(comment => (
                         <View>
                             <View style={{flexDirection: 'row'}}>
                                 
@@ -125,18 +151,18 @@ const PostDetail = ({
                                     </Text>
                                 </TouchableOpacity>
                             </View>
-                            
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={styles.CommentName}>
-                                    {comment.name}
-                                </Text>
-                                <Text style={styles.CommentFirst}>
-                                    {comment.comment}
-                                </Text>
-                            </View>
+                            <>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={styles.CommentName}>
+                                            {comments[0].name}
+                                        </Text>
+                                        <Text style={styles.CommentFirst}>
+                                            {comments[0].comment}
+                                        </Text>
+                                    </View>
+                            </>
                         </View>
                         
-                    ))}
                     
                 </View>
                
@@ -167,7 +193,7 @@ const PostDetail = ({
                     <Text
                         style={{flex: 1, fontSize: 16, color: themes.colors.gray, fontWeight: 'bold', textAlign: 'center'}}
                     >
-                        카테고리
+                        댓글 더 보기
                     </Text>
                         <AntDesign 
                             name="close" 
@@ -177,26 +203,41 @@ const PostDetail = ({
                             onPress={()=> closeBottom()}
                         />
                 </View>
+                
                 <HLine />
-
-                <View
-                    style={{alignItems: 'center'}}
-                >
-                    <Text>
-                        RBSHEET
-                    </Text>
-                    {/* {postCategory.map(category => (
+                <ScrollView>
+                    {comments.map(c => (
                         <>
-                            <Text style={{color: 'black', margin: 10, fontSize: 16, fontWeight: 'bold', color: themes.colors.buttonText}}
-                                onPress={() => inquireMenu(category)}
-                            >
-                                {category}
-                                
-                            </Text>
+                            <View style={{backgroundColor: themes.colors.main, marginTop: 15}}>
+                                <View style={{flexDirection: 'row'}}>
+                                    <View style={{flexDirection: 'row', justifyContent: 'flex-start', width: '55%'}}>
+                                        <View>
+                                            <MaterialCommunityIcons name="face-profile" size={24} color="black" />
+                                        </View>
+                                        <View style={{marginLeft: 10, marginTop: 3}}>
+                                            <Text style={{fontWeight: 'bold'}}>
+                                                {c.name}
+                                                
+                                            </Text>
+                                        </View>
+                                    </View>
+                                    <View style={{marginLeft: 10, marginTop: 4, alignItems: 'flex-end', width: '40%'}}>
+                                        <Text style={{fontSize: 10, color: themes.colors.gray}}>
+                                            {c.date}
+                                        </Text>
+                                    </View>
+                                </View>
+                            
+                                <View style={{alignItems: 'flex-start', marginTop: 5, marginLeft: 35}}>
+                                    <Text style={{fontSize: 15, color: themes.colors.darkgray, marginBottom: 10}}>
+                                        {c.comment}
+                                    </Text>
+                                </View>
+                            </View>
                             <HLine />
                         </>
-                    ))} */}
-                </View>
+                    ))}
+                </ScrollView>
             </RBSheet>
         </ScrollView>
     );

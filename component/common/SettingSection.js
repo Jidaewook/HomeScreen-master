@@ -3,11 +3,13 @@ import { TouchableHighlightComponent } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import styled from 'styled-components';
 import themes from '../../config/themes';
+import {View, Text} from 'react-native';
 
 
 const ProfileContainer = styled.View`
     flex: 1;
-    margin-bottom: 20;
+    height: 35px;
+    justify-content: center;
 `;
 
 const FirstLine = styled.View`
@@ -16,10 +18,10 @@ const FirstLine = styled.View`
 `;
 
 const ProfileTitle = styled.Text`
-    font-size: 16px;
-    color: ${themes.colors.view};
-    margin-bottom: 6px;
+    font-size: 14px;
+    color: ${themes.colors.gray};
     font-weight: 800;
+    margin-left: 15px;
 `;
 
 const ProfileSubTitle = styled.Text`
@@ -28,10 +30,10 @@ const ProfileSubTitle = styled.Text`
 `;
 
 const Container = styled.View`
-    background-color: white;
+    background-color: ${themes.colors.brightGray};
     flex-direction: row;
     align-items: center;
-    padding: 20px;
+    padding: 5px;
     margin-bottom: -30px;
     ${Platform.select({
         ios: {
@@ -49,7 +51,7 @@ const SingleContainer = styled.View`
     justify-content: space-between;
 `;
 
-const SettingSection = ({title, children}) => {
+const SettingSection = ({title}) => {
     return (
             <Container>
                 <SingleContainer>
@@ -59,7 +61,8 @@ const SettingSection = ({title, children}) => {
                         </ProfileTitle>
                         {/* {subTitle && <ProfileSubTitle>{subTitle}</ProfileSubTitle>} */}
                     </ProfileContainer>
-                    {children}
+                    
+                    
 
                 </SingleContainer>
             </Container>
