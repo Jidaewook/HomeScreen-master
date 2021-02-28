@@ -2,9 +2,10 @@ import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {apiImage} from '../../api';
 import {useNavigation} from '@react-navigation/native';
+import { ListItem } from 'react-native-elements';
 
 
-const NcsCard = ({onPress, src, title}) => {
+const NcsCard = ({onPress, src, image, title}) => {
 
     // const navigation = useNavigation();
 
@@ -28,13 +29,15 @@ const NcsCard = ({onPress, src, title}) => {
             }}> 
         <View>
             <Image
+                // source={image}
              source={{uri: apiImage(src)}}
             // source={{uri: 'https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.spotvnews.co.kr%2F%3Fmod%3Dnews%26act%3DarticleView%26idxno%3D318254&psig=AOvVaw29ovpU7G_2rZ0EKbmgHQrM&ust=1607309642855000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOCNxJStuO0CFQAAAAAdAAAAABAJ'}}
-             style={{
-                 height:80,
-                 width:60,
-                 borderRadius:10
-             }}
+                style={{
+                    height:80,
+                    width:60,
+                    borderRadius:10,
+                    // backgroundColor: 'gray'
+                }}
             />
         </View>
 

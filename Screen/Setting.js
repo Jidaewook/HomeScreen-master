@@ -1,12 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {AsyncStorage, SectionList, StatusBar, View, Alert, Text, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {AsyncStorage, SectionList, StatusBar, Linking, View, Alert, Text, StyleSheet} from 'react-native';
 import styled from 'styled-components';
-import {ListItem, SingleItem, ToggleList} from '../component/common/ListItem';
 import SettingSection from '../component/common/SettingSection';
-import TermsofService from '../component/common/modal/TermsofService';
-import Privacy from '../component/common/modal/Privacy';
+import {AntDesign} from '@expo/vector-icons';
 import axios from 'axios';
-import themes from '../config/themes';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Common = styled.SafeAreaView`
   background-color: white;
@@ -31,25 +29,42 @@ const HLine = styled.View`
 `;
 
 const MenuItem = [
-    {
-        title: "서비스 정보",
+      {
+        title: '알람설정',
         data: [
-            {title: '버전정보', icon: "user", screen: null}
-        ]
-    },
-    {
+          {title: '알람설정', icon: 'notification', screen: 'Alarm'}
+        ],
+      },
+      {
         title: '개인정보',
         data: [
-            {title: '계정정보', icon: 'user', screen: 'Account'},
-            {title: '서비스 이용약관', icon: 'mail', screen: 'Agreement'}
-        ]
-    },
-    {
-        title: '고객센터/도움말',
+          {title: '개인정보정책', icon: 'user', screen: 'Privacy'},
+          {title: '서비스이용약관', icon: 'copy1', screen: 'Service'}
+        ],
+      },
+      {
+        title: '고객센터',
         data: [
-            {title: '고객센터/도움말', icon: 'mail', screen: 'SendMessage'}
+          {title: '서비스문의', icon: 'customerservice', screen: ''},
+          {title: 'FAQ', icon: 'questioncircleo', screen: 'Frequency'},
+          {title: '오류신고', icon: 'bells', screen: ''}
+        ],
+      },
+      {
+        title: '서비스정보',
+        data: [
+          {title: '버전정보', icon: 'ellipsis1', screen: 'Version'},
+          {title: '구독문의', icon: 'creditcard', screen: ''}
+        ],
+      },
+      {
+        title: '계정설정',
+        data: [
+          {title: '로그아웃', icon: 'dingding', screen: ''},
+          {title: '탈퇴문의', icon: 'phone', screen: ''},
+          {title: '      ', icon: '', screen: ''}
         ]
-    }
+      }
 ]
 
 const Setting = ({navigation}) => {
@@ -58,12 +73,25 @@ const Setting = ({navigation}) => {
     const ProfilePage = () => {
       navigation.navigate("ProfilePage")
     };
-    const [privacyModal, setPrivacyModal] = useState(false);
-    const [termsModal, setTermsModal] = useState(false);
+
+    const movieScreen = (a) => {
+      navigation.navigate(a)
+    };
+
+    const openOnPressMail = (email) => {
+      const url = `mailto:dw4157@naver.com`;
+	    Linking.canOpenURL(url)
+		         .then((supported) => {
+                if (supported) {
+                  return Linking.openURL(url)
+                    .catch(() => null);
+                }
+              });
+    }
+
     const [userData, setUserData] = useState({});
 
     const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
     const getUserData = async () => {
 
       const token = await AsyncStorage.getItem('token')
@@ -71,7 +99,6 @@ const Setting = ({navigation}) => {
         'Authorization': 'Bearer ' + token
       }
       console.log("HEADERS", headers)
-
 
       try {
         axios 
@@ -115,53 +142,58 @@ const Setting = ({navigation}) => {
 
     return (
       <SectionList
-          sections={[
-            {
-              title: '알람설정',
-              data: [
-                '공지수신',
-                '학습알림',
-                '푸시알림'
-              ],
-            },
-            {
-              title: '개인정보',
-              data: [
-                '개인정보정책',
-                '서비스이용약관'
-              ],
-            },
-            {
-              title: '고객센터',
-              data: [
-                '서비스문의',
-                'FAQ',
-                '오류신고'
-              ],
-            },
-            {
-              title: '서비스정보',
-              data: [
-                '버전정보',
-                '구독문의'
-              ],
-            },
-            {
-              title: '계정설정',
-              data: [
-                '로그아웃',
-                '탈퇴문의',
-                '  '
-              ],
-            }
-          ]}
-          renderItem={({item}) => 
-            <View style={styles.itemBox}>
-              <Text style={styles.item}> 
-                {item}
-              </Text>
-            </View> 
-          }
+        sections={MenuItem}
+          renderItem={({item}) => (
+            <TouchableOpacity 
+              style={styles.itemBox}
+              onPress={() => {
+                switch (item.title) {
+                  case "서비스문의" :
+                    openOnPressMail();
+                    break
+                  case "오류신고" : 
+                    openOnPressMail();
+                    break
+                  case "로그아웃" :
+                    alert("로그아웃 하시겠습니까?")
+                    break
+                  case "탈퇴문의" : 
+                    alert("탈퇴하시겠습니까?")
+                    break
+                  default :
+                    movieScreen(item.screen)
+                    break
+                }
+                // item.title === '로그아웃' ? (
+                //   alert("로그아웃 하시겠습니까?")
+                // ) : (
+                //   movieScreen(item.screen)
+                // )}
+              }}
+            >
+              <View style={styles.icon}>
+                <AntDesign name={item.icon} size={14} />
+              </View>
+              <View style={styles.item}>
+                <Text style={styles.item}> 
+                  {item.title}
+                </Text>
+              </View>
+              <View style={styles.right}>
+                {
+                  item.title === '버전정보' ? (
+                    <Text style={{marginLeft: -15}}>1.0.0</Text>
+                  ) : (
+                    item.title === '      ' ? (
+                      <Text></Text>
+                    ) : (
+                    <AntDesign name="right" size={14} color="gray" />
+                  ))
+                }
+                
+              </View>
+            </TouchableOpacity> 
+          )}
           renderSectionHeader={({section}) => (
             <SettingSection
               title={section.title}
@@ -195,12 +227,28 @@ const styles = StyleSheet.create({
     },
     itemBox: {
       paddingLeft: 20,
-      height: 40,
+      height: 50,
       fontSize: 18,
       backgroundColor: 'white',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      flexDirection: 'row'
     },
     item: {
-      fontSize: 14
+      width: '75%',
+      alignItems: 'flex-start',
+      fontSize: 14,
+      justifyContent: 'center'
+    },
+    icon: {
+      width: '10%',
+      marginLeft: 20,
+      marginRight: -5,
+      alignItems: 'flex-start',
+      justifyContent: 'center'
+    },
+    right: {
+      width: '15%',
+      marginLeft: 20,
+      justifyContent: 'center'
     }
 });

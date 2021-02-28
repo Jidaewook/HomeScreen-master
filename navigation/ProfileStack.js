@@ -4,6 +4,10 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Setting from '../Screen/Setting';
 import ProfilePage from '../Screen/ProfileDetail/ProfilePage';
 import BackBtn from '../component/common/BackBtn';
+import Privacy from '../Screen/Main/Setting/Privacy';
+import Alarm from '../Screen/Main/Setting/Alarm';
+import Frequency from '../Screen/Main/Setting/Frequency';
+import Service from '../Screen/Main/Setting/Service';
 
 const ProfileStack = createStackNavigator();
 
@@ -16,9 +20,13 @@ export default () => (
         }}
         initialRouteName="Profile"
     >
-        <ProfileStack.Screen name="ProfilePage" component={ProfilePage}  />
+        <ProfileStack.Screen name="ProfilePage" component={ProfilePage} options={{headerShown: false}}/>
         <ProfileStack.Screen name="Setting" component={Setting} />
-        
+        <ProfileStack.Screen name="Privacy" component={Privacy} />
+        <ProfileStack.Screen name="Alarm" component={Alarm} />
+        <ProfileStack.Screen name="Frequency" component={Frequency} />
+        <ProfileStack.Screen name="Service" component={Service} />
+
     </ProfileStack.Navigator>
 )
 

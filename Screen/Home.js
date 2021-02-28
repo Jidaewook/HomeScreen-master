@@ -17,7 +17,6 @@ import {H1} from '../config/Typography';
 
 import {lectureApi, noticeApi} from '../api';
 
-
 const Common = styled.SafeAreaView`
     ${Platform.select({
         ios: {
@@ -85,6 +84,30 @@ const Heading = styled.View`
         margin-Top: 5;
 `;
 
+const testData = [
+    {
+        title: '예시1',
+        image: require('../images/thumb/thumb_01.jpg')
+    },
+    {
+        title: '예시2',
+        image: require('../images/thumb/thumb_02.jpg')
+    },
+    {
+        title: '예시3',
+        image: require('../images/thumb/thumb_03.jpg')
+    },
+    {
+        title: '예시4',
+        image: require('../images/thumb/thumb_04.jpg')
+    },
+    {
+        title: '예시5',
+        image: require('../images/thumb/thumb_05.jpg')
+    },
+    
+]
+
 const Home = ({}) => {
 
     const [lectures, setLectures] = useState({
@@ -143,6 +166,7 @@ const Home = ({}) => {
                 <NcsCard 
                     onPress={() => goToDetail(item.id, item.category)}
                     title={item.title}
+                    // image={item.image}
                 />
             )
     }
@@ -257,13 +281,14 @@ const Home = ({}) => {
                             />
                             <FlatList 
                                 data={lectures.ncs}
+                                // data={testData}
                                 keyExtractor={(item) => item.id}
                                 horizontal={true}
                                 showsHorizontalScrollIndicator={false}
                                 renderItem={renderNCS}
                             />
                             <ContentTitlePsat 
-                                title={"PSAT"}
+                                title={"PSAT"}         
                             />
                             <FlatList 
                                 data={lectures.psat}
