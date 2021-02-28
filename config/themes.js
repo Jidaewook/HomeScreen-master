@@ -15,7 +15,8 @@ const colors={
     postListSky: '#e0f3ff',
     postListOrange: '#ffefc4',
     line: '#e6e6e6',
-    brightGray: '#e8e8e8'
+    brightGray: '#e8e8e8',
+    shinyGray: '#f2f2f2'
 
 }
 

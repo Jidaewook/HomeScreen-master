@@ -64,18 +64,25 @@ const PostPage = () => {
     const [posts, setPosts] = useState({
         bbs: [],
         qna: [],
+        pass: [],
         bbsError: null,
-        qnaError: null
+        qnaError: null,
+        passError: null
     });
     
 
     const getPostData = async () => {
         const [bbsData, bbsDataError] = await postApi.bbs();
         const [qnaData, qnaDataError] = await postApi.qna();
+        const [passData, passDataError] = await postApi.pass();
         
         setPosts({
             qna,
-            qnaError
+            qnaError,
+            pass,
+            passError,
+            free,
+            freeError
         });
     }
 

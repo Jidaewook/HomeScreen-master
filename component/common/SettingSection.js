@@ -18,7 +18,7 @@ const FirstLine = styled.View`
 `;
 
 const ProfileTitle = styled.Text`
-    font-size: 14px;
+    font-size: 15px;
     color: ${themes.colors.gray};
     font-weight: 800;
     margin-left: 15px;
@@ -30,11 +30,10 @@ const ProfileSubTitle = styled.Text`
 `;
 
 const Container = styled.View`
-    background-color: ${themes.colors.brightGray};
+    background-color: ${themes.colors.shinyGray};
     flex-direction: row;
     align-items: center;
     padding: 5px;
-    margin-bottom: -30px;
     ${Platform.select({
         ios: {
             fontFamily: "Avenir",
@@ -46,7 +45,7 @@ const Container = styled.View`
 `;
 
 const SingleContainer = styled.View`
- width: 100%;
+    width: 100%;
     flex-direction: column;
     justify-content: space-between;
 `;

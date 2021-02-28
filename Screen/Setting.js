@@ -147,9 +147,11 @@ const Setting = ({navigation}) => {
               ],
             },
             {
-              title: '',
+              title: '계정설정',
               data: [
-                '로그아웃'
+                '로그아웃',
+                '탈퇴문의',
+                '  '
               ],
             }
           ]}
@@ -158,7 +160,7 @@ const Setting = ({navigation}) => {
               <Text style={styles.item}> 
                 {item}
               </Text>
-           </View> 
+            </View> 
           }
           renderSectionHeader={({section}) => (
             <SettingSection
@@ -167,91 +169,6 @@ const Setting = ({navigation}) => {
           )}
           keyExtractor={(item, index) => index}
         />
-
-        // <ScrollView
-        //     showsVerticalScrollIndicator={false}
-        //     style={{backgroundColor: 'white'}}
-        // >
-          
-        //     <Common>
-        //         <Container>
-        //         <HLine />
-
-        //             <SettingSection
-        //               title={"서비스 정보"}
-                      
-        //             >
-        //               <SingleItem   
-        //                 title={"버전정보"}
-        //                 subTitle={"1.0.0"}
-        //               />
-        //             </SettingSection>
-        //             <HLine />
-        //             <SettingSection
-        //               title={"개인 정보"}
-                      
-        //             >
-        //               <SingleItem   
-        //                 title={"개인정보정책"}
-        //                 onPress={() => {setPrivacyModal(true)}}
-        //               />
-        //               <SingleItem   
-        //                 title={"서비스 이용약관"}
-        //                 onPress={() => {setTermsModal(true)}}
-        //               />
-        //             </SettingSection>
-        //             <HLine />
-
-        //             <SettingSection
-        //               title={"알람설정"}
-                      
-        //             >
-        //               <ToggleList 
-        //                 title={"공지수신"}
-        //               />
-        //               <ToggleList 
-        //                 title={"학습알람"}
-        //               />
-        //               <ToggleList 
-        //                 title={"푸시알림"}
-        //               />
-        //             </SettingSection>
-        //             <HLine />
-
-        //             <SettingSection
-        //               title={"고객센터/도움말"}
-                      
-        //             >
-        //               <SingleItem   
-        //                 title={"고객센터/도움말"}
-        //                 icon={"mail"}
-        //                 // 누르면 고객센터페이지
-        //                 onPress={() => alert("MAIL")}
-        //               />
-                      
-        //             </SettingSection>
-        //             <HLine />
-
-        //             <SettingSection
-        //               title={"계정설정"}
-                      
-        //             >
-        //               <SingleItem   
-        //                 title={"로그아웃"}
-        //                 icon={"mail"}
-        //                 // 누르면 고객센터페이지
-        //                 onPress={ logout }
-                        
-        //               />
-                      
-        //             </SettingSection>
-        //             <HLine />
-
-        //             {termsModal ? <TermsofService visible={termsModal} close={() => {setTermsModal(false)}} /> : (null)}
-        //             {privacyModal ? <Privacy visible={privacyModal} close={() => setPrivacyModal(false)} /> : (null)}
-        //         </Container>
-        //     </Common>
-        // </ScrollView>
     );
 };
 
@@ -279,10 +196,11 @@ const styles = StyleSheet.create({
     itemBox: {
       paddingLeft: 20,
       height: 40,
+      fontSize: 18,
       backgroundColor: 'white',
       justifyContent: 'center'
     },
     item: {
-      fontSize: 20
+      fontSize: 14
     }
 });

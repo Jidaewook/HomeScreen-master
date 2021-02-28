@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useLayoutEffect} from 'react';
-import {StyleSheet, Alert, AsyncStorage,Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, SectionList} from 'react-native';
+import {StyleSheet, Alert, FlatList, AsyncStorage,Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, SectionList} from 'react-native';
 import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
@@ -7,9 +7,9 @@ import * as Permissions from 'expo-permissions';
 import { useNavigation } from '@react-navigation/native';
 import {ListItem} from '../../component/common/ListItem';
 import axios from 'axios';
-import { FlatList } from 'react-native-gesture-handler';
 import themes from '../../config/themes';
-
+import ProfileBox_1 from '../../component/common/ProfileBox_1';
+import { lectureApi, noticeApi } from '../../api';
 
 const ProfilePage = () => {
 
@@ -66,6 +66,35 @@ const ProfilePage = () => {
 
     const navigation = useNavigation();
     
+    const [recents, setRecent] = useState([]);
+
+    const [loading, setLoading] = useState(true);
+
+    const getData = async () => {
+        const [ncs, ncsError] = lectureApi.ncs();
+        const [psat, psatError] = lectureApi.psat();
+        const [notice, noticeError] = noticeApi.notice();
+
+        setLectures({
+            ncs,
+            ncsError,
+            psat,
+            psatError
+        });
+
+        setNotices(notice);
+
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    const goToDetail = (id, category) => {
+        navigation.navigate("Detail", {id, category})
+    };
+
     useLayoutEffect(() => {
         navigation.setOptions({
           
@@ -93,9 +122,7 @@ const ProfilePage = () => {
                 }
                 ItemSeparatorComponent={() => <HLine />}
             />
-
-
-
+            <ProfileBox_1 />
             {/* <ScrollView showsVerticalScrollIndicator={false}>
                 <ListItem
                     title={userData.username}
@@ -193,7 +220,9 @@ const ProfilePage = () => {
                 </View>
 
             </ScrollView> */}
+            
         </SafeAreaView>
+        
     );
 };
 
