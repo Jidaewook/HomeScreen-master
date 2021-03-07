@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import themes from '../../config/themes';
 
 
 const ContentTitleNCS = ({title, desc, addsize}) => {
@@ -23,7 +24,7 @@ const ContentTitleNCS = ({title, desc, addsize}) => {
                 style={{alignItems: 'flex-end', paddingRight: 15, width: '20%', justifyContent: 'center'}}
                 onPress={() => navigation.navigate("NcsBbs")}
             >
-                <Text>
+                <Text style={{fontSize: 12, color: themes.fontsColor.more}}>
                     더보기
                 </Text>
             </TouchableOpacity>
@@ -58,8 +59,8 @@ const styles = StyleSheet.create({
     },
     TitleFont: {
         fontWeight: 'bold',
-        color: 'gray',
-        fontSize: 24
+        color: themes.fontsColor.SubTitle,
+        fontSize: 18
     },
     ContentTitleFont: {
         fontWeight: 'bold',

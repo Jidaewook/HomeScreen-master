@@ -5,6 +5,7 @@ import SettingSection from '../component/common/SettingSection';
 import {AntDesign} from '@expo/vector-icons';
 import axios from 'axios';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import themes from '../config/themes';
 
 const Common = styled.SafeAreaView`
   background-color: white;

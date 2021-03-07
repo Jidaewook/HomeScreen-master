@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View, Image, TouchableOpacity} from 'react-native';
-import ProgressCircle from 'react-native-progress-circle';
-import {Feather} from '@expo/vector-icons';
+import {AntDesign} from '@expo/vector-icons';
+import themes from '../../config/themes';
 
 const LectureList = ({image, title, bg, onPress, duration}) => {
     return (
@@ -10,22 +10,22 @@ const LectureList = ({image, title, bg, onPress, duration}) => {
             style={{
                 flexDirection: 'row',
                 backgroundColor: bg,
-                padding: 20,
+                padding: 15,
                 marginHorizontal: 20,
                 borderRadius: 20,
                 alignItems: 'center',
-                marginTop: 10
+                marginTop: 5
             }}
         >
             <Image 
                 source={image}
-                style={{width: 40, height: 40}}
+                style={{width: 40, height: 40, borderRadius: 20}}
             />
             <View>
                 <Text style={{
-                    color: "#345c74",
+                    color: themes.fontsColor.contentTitle,
                     fontWeight: 'bold',
-                    fontSize: 13,
+                    fontSize: 12,
                     paddingHorizontal: 20,
                     width: 170
                 }}>
@@ -33,7 +33,7 @@ const LectureList = ({image, title, bg, onPress, duration}) => {
                 </Text>
                 <Text
                     style={{
-                        color: '#f58084', 
+                        color: themes.fontsColor.contentDuration, 
                         fontWeight: 'bold',
                         fontSize: 12,
                         paddingHorizontal: 20
@@ -43,20 +43,7 @@ const LectureList = ({image, title, bg, onPress, duration}) => {
                 </Text>
                 
             </View>
-            <ProgressCircle
-                percent={30}
-                radius={17}
-                borderWidth={1.5}
-                color="f58084"
-                shadowColor="#fff"
-                bgColor="#fff"
-            >
-                <Feather
-                    name="play"
-                    size={24}
-                    color="pink"
-                />
-            </ProgressCircle>
+            <AntDesign name="playcircleo" size={24} color="pink" />
         </TouchableOpacity>
     );
 };

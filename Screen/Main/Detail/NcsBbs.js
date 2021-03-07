@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, ScrollView ,Button, Modal, Dimensions, StyleSheet, StatusBar, Image, TouchableOpacity, ActivityIndicator, FlatList, Platform} from 'react-native';
+import themes from '../../../config/themes';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
@@ -250,14 +251,16 @@ const styles = StyleSheet.create({
     header: {},
     heading: {
         fontFamily: 'HelveticaNeue',
-        fontSize: 28,
+        fontSize: 24,
         fontWeight: 'bold',
+        color: themes.fontsColor.Title,
         marginTop: 5,
     },
     subHeading: {
         fontFamily: 'HelveticaNeue',
-        fontSize: 20,
-        fontWeight: '300',
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: themes.fontsColor.more,
         marginTop: 5,
     },
     dailyThoughtsWrapper: {

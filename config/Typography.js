@@ -86,13 +86,15 @@ export const Cap = ({ children, colors }) => {
 
 const Container = styled.Text`
   ${Platform.select({
-    ios: {
-        fontFamily: "Avenir",
-    },
-    android: {
-        fontFamily: "Roboto",
-    },
-})}
+        ios: {
+            fontFamily: "Avenir",
+            fontWeight: 'bold'
+        },
+        android: {
+            fontFamily: "Roboto",
+            fontWeight: 'bold'
+        },
+    })};
 `;
 
 const HeadingMain = styled.Text`

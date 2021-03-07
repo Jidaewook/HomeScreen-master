@@ -42,11 +42,12 @@ export default () => {
                 showLabel: false
             }}
         >
-                        <Tabs.Screen name="Profile" component={ProfileStack} />
+                        
 
             <Tabs.Screen name="Home" component={HomeStack} />
             <Tabs.Screen name="List" component={PostStack} />
             <Tabs.Screen name="Recommend" component={RecommendStack} />
+            <Tabs.Screen name="Profile" component={ProfileStack} />
 
         </Tabs.Navigator>
     );

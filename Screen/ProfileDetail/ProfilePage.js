@@ -49,7 +49,7 @@ const ProfilePage = () => {
                     imageStyle={styles.profileBackground}
                 >
                     <View style={styles.editGear}>
-                        <AntDesign name="edit" size={24} color={themes.colors.brightGray} onPress={()=> goToEdit("profileEdit")}  />
+                        <AntDesign name="edit" size={24} color={themes.colors.brightGray} onPress={()=> goToEdit("ProfileEdit")}  />
                         <AntDesign name="setting" size={24} color={themes.colors.brightGray} onPress={()=> goToEdit("Setting")} />
                     </View>
                     
@@ -105,13 +105,13 @@ const ProfilePage = () => {
                             <View style={{marginTop: 20, marginBottom: 15}}>
                                 <View style={styles.divider} />
                                 <View style={{paddingTop: 15, }}>
-                                    <Text style={{fontSize: 16, color: themes.colors.gray, textAlign: 'center'}}>
+                                    <Text style={{fontSize: 14, color: themes.colors.gray, textAlign: 'center'}}>
                                         안녕하세요, 자기소개란입니다. 이곳에 자기소개를 해보세요.
                                     </Text>
                                 </View>
                                 <View style={[styles.divider, {marginTop: 20}]} />
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                    <Text style={{fontWeight: 'bold', fontSize: 16, color: themes.colors.gray, marginTop: 15,}}>
+                                    <Text style={{fontWeight: 'bold', fontSize: 14, color: themes.colors.gray, marginTop: 15,}}>
                                         최근에 본 영상
                                     </Text>
                                     <TouchableOpacity>
@@ -134,7 +134,7 @@ const ProfilePage = () => {
                                 </ScrollView>
                                 <View style={[styles.divider, {marginTop: 20}]} />
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                    <Text style={{fontWeight: 'bold', fontSize: 16, color: themes.colors.gray, marginTop: 15,}}>
+                                    <Text style={{fontWeight: 'bold', fontSize: 14, color: themes.colors.gray, marginTop: 15,}}>
                                         좋아요 한 영상
                                     </Text>
                                     <TouchableOpacity>
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
     divider: {
         width: '100%',
         borderWidth: 1,
-        borderColor: '#E9ECEF'
+        borderColor: themes.colors.shinyGray
     }
 
 });

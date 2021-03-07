@@ -20,6 +20,14 @@ const colors={
 
 }
 
+const fontsColor={
+    Title: '#303030',
+    SubTitle: 'gray',
+    more: 'gray',
+    contentTitle: '#6e6e6e',
+    contentDuration: '#ffdbdb'
+}
 
 
-export default {colors};
+
+export default {colors, fontsColor};

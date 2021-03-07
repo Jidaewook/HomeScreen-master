@@ -18,22 +18,22 @@ const CommunicationList = () => {
         {
             id: 1,
             name: "2020",
-            icon: icons.year,
+            icon: icons.year2020,
         },
         {
             id: 2,
             name: "2019",
-            icon: icons.noodle,
+            icon: icons.year2019,
         },
         {
             id: 3,
             name: "2018",
-            icon: icons.hotdog,
+            icon: icons.year2018,
         },
         {
             id: 4,
             name: "2017",
-            icon: icons.salad,
+            icon: icons.year2017,
         },
         {
             id: 5,
@@ -581,71 +581,10 @@ const CommunicationList = () => {
 
     const renderHeader = () => {
         return (
-            <View style={{flexDirection: 'row', height: 50}}>
-                <TouchableOpacity
-                    style={{
-                        width: 50,
-                        paddingLeft: 20,
-                        justifyContent: 'center'
-                    }}
-                >
-                    <Image
-                        source={icons.nearby}
-                        resizeMode="contain"
-                        style={{
-                            width: 30,
-                            height: 30
-                        }}
-                    >
-
-                    </Image>
-                </TouchableOpacity>
-                <View
-                    style={{
-                        flex: 1, 
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}
-                >
-                    <View
-                        style={{
-                            width: '70%', height: '100%',
-                            backgroundColor: themes.colors.lightgray,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderRadius: 30
-                        }}
-                    >
-                        <Text
-                            style={{
-                                fontWeight: 'bold',
-                                fontSize: 16,
-                            }}
-                        >
-                            Search Title
-                        </Text>
-                        
-                    </View>
-                    
-                </View>
-                <TouchableOpacity
-                    style={{
-                        width: 50,
-                        paddingRight: 20,
-                        justifyContent: 'center'
-                    }}
-                >
-                    <Image
-                        source={icons.basket}
-                        resizeMode="contain"
-                        style={{
-                            width: 30,
-                            height: 30
-                        }}
-                    >
-
-                    </Image>
-                </TouchableOpacity>
+            <View style={{flexDirection: 'row', height: 5}}>
+                
+               
+                
             </View>
         ) 
     }
@@ -657,6 +596,7 @@ const CommunicationList = () => {
                     style={{
                         padding: 10,
                         paddingBottom: 20,
+                        marginBottom: -15,
                         backgroundColor: (selectedFilter?.id == item.id) ? themes.colors.lightgray : themes.colors.main,
                         borderRadius: 30,
                         alignItems: "center",
@@ -691,7 +631,9 @@ const CommunicationList = () => {
                         style={{
                             marginTop: 10,
                             color: (onSelectedFilter?.id == item.id) ? themes.colors.main : themes.colors.black,
-                            fontSize: 10
+                            fontSize: 12,
+                            fontWeight: 'bold',
+                            color: themes.fontsColor.contentTitle
                         }}
                     >
                         {item.name}
@@ -703,12 +645,12 @@ const CommunicationList = () => {
         return (
             <View style={{ padding: 20 }}>
                 <Text
-                    style={{fontWeight: '800', fontSize: 26, marginTop: 10}}
+                    style={{fontWeight: 'bold', fontSize: 24, marginTop: 1, color: themes.fontsColor.Title}}
                 >
                     의사소통능력
                 </Text>
                 <Text
-                    style={{fontWeight: '400', fontSize: 12, marginTop: 10, marginLeft: 10}}
+                    style={{fontWeight: 'bold', fontSize: 14, marginTop: 10, color: themes.fontsColor.more, fontWeight: 'bold'}}
                 >
                     기관별 출제비중 98%, 압도적 출제비중
                 </Text>
@@ -763,7 +705,6 @@ const CommunicationList = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            {renderHeader()}
             {renderFilter()}
             {renderList()}
         </SafeAreaView>

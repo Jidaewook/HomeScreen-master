@@ -14,6 +14,7 @@ import ContentTitleNotice from '../component/common/ContentTitleNotice';
 import ContentTitleNcs from '../component/common/ContentTitleNCS';
 import ContentTitlePsat from '../component/common/ContentTitlePSAT';
 import {H1} from '../config/Typography';
+import themes from '../config/themes';
 
 import {lectureApi, noticeApi} from '../api';
 
@@ -84,26 +85,31 @@ const Heading = styled.View`
         margin-Top: 5;
 `;
 
-const testData = [
+const you_Sam_Data = [
     {
-        title: '예시1',
-        image: require('../images/thumb/thumb_01.jpg')
+        title: '의사소통능력 2주차',
+        image: require('../images/you_thumb/2_1(1).jpg'),
+        desc: '의사소통능력 샘플 강의입니다. 통능력 샘플 강의입니통능력 샘플 강의입니통능력 샘플 강의입니통능력 샘플 강의입니'
     },
     {
-        title: '예시2',
-        image: require('../images/thumb/thumb_02.jpg')
+        title: '수리능력 2주차',
+        image: require('../images/you_thumb/2_2(1).jpg'),
+        desc: '의사소통능력 샘플 강의입니다.'
     },
     {
-        title: '예시3',
-        image: require('../images/thumb/thumb_03.jpg')
+        title: '문제해결능력 2주차',
+        image: require('../images/you_thumb/2_3(1).jpg'),
+        desc: '의사소통능력 샘플 강의입니다.'
     },
     {
-        title: '예시4',
-        image: require('../images/thumb/thumb_04.jpg')
+        title: '자원관리능력 2주차',
+        image: require('../images/you_thumb/2_4(1).jpg'),
+        desc: '의사소통능력 샘플 강의입니다.'
     },
     {
-        title: '예시5',
-        image: require('../images/thumb/thumb_05.jpg')
+        title: '문제해결능력 2+1주차',
+        image: require('../images/you_thumb/2_5(1).jpg'),
+        desc: '의사소통능력 샘플 강의입니다.'
     },
     
 ]
@@ -166,7 +172,7 @@ const Home = ({}) => {
                 <NcsCard 
                     onPress={() => goToDetail(item.id, item.category)}
                     title={item.title}
-                    // image={item.image}
+                    image={item.image}
                 />
             )
     }
@@ -177,7 +183,8 @@ const Home = ({}) => {
                 onPress={() => goToDetail(item.id, item.category)}
                 name={item.title}
                 desc={item.desc}
-                src={item.thumbnail[0].url}
+                image={item.image}
+                // src={item.thumbnail[0].url}
             />
         )
     }
@@ -188,7 +195,9 @@ const Home = ({}) => {
                 onPress={() => goToDetail(item.id, item.category)}
                 name={item.title}
                 desc={item.desc}
-                src={item.thumbnail[0].url}
+                image={item.image}
+
+                // src={item.thumbnail[0].url}
             />
         )
     }
@@ -200,11 +209,11 @@ const Home = ({}) => {
                     style={{felx: 1, flexDirection: 'row'}}
                 >
                 <HeroText>
-                    <H1 colors={'gray'}>패스매니저 PassMeNCS</H1>
+                    <H1 colors={themes.fontsColor.Title}>패스매니저 PassMeNCS</H1>
                 </HeroText>
                 <TouchableOpacity
                     onPress={() => navigation.navigate("Profile")}
-                    style={{padding: 20, marginLeft: 60}}
+                    style={{padding: 20, marginLeft: 55}}
                 >
                     <Image
                         source={require('../images/profile_sample.jpeg')}
@@ -270,32 +279,40 @@ const Home = ({}) => {
                                 title={"NOTICE"}
                             />
                                 <FlatList 
-                                    data={notices}
+                                    // data={notices}
+                                    data={you_Sam_Data}
                                     keyExtractor={(item) => item.id}
                                     horizontal={true}
                                     showsHorizontalScrollIndicator={false}
                                     renderItem={renderNotice}
+                                    style={{width: '98%', marginBottom: -30}}
                                 />
                             <ContentTitleNcs
                                 title={"NCS"}
                             />
                             <FlatList 
-                                data={lectures.ncs}
+                                // data={lectures.ncs}
                                 // data={testData}
+                                data={you_Sam_Data}
                                 keyExtractor={(item) => item.id}
                                 horizontal={true}
                                 showsHorizontalScrollIndicator={false}
                                 renderItem={renderNCS}
+                                style={{width: '98%'}}
+
                             />
                             <ContentTitlePsat 
                                 title={"PSAT"}         
                             />
                             <FlatList 
-                                data={lectures.psat}
+                                // data={lectures.psat}
+                                data={you_Sam_Data}
                                 keyExtractor={(item) => item.id}
                                 horizontal={true}
                                 showsHorizontalScrollIndicator={false}
                                 renderItem={renderPSAT}
+                                style={{width: '98%'}}
+
                             />
                         </>
                     )}

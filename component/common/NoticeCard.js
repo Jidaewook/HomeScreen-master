@@ -5,7 +5,7 @@ import { apiImage } from '../../api';
 import Likes from './Likes';
 
 
-const NoticeCard = ({onPress, src, name, desc}) => {
+const NoticeCard = ({onPress, src, image, name, desc}) => {
     return (
         <TouchableOpacity 
              onPress={onPress}
@@ -19,15 +19,17 @@ const NoticeCard = ({onPress, src, name, desc}) => {
                  padding:15,
                  marginRight:5,
                  marginLeft:2,
-                 marginBottom:5            
+                 marginBottom:5,
+                 
              }}
             >
                 <Image
-                source={{uri: apiImage(src)}}
+                    source={image}
+                // source={{uri: apiImage(src)}}
                 style={{
                     width:175,
                     height:115,
-                    borderRadius:20
+                    borderRadius:5
                 }}
                 />
                 <View style={{
@@ -61,11 +63,11 @@ const NoticeCard = ({onPress, src, name, desc}) => {
                
                 </View>
                 <Text style={{
-                     fontSize:9,
+                     fontSize:12,
                      color:"#4f4a4a",
                      fontWeight:"400"
                  }}>
-                     {desc}
+                     {desc.slice(0,19)}
                  </Text>
 
 
@@ -75,14 +77,14 @@ const NoticeCard = ({onPress, src, name, desc}) => {
                      alignItems:"center",
                      width:"100%"
                  }}>
-                     <View style={{
+                     {/* <View style={{
                          width:"95%", alignItems: 'flex-end'
                      }}>
                          <Likes 
                             likes={"25"}
                             
                         />
-                     </View>
+                     </View> */}
                      
                  </View>
                 

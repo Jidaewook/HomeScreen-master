@@ -18,6 +18,6 @@ export default Likes;
 const styles = StyleSheet.create({
     LikesText: {
         fontWeight: '300',
-        fontSize: 15        
+        fontSize: 12        
     }
 })

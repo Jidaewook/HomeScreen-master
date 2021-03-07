@@ -24,6 +24,10 @@ export const star = require("../assets/icons/star.png");
 export const sushi = require("../assets/icons/sushi.png");
 export const user = require("../assets/icons/user.png");
 export const year = require("../assets/icons/year.png");
+export const year2020 = require("../images/zodiac/ox.png");
+export const year2019 = require('../images/zodiac/rabbit.png');
+export const year2018 = require('../images/zodiac/rat.png');
+export const year2017 = require('../images/zodiac/tiger.png');
 
 export default {
     back,
@@ -51,5 +55,9 @@ export default {
     star,
     sushi,
     user,
-    year
+    year,
+    year2017,
+    year2018,
+    year2019,
+    year2020
 }
