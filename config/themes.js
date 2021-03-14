@@ -28,6 +28,9 @@ const fontsColor={
     contentDuration: '#ffdbdb'
 }
 
+const sizes={
+    base: 30
+}
 
 
 export default {colors, fontsColor};

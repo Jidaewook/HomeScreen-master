@@ -214,7 +214,7 @@ const PostPage = () => {
                             <View>
                                 {qna.map(q => (
                                     <TouchableOpacity style={{backgroundColor: themes.colors.postListSky}}
-                                    onPress={() => goToPostDetail(q._id)}
+                                        onPress={() => goToPostDetail(q._id)}
 
                                     >
                                         <View style={styles.postList} 
