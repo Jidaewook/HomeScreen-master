@@ -1,27 +1,59 @@
 import React, {useState, useEffect} from 'react';
-import {View, Image, Text, StatusBar, StyleSheet, Dimensions, ScrollView, TouchableOpacity, Button} from "react-native";
+import {View, Image, Text, StatusBar, StyleSheet, Dimensions, FlatList, ScrollView, TouchableOpacity, SafeAreaView, Button, ActivityIndicator} from "react-native";
 import YoutubePlayer from 'react-native-youtube-iframe';
 import {useNavigation} from '@react-navigation/native';
-import {AntDesign} from '@expo/vector-icons';
-
-
-import Slide from '../component/common/Slide';
-import Category from '../component/common/Category';
-import Title from '../component/common/Title';
-import Likes from '../component/common/Likes';
-import Count from '../component/common/Count';
-import Desc from '../component/common/Desc';
-import DetailCard from '../component/common/DetailCard';
-import themes from '../config/themes';
 import {lectureApi, noticeApi} from '../api';
-import {Ionicons} from '@expo/vector-icons';
-
+import Section from '../component/common/Section';
+import Card from '../component/common/Card';
+import themes from '../config/themes';
+import { Feather } from '@expo/vector-icons';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
-const Detail = ({route: {params: {id, category}}}) => {
+const articles = [
+    {
+      title: 'Ice cream is made with carrageenan …',
+      image: 'https://images.unsplash.com/photo-1516559828984-fb3b99548b21?ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80',
+      cta: 'View article', 
+      desc: '마감기한 3/6',
+      horizontal: true
+    },
+    {
+      title: 'Is makeup one of your daily esse …',
+      image: 'https://images.unsplash.com/photo-1519368358672-25b03afee3bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2004&q=80',
+      cta: 'View article',
+      desc: '마감기한 3/6',
 
+    },
+    {
+      title: 'Coffee is more than just a drink: It’s …',
+      image: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80',
+      cta: 'View article' ,
+      desc: '마감기한 3/6',
+
+    },
+    {
+      title: 'Fashion is a popular style, especially in …',
+      image: 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1326&q=80',
+      cta: 'View article' ,
+      desc: '마감기한 3/6',
+
+    },
+    {
+      title: 'Argon is a great free UI packag …',
+      image: 'https://images.unsplash.com/photo-1482686115713-0fbcaced6e28?fit=crop&w=1947&q=80',
+      cta: 'View article', 
+      desc: '마감기한 3/6',
+
+      horizontal: true
+    },
+  ]
+
+// const Detail = ({route: {params: {id, category}}}) => {
+const Detail = () => {
     
+    const navigation = useNavigation();
+
     const [result, setResult] = useState({
         loading: true,
         data: {}, 
@@ -77,81 +109,98 @@ const Detail = ({route: {params: {id, category}}}) => {
     //     navigation.navigate("Detail", {id})
     // };
 
+    const [loading, setLoading] = useState(true);
+
+    const [active, setActive] = useState('주요내용');
+
+    const tabs = ['주요내용', '관련영상', '관련기출', '질문&답변'];
+
+    const renderTab = (tab) => {
+        const isActive = active === tab;
+
+        return (
+            <TouchableOpacity
+                key={`tab-${tab}`}
+                onPress={() => handleTab(tab)}
+                style={[styles.tab, isActive ? styles.active : null]}
+            >
+                <Text style={{fontSize: 15, fontWeight: 'bold', color: isActive ? 'black' : 'gray'}}>
+                    {tab}
+                </Text>
+                
+            </TouchableOpacity>
+        )
+    }
+
+    const handleTab = tab => {
+        setActive(tab)
+    }
+
+    const renderItem = ({item, index}) => {
+        return (
+            <TouchableOpacity
+                onPress={() => alert(item.title)}
+                style={{marginLeft: 20, marginBottom: 20, backgroundColor: themes.colors.shinyGray, height: 50, flexDirection: 'row', alignItems: 'center'}}
+            >
+                <Text style={{width: '90%'}}>
+                    {item.title}
+                </Text>
+                <View style={{width: '10%'}}>
+                <Feather name="play-circle" size={24} color="black" />  
+                </View>
+            </TouchableOpacity>
+            
+        )
+}
+
     return (
     <>  
-        <View
+        <SafeAreaView
             style={styles.Container}
         >
             <StatusBar backgroundColor="#f58084" />
+               
             <YoutubePlayer 
-                height={HEIGHT/3.6}
+                height={HEIGHT/3.8}
                 width={WIDTH}
                 play={false}
                 videoId={result.data.url}
-
             />
-            <View>
-                 <View
-                     style={styles.ViewContainer}
-                     // style={{width: '100%'}}
-                 >
-                    <View
-                        style={styles.ViewBox}
-                    >
-                        <Title title={result.data.title} />
-                        <Category 
-                            cate={result.data.tag} 
-                        />
-                    </View>
-                
-                    <View
-                        style={styles.ViewSetting}
-                        style={{alignSelf: 'flex-end', marginRight: 10, marginTop: 5}}    
-                    >
-                        <Likes 
-                            likes={"25"}
-                        />
-                        <Count 
-                            count={"20"}
-                        />
-                    </View>
-                </View>
-            
+            <View style={[styles.tabs]}>
+                {tabs.map(tab => renderTab(tab))}
             </View>
-        </View>
-    
+            
+                <View>
+                    {active === '주요내용' ? (
+                        <Text>
+                            주요내용
+                        </Text>
+                    ) : (null)}
+                    {active === '관련영상' ? (
+                        <FlatList 
+                            data={articles}
+                            keyExtractor={(item) => item.title}
+                            horizontal={false}
+                            showsHorizontalScrollIndicator={false}
+                            renderItem={renderItem}
+                            style={{width: '98%', marginBottom: 100}}
+                        />
 
-        <ScrollView
-            style={{backgroundColor: '#fff'}}
-        >
-        
-            <Desc
-                desc={result.data.desc}
-            />
-            <Text
-                style={{marginTop: 40, paddingLeft: 20, paddingRight: 20, fontWeight: 'bold'}}
-            >
-                PSAT기출해설
-            </Text>
-            <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    style={{backgroundColor: '#fff', paddingLeft: 20, paddingRight: 20}}
-            >
-                {/* {lectures.psat.map(item => (
-                    <DetailCard
-                        onPress={() => goToDetail(item.id)}
-                                
-                        name={item.title}
-                        src={item.thumbnail[0].url}
-                        desc={item.desc}
-                    />
-                ))}    */}
-            
-            
-            </ScrollView>
-        </ScrollView>
-                 
+                    ) : (null)}
+                    {active === '관련기출' ? (
+                        <Text>
+                            관련기출
+                        </Text>
+                    ) : (null)}
+                    {active === '질문&답변' ? (
+                        <Text>
+                            질문과 답변
+                        </Text>
+                    ) : (null)}
+                </View>
+                
+           
+        </SafeAreaView>         
     </> 
     );
 };
@@ -160,100 +209,28 @@ export default Detail;
 
 
 const styles = StyleSheet.create({
-    BG: {
-        width: '100%',
-        height: '100%',
-        opacity: 0.4,
-        position: 'absolute',
-        backgroundColor: '#009387'
-    },
-    Header: {
-        height: HEIGHT / 3,
-        alignItems: "center",
-        justifyContent: 'flex-end'
-    },
+    
     Container: {
         backgroundColor: "white",
         justifyContent: "center",
         marginLeft: 0,
         marginRight: 0
     },
-    Info: {
-        width: '50%',
-        marginLeft: '10%'
+    tab: {
+        marginRight: 20,
+        paddingVertical: 15
     },
-    Title: {
-        color: 'black',
-        fontWeight: 'bold',
-        fontSize: 25,
-        
+    active: {
+        borderBottomColor: 'gray',
+        // themes.colors.title,
+        borderBottomWidth: 3
     },
-    TitleSub: {
-        color: 'black',
-        fontWeight: 'bold',
-        fontSize: 18,
-        marginTop: 30,
-        backgroundColor: 'white'
-    },
-    Tag: {
-        width: '10%',
-        height: '10%',
-        color: 'black',
-        flexDirection: 'row'
-    },
-    Image: {
-        marginTop: 10,
-        width: 50,
-        height: 50,
-        borderRadius: 100,
-        overflow: "hidden",
-        backgroundColor: "gray",
-        display: "flex",
-        flexDirection: "row"
-    },
-    image: {
-        flex: 1,
-        height: 10,
-        width: 10,
-        marginTop: 10
-    },
-    TagContainer: {
-        flexDirection: "column",
-        display: "flex",
-        justifyContent: "flex-start",
-        marginVertical: 4,
-        width: "100%",
-        height: 150
-    }, 
-    likes: {
-        fontSize: 15,
-        marginTop: 5,
-        marginLeft: 5
-    },
-    comments: {
-        fontSize: 15,
-        marginTop: 5,
-        marginLeft: 5
-    },
-    ViewContainer : {
+    tabs: {
+        borderBottomColor: 'lightgray',
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        marginVertical: 10,
+        marginHorizontal: 15,
         flexDirection: 'row',
-        width: '100%',
-        marginTop: 0,
-        alignItems: 'center',
-        backgroundColor: '#fff'
-    }, 
-    ViewBox: {
-        width: '70%',
-        // backgroundColor: themes.colors.view
-    },
-    ViewSetting: {
-        width: '30%',
-        alignItems: 'flex-end'
-
-    },
-    Video: {
-        width: WIDTH,
-        height: HEIGHT/3
+        justifyContent: 'space-between'
     }
-
 });

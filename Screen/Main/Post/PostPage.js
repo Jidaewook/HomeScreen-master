@@ -144,7 +144,6 @@ const PostPage = () => {
             </View>
             <ScrollView
                 showsVerticalScrollIndicator={false}
-                // contentContainerStyle={{flex: 1}}
             >
                 {loading ? (
                     <View style={{marginTop: 200, justifyContent: 'center'}}>
@@ -155,7 +154,7 @@ const PostPage = () => {
                         {active === '자유게시판' ? (
                         
                             <View
-                                style={{backgroundColor: themes.colors.postListGray}}
+                                style={{backgroundColor: themes.bgColor.tablecolor}}
                             >
                                 {free.map(f => (
                                     <TouchableOpacity
@@ -213,7 +212,7 @@ const PostPage = () => {
                         {active === '질문게시판' ? (
                             <View>
                                 {qna.map(q => (
-                                    <TouchableOpacity style={{backgroundColor: themes.colors.postListSky}}
+                                    <TouchableOpacity style={{backgroundColor: '#ffffff'}}
                                         onPress={() => goToPostDetail(q._id)}
 
                                     >
@@ -260,7 +259,7 @@ const PostPage = () => {
                         {active === '합격수기' ? (
                             <View>
                             {pass.map(p => (
-                                <View style={{backgroundColor: themes.colors.postListOrange}}>
+                                <View style={{backgroundColor: '#ffffff'}}>
                                     <View style={styles.postList} >
                                         <View style={{flexDirection: 'row'}} >
                                                     {p.tag.map(t => (
@@ -315,7 +314,7 @@ export default PostPage;
 const styles = StyleSheet.create({
     safeView: {
         flex: 1,
-        backgroundColor: themes.colors.main,
+        backgroundColor: themes.bgColor.bgcolor,
         paddingHorizontal: 10
     },
     tabs: {
@@ -361,7 +360,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         letterSpacing: -.72,
         fontWeight: '500',
-        color: themes.colors.buttonText,
+        color: themes.fontsColor.table,
         paddingVertical: 10,
         marginHorizontal: 15
     },

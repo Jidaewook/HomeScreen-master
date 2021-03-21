@@ -1,19 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import {Text} from 'galio-framework';
 import themes from '../../config/themes';
+import {useNavigation} from '@react-navigation/native';
 
-const Section = ({title, horizontal=true, children}) => {
+
+const Section = ({title, horizontal=true, children, show=true}) => {
+
+    const navigation = useNavigation();
+
     return (
         <View style={styles.container}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text size={18} bold color={themes.fontsColor.SubTitle} style={styles.title}>
                     {title}
                 </Text>
-                <Text size={12} color={themes.fontsColor.SubTitle} style={styles.more}>
-                    더보기
-                </Text>
+                {/* 상황값 필요 */}
+                <TouchableOpacity
+                    onPress={() => navigation.navigate("Detail")}
+
+                >
+                    <Text size={12} color={themes.fontsColor.SubTitle} style={styles.more}>
+                        {show === true ? ("더보기") : (null)}
+                    </Text>
+                </TouchableOpacity>
             </View>
             
             <ScrollView

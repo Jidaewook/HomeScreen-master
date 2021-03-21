@@ -10,7 +10,6 @@ const colors={
     gray: 'gray',
     faintgray: '#f4f4f4',
     darkgray: '#363636',
-    buttonText: '#4b4d4c',
     postListGray: '#e3e3e3',
     postListSky: '#e0f3ff',
     postListOrange: '#ffefc4',
@@ -25,7 +24,15 @@ const fontsColor={
     SubTitle: 'gray',
     more: 'gray',
     contentTitle: '#6e6e6e',
-    contentDuration: '#ffdbdb'
+    contentDuration: '#ffdbdb',
+    table: '#635a5a'
+}
+
+const bgColor={
+    bgcolor: '#ffffff',
+    tablecolor: '#ffffff',
+    zonecolor: 'gray'
+
 }
 
 const sizes={
@@ -33,4 +40,4 @@ const sizes={
 }
 
 
-export default {colors, fontsColor};
+export default {colors, fontsColor, bgColor};

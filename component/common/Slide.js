@@ -3,9 +3,10 @@ import {View, Text, Image, StyleSheet, Dimensions} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { noticeApi, lectureApi, apiImage } from '../../api';
 import * as WebBroswer from 'expo-web-browser';
+import { ImageBackground } from 'react-native';
 
 
-const Slide = (src) => {
+const Slide = ({src, title, desc}) => {
 
     // 왜 안되지
     const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
@@ -15,11 +16,24 @@ const Slide = (src) => {
             <View 
                 style={styles.Container}
             >
-                <Image
+                <ImageBackground
                     style={styles.MainSlide}
-                    source={{uri: apiImage(src)}}
+                    source={{uri: src}}
                 />
-
+                <View style={{flexDirection: 'row', width: '100%', height: '100%'}}>
+                    <Image 
+                        style={styles.thumbnail}
+                        source={{uri: src}}
+                    />
+                    <View style={{width: '100%', height: '75%'}}>
+                        <Text style={styles.SlideTitle}>
+                            {title.slice(0,10)}
+                        </Text>
+                        <Text style={styles.SlideDesc}>
+                            {desc}
+                        </Text>
+                    </View>
+                </View>
             </View>
         </ScrollView>
     );
@@ -35,9 +49,28 @@ const styles = StyleSheet.create({
 
     MainSlide: {
         width: '100%',
-        height: '100%',
+        height: '55%',
         backgroundColor: 'black',
         opacity: 0.4,
         position: "absolute"
+    },
+    thumbnail: {
+        width: '40%',
+        height: '48%',
+        margin: 10,
+        resizeMode: 'stretch'
+    },
+    SlideTitle: {
+        width: '30%',
+        marginTop: 10,
+        marginLeft: 100,
+        fontSize: 16
+    },
+    SlideDesc: {
+        marginTop: 10,
+        width: '50%',
+        height: '50%',
+        backgroundColor: 'gray'
     }
+
 })
