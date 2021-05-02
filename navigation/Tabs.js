@@ -12,6 +12,10 @@ const Tabs = createBottomTabNavigator();
 const getHeaderName = route =>
     route?.state?.routeNames[route.state.index] || "Movies";
 
+const hideTabBarComponents = [
+    'Recommend',
+]
+
 export default () => {
     
 
@@ -38,15 +42,17 @@ export default () => {
                     );
                 }
             })}
+            
             tabBarOptions={{
                 showLabel: false
             }}
         >
                         
+            
 
             <Tabs.Screen name="Home" component={HomeStack} />
+            <Tabs.Screen name="Recommend" component={RecommendStack}/>
             <Tabs.Screen name="List" component={PostStack} />
-            <Tabs.Screen name="Recommend" component={RecommendStack} />
             <Tabs.Screen name="Profile" component={ProfileStack} />
 
         </Tabs.Navigator>

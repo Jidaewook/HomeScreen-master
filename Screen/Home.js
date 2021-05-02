@@ -17,6 +17,7 @@ import {H1} from '../config/Typography';
 import themes from '../config/themes';
 
 import {lectureApi, noticeApi} from '../api';
+import movieApi from '../movieApi';
 
 const Common = styled.SafeAreaView`
     ${Platform.select({
@@ -87,30 +88,85 @@ const Heading = styled.View`
 
 const you_Sam_Data = [
     {
-        title: '의사소통능력 2주차',
-        image: require('../images/you_thumb/2_1(1).jpg'),
-        desc: '의사소통능력 샘플 강의입니다. 통능력 샘플 강의입니통능력 샘플 강의입니통능력 샘플 강의입니통능력 샘플 강의입니'
-    },
-    {
-        title: '수리능력 2주차',
-        image: require('../images/you_thumb/2_2(1).jpg'),
-        desc: '의사소통능력 샘플 강의입니다.'
-    },
-    {
-        title: '문제해결능력 2주차',
-        image: require('../images/you_thumb/2_3(1).jpg'),
-        desc: '의사소통능력 샘플 강의입니다.'
-    },
-    {
-        title: '자원관리능력 2주차',
-        image: require('../images/you_thumb/2_4(1).jpg'),
-        desc: '의사소통능력 샘플 강의입니다.'
-    },
-    {
-        title: '문제해결능력 2+1주차',
-        image: require('../images/you_thumb/2_5(1).jpg'),
-        desc: '의사소통능력 샘플 강의입니다.'
-    },
+        id: 1101822001,
+        title: '시간, 속력, 거리 (1)',
+        desc: "수리능력 중 응용수리 영역의 첫 번째 난관, 시간/속력/거리 첫번째 시간",
+        genre_ids: [
+          14,
+          101
+        ],
+        rating: 5.5,
+        poster_path: require("../assets/images/thumb/sample1.png"),
+        backdrop_path: require('../assets/images/thumb/back1.jpeg'),
+        professor: {},
+        comments: [],
+        likes: [],
+        url: `https://youtu.be/16iF_hKs034`
+        },
+        // {
+        //   id: 1101822002,
+        //   title: '상황구성_위치추론 (1)',
+        //   desc: "문제해결능력, 위치추론 기초이론",
+        //   genre_ids: [
+        //     14,
+        //     100
+        //   ],
+        //   rating: 6.5,
+        //   poster_path: require("../HomeScreen-master/assets/images/thumb/sample5.jpeg"),
+        //   backdrop_path: require('../HomeScreen-master/assets/images/thumb/back2.jpeg'),
+        //   professor: {},
+        //   comments: [],
+        //   likes: [],
+        //   url: `https://youtu.be/X3nq35bfJmA`
+        // },
+        // {
+        //   id: 1101822003,
+        //   title: '상황구성_위치추론 (2)',
+        //   desc: "문제해결능력, 위치추론 기본이론. 문제해결 접근법을 적용하라",
+        //   genre_ids: [
+        //     14,
+        //     102
+        //   ],
+        //   rating: 6.5,
+        //   poster_path: require("../HomeScreen-master/assets/images/thumb/sample2.png"),
+        //   backdrop_path: require('../HomeScreen-master/assets/images/thumb/back3.jpeg'),
+        //   professor: {},
+        //   comments: [],
+        //   likes: [],
+        //   url: `https://youtu.be/h03HjVWloQU`
+        // },
+        // {
+        //   id: 1101822004,
+        //   title: '상황구성_요일추론 (1)',
+        //   desc: "문제해결능력, 요일문제는 단순하다. 정해진 틀에서 빠르게 해결하라",
+        //   genre_ids: [
+        //     14,
+        //     102
+        //   ],
+        //   rating: 8.5,
+        //   poster_path: require("../HomeScreen-master/assets/images/thumb/sample3.jpeg"),
+        //   backdrop_path: require('../HomeScreen-master/assets/images/thumb/back4.jpeg'),
+        //   professor: {},
+        //   comments: [],
+        //   likes: [],
+        //   url: `https://youtu.be/X3nq35bfJmA`
+        // },
+        // {
+        //   id: 1101822005,
+        //   title: '상황구성_요일추론 (2)',
+        //   desc: "문제해결능력, 요일추론 접근법 확인과 실전 적용",
+        //   genre_ids: [
+        //     14,
+        //     102
+        //   ],
+        //   rating: 10.0,
+        //   poster_path: require("../HomeScreen-master/assets/images/thumb/sample4.jpeg"),
+        //   backdrop_path: require('../HomeScreen-master/assets/images/thumb/back5.jpeg'),
+        //   professor: {},
+        //   comments: [],
+        //   likes: [],
+        //   url: `https://youtu.be/X3nq35bfJmA`
+        // }
     
 ]
 
@@ -130,7 +186,8 @@ const Home = ({}) => {
     const getData = async () => {
         const [ncs, ncsError] = await lectureApi.ncs();
         const [psat, psatError] = await lectureApi.psat();
-        const [notice, noticeError] = await noticeApi.notice(); 
+        // const [notice, noticeError] = await noticeApi.notice(); 
+        const [movie, movieError] = await movieApi.movie();
 
         setLectures({
             ncs,
@@ -141,6 +198,8 @@ const Home = ({}) => {
 
         setNotices(notice);
 
+        setMovies(movie);
+
         setLoading(false);
     };
 
@@ -149,28 +208,18 @@ const Home = ({}) => {
     }, []);
 
     const navigation = useNavigation();
-    const goToDetail = (id, category) => {
-        navigation.navigate("Detail", {id, category})
-        console.log("112391283019283012983", category)
+    const goToDetail = (id, genre) => {
+        navigation.navigate("Detail", {id, genre})
+        console.log("112391283019283012983", genre)
     };
 
     const [searchModal, setSearchModal] = useState(false);
     const [keyword, setKeyword] = useState("");
 
-    const InitialCities = [
-        { title: "Seoul" },
-        { title: "Busan" },
-        { title: "Jeju" },
-    ];
-
-    const filteredCity = InitialCities.filter((city) => {
-        return city.title.toLowerCase().includes(keyword.toLocaleLowerCase());
-    });
-
     const renderNCS = ({item, index}) => {
             return (
                 <NcsCard 
-                    onPress={() => goToDetail(item.id, item.category)}
+                    onPress={() => goToDetail(item.id, item.genre)}
                     title={item.title}
                     image={item.image}
                 />
@@ -180,10 +229,10 @@ const Home = ({}) => {
     const renderNotice = ({item}) => {
         return (
             <NoticeCard 
-                onPress={() => goToDetail(item.id, item.category)}
+                onPress={() => goToDetail(item.id, item.genre_ids)}
                 name={item.title}
                 desc={item.desc}
-                image={item.image}
+                image={item.poster_path}
                 // src={item.thumbnail[0].url}
             />
         )
@@ -220,16 +269,6 @@ const Home = ({}) => {
                         style={{width: 30, height: 30, borderRadius: 15}}
 
                     />
-
-                    {/* <SimpleLineIcons
-                        name="settings"
-                        size={22}
-                        style={{
-                            width: 24,
-                            height: 24,
-                            marginRight: 10
-                        }}                        
-                    /> */}
                 </TouchableOpacity>
                 </View>
                 <HLine />
@@ -278,15 +317,15 @@ const Home = ({}) => {
                             <ContentTitleNotice
                                 title={"NOTICE"}
                             />
-                                <FlatList 
-                                    // data={notices}
+                                {/* <FlatList 
+                                    // data={movie}
                                     data={you_Sam_Data}
                                     keyExtractor={(item) => item.id}
                                     horizontal={true}
                                     showsHorizontalScrollIndicator={false}
                                     renderItem={renderNotice}
                                     style={{width: '98%', marginBottom: -30}}
-                                />
+                                /> */}
                             <ContentTitleNcs
                                 title={"NCS"}
                             />

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useLayoutEffect} from 'react';
-import {View, Text, TouchableOpacity, ActivityIndicator, SafeAreaView, StyleSheet } from 'react-native';
+import {View, Text, TouchableOpacity, ActivityIndicator, SafeAreaView, StyleSheet, Alert } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import themes from '../../../config/themes';
 import {FontAwesome, AntDesign, MaterialCommunityIcons} from '@expo/vector-icons';
@@ -9,6 +9,10 @@ import BadgePill from '../../../component/common/BadgePill';
 import HLine from '../../../component/common/HLine';
 import axios from 'axios';
 import { postApi } from '../../../api';
+
+import moment from 'moment';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 const PostPage = () => {
 
@@ -91,8 +95,30 @@ const PostPage = () => {
         getFreeData();
         getPassData();
         getPostData();
+        
+        console.log(new Date().getDate());
     }, [])
 
+    const momentDate = (date) => {
+        moment(date).format('L')
+    }
+
+    // const now = () => (
+    //     const date = new Date().getDate(); //Current Date
+    //     const month = new Date().getMonth() + 1; //Current Month
+    //     const year = new Date().getFullYear(); //Current Year
+    //     const hours = new Date().getHours(); //Current Hours
+    //     const min = new Date().getMinutes(); //Current Minutes
+    //     const sec = new Date().getSeconds(); //Current Seconds
+
+    //     return (
+    //         console.log(            date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec
+    //         )
+    //         date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec
+    //     )
+
+        
+    // )
 
     //게시판 탭 설정
     const tabs = ['자유게시판', '질문게시판', '합격수기'];
@@ -178,11 +204,18 @@ const PostPage = () => {
                                                 ))}
                                             </View>
         
-                                            <Text
+                                            {/* <Text
                                                 style={styles.badgePill}
-                                            >
-                                                {f.createdAt.slice(0,10)}
-                                            </Text>
+                                            > */}
+                                                <Moment from={Date.now()} element={Text}>
+                                                    <Text>
+                                                        {f.createdAt}
+                                                    </Text>
+                                                </Moment>
+                                                {/* {moment(f.createdAt).format('YYYY/MM/DD')} */}
+                                                {/* {momentDate(f.createdAt)} */}
+                                                {/* {f.createdAt.slice(0,10)} */}
+                                            {/* </Text> */}
                                         </View>
                                         <View style={{flexDirection: 'row'}}>
                                             <Text style={[styles.titleStyle, {width: '65%'}]}>

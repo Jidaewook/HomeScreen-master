@@ -9,6 +9,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import HLine from '../../../component/common/HLine';
 
+import Moment from 'moment';
+import 'moment-timezone';
+import moment from 'moment';
+
+
 const PostDetail = ({
     route: {
         params: {id}
@@ -98,6 +103,10 @@ const PostDetail = ({
 
     const [postDetailModal, setPostDetailModal] = useState(false);
 
+    const momentDate = (date) => {
+        moment(date).format('L')
+    }
+
     return (
         <ScrollView style={styles.Container}>
             <Text style={styles.Title}>
@@ -108,8 +117,15 @@ const PostDetail = ({
                     작성자
                 </Text>
                 <Text style={styles.Date}>
-                    {result.data.published_at}
+                    {momentDate(result.data.published_at)}
                 </Text>
+                
+                {/* <Moment fromNow format="YYYY/MM/DD">
+                    <Text style={styles.Date}>
+                        {result.data.published_at}
+                        
+                    </Text>
+                </Moment> */}
             </View>
             <View>
                 <Text style={styles.Desc}>

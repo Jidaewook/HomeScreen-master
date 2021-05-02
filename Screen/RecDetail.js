@@ -3,9 +3,11 @@ import {View, Image, Text, StatusBar, StyleSheet, Dimensions, TextInput, FlatLis
 import YoutubePlayer from 'react-native-youtube-iframe';
 import {useNavigation} from '@react-navigation/native';
 import {lectureApi, noticeApi} from '../api';
+import MovieApi, { getMovies } from '../movieApi';
 import Section from '../component/common/Section';
 import Card from '../component/common/Card';
 import themes from '../config/themes';
+import Genres from '../component/common/Genres';
 import { Feather } from '@expo/vector-icons';
 import { theme } from 'galio-framework';
 
@@ -13,87 +15,90 @@ const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
 const articles = [
     {
-      title: 'Ice cream is made with carrageenan …',
-      image: 'https://images.unsplash.com/photo-1516559828984-fb3b99548b21?ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80',
-      cta: 'View article', 
-      desc: '아이스크림은 캐리건으로부터 만들어졌다. 본 강의에서 다룰 내용은 아이스크림의 연혁과 아이스크림을 처음 제조한 사람에 대한 내용이 될 것이다.',
-      horizontal: true
-    },
-    {
-      title: 'Is makeup one of your daily esse …',
-      image: 'https://images.unsplash.com/photo-1519368358672-25b03afee3bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2004&q=80',
-      cta: 'View article',
-      desc: '마감기한 3/6',
-
-    },
-    {
-      title: 'Coffee is more than just a drink: It’s …',
-      image: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80',
-      cta: 'View article' ,
-      desc: '마감기한 3/6',
-
-    },
-    {
-      title: 'Fashion is a popular style, especially in …',
-      image: 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1326&q=80',
-      cta: 'View article' ,
-      desc: '마감기한 3/6',
-
-    },
-    {
-      title: 'Argon is a great free UI packag …',
-      image: 'https://images.unsplash.com/photo-1482686115713-0fbcaced6e28?fit=crop&w=1947&q=80',
-      cta: 'View article', 
-      desc: '마감기한 3/6',
-
-      horizontal: true
-    },
+        id: 1101822001,
+        title: '시간, 속력, 거리 (1)',
+        desc: "수리능력 중 응용수리 영역의 첫 번째 난관, 시간/속력/거리 첫번째 시간",
+        genre_ids: [
+          14,
+          101
+        ],
+        rating: 5.5,
+        poster_path: 'https://images.unsplash.com/photo-1516559828984-fb3b99548b21?ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80',
+        backdrop_path: 'https://images.unsplash.com/photo-1516559828984-fb3b99548b21?ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80',
+        professor: {},
+        comments: [],
+        likes: [],
+        url: `https://youtu.be/16iF_hKs034`
+        },
+        {
+          id: 1101822002,
+          title: '상황구성_위치추론 (1)',
+          desc: "문제해결능력, 위치추론 기초이론",
+          genre_ids: [
+            14,
+            100
+          ],
+          rating: 6.5,
+          poster_path: require("../assets/images/thumb/sample2.png"),
+          backdrop_path: require('../assets/images/thumb/back2.jpeg'),
+          professor: {},
+          comments: [],
+          likes: [],
+          url: `https://youtu.be/X3nq35bfJmA`
+        },
+        {
+          id: 1101822003,
+          title: '상황구성_위치추론 (2)',
+          desc: "문제해결능력, 위치추론 기본이론. 문제해결 접근법을 적용하라",
+          genre_ids: [
+            14,
+            102
+          ],
+          rating: 6.5,
+          poster_path: require("../assets/images/thumb/sample3.jpeg"),
+          backdrop_path: require('../assets/images/thumb/back3.jpeg'),
+          professor: {},
+          comments: [],
+          likes: [],
+          url: `https://youtu.be/h03HjVWloQU`
+        },
+        {
+          id: 1101822004,
+          title: '상황구성_요일추론 (1)',
+          desc: "문제해결능력, 요일문제는 단순하다. 정해진 틀에서 빠르게 해결하라",
+          genre_ids: [
+            14,
+            102
+          ],
+          rating: 8.5,
+          poster_path: require("../assets/images/thumb/sample4.jpeg"),
+          backdrop_path: require('../assets/images/thumb/back4.jpeg'),
+          professor: {},
+          comments: [],
+          likes: [],
+          url: `https://youtu.be/X3nq35bfJmA`
+        },
+        {
+          id: 1101822005,
+          title: '상황구성_요일추론 (2)',
+          desc: "문제해결능력, 요일추론 접근법 확인과 실전 적용",
+          genre_ids: [
+            14,
+            102
+          ],
+          rating: 10.0,
+          poster_path: require("../assets/images/thumb/sample5.jpeg"),
+          backdrop_path: require('../assets/images/thumb/back5.jpeg'),
+          professor: {},
+          comments: [],
+          likes: [],
+          url: `https://youtu.be/X3nq35bfJmA`
+        },
   ]
 
-  const comments = [
-    {
-        comment: '1등',
-        name: '유저네임',
-        date: '2021-01-21'
-    },
-    {
-        comment: '안녕하세요 댓글이벤트 당첨자입니다. 당첨된 댓글은 이메일을 보내주세요',
-        name: '관리자',
-        date: '2021-01-21'
-
-    },
-    {
-        comment: '위에꺼 거짓말임',
-        name: '나도 관리자는 아님',
-        date: '2021-01-21'
-
-    },
-    {
-        comment: '1등',
-        name: '유저네임',
-        date: '2021-01-21'
-    },
-    {
-        comment: '안녕하세요 댓글이벤트 당첨자입니다. 당첨된 댓글은 이메일을 보내주세요',
-        name: '관리자',
-        date: '2021-01-21'
-
-    },
-    {
-        comment: '1등',
-        name: '유저네임',
-        date: '2021-01-21'
-    },
-    {
-        comment: '안녕하세요 댓글이벤트 당첨자입니다. 당첨된 댓글은 이메일을 보내주세요',
-        name: '관리자',
-        date: '2021-01-21'
-
-    },
-  ]
 
 // const Detail = ({route: {params: {id, category}}}) => {
-const Detail = () => {
+const Detail = ({route: {params: {id}}}) => {
     
     const navigation = useNavigation();
 
@@ -104,7 +109,9 @@ const Detail = () => {
     });
 
     const getData = async () => {
-        console.log("xxxxxxxxx", category)
+        const filteredItem = articles.filter(i => i.id.includes(id))
+        
+        console.log("articles", filteredItem)
 
         if (category === "notice") {
             const [notice, noticeError] = await noticeApi.noticeDetail(id)
@@ -144,6 +151,7 @@ const Detail = () => {
 
     useEffect(() => {
         getData()
+        
     }, {})
 
     // const navigation = useNavigation();
@@ -283,18 +291,19 @@ const Detail = () => {
                     {active === '주요내용' ? (
                         // <View>
                                 <ScrollView contentContainerStyle={{height: 1000}}>
-
-                                {articles.slice(0, 1).map(i => (
-                                    <View>
+ 
+                                    {/* <View>
+                                        <Genres genres={i.genre_ids}/>
                                         <Text style={styles.MainTitle}>
-                                        {i.title.slice(0, 20)}
-                                    </Text>
-                                    <Text style={styles.MainDesc}>
-                                        {i.desc}
-                                    </Text>
-                                    </View>
+                                            {i.title.slice(0, 20)}
+                                        </Text>
+                                        <Text style={styles.MainDesc}>
+                                            {i.desc}
+                                        </Text>
+                                    </View> */}
                                     
-                                ))}
+                                
+                                
                                     <View>
                                         <Text style={styles.slogan}>
                                             "각종 적성검사의 기본기를 
@@ -302,7 +311,6 @@ const Detail = () => {
                                         <Text style={styles.slogan}> 
                                             탄탄하게 다집니다."
                                         </Text>
-                                        
                                     </View>
                                     {/* <View style={{height: 150}}>
                                             
@@ -344,7 +352,7 @@ const Detail = () => {
                     ) : (null)}
                     {active === '관련영상' ? (
                         <FlatList 
-                            data={articles}
+                            data={getMovies}
                             keyExtractor={(item) => item.title}
                             horizontal={false}
                             showsHorizontalScrollIndicator={false}

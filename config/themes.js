@@ -40,4 +40,4 @@ const sizes={
 }
 
 
-export default {colors, fontsColor, bgColor};
+export default {colors, fontsColor, bgColor, sizes};

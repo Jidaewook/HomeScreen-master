@@ -2,6 +2,7 @@ import React from 'react'
 import {createStackNavigator} from '@react-navigation/stack';
 // import Home from '../Screen/Home';
 import Home from '../Screen/Main/Home/Home';
+import Notification from '../Screen/Main/Home/Notification';
 import Detail from '../Screen/Detail';
 import NoticeBbs from '../Screen/Main/Detail/NoticeBbs';
 import NcsBbs from '../Screen/Main/Detail/NcsBbs';
@@ -23,24 +24,21 @@ export default () => {
                 headerBackTitleVisible: false,
                 headerTransparent: false,
                 headerBackImage: () => <BackBtn />
+                
             }}
             initialRouteName="Main"
         >
             <HomeStack.Screen 
-                options={{
-                    header: ({navigation, scene}) => (
-                        <Header 
-                            search
-                            options
-                        />
-                            
-                    ),
-                    cardStyle: {backgroundColor: '#f8f9fe'}
-
-                }}
                 name="Home" 
                 component={Home} 
-                
+                options={{
+                    headerShown: false
+                }}
+            />
+            <HomeStack.Screen 
+                name="Notification" 
+                component={Notification} 
+               
             />
             <HomeStack.Screen name="Detail" component={Detail} />
             <HomeStack.Screen name="Setting" component={Setting}  />

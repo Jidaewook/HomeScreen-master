@@ -4,9 +4,10 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { noticeApi, lectureApi, apiImage } from '../../api';
 import * as WebBroswer from 'expo-web-browser';
 import { ImageBackground } from 'react-native';
+import Genres from '../../component/common/Genres';
 
 
-const Slide = ({src, title, desc}) => {
+const Slide = ({src, title, desc, genres}) => {
 
     // 왜 안되지
     const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
@@ -32,6 +33,7 @@ const Slide = ({src, title, desc}) => {
                         <Text style={styles.SlideDesc}>
                             {desc}
                         </Text>
+                        {/* <Genres>{genres}</Genres> */}
                     </View>
                 </View>
             </View>
