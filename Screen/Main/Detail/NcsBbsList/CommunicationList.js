@@ -720,7 +720,7 @@ const styles = StyleSheet.create({
 
     },
     shadow: {
-        shadowColor: "#000",
+        shadowColor: 'black',
         shadowOffset: {
             width: 0,
             height: 3,

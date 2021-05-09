@@ -185,7 +185,7 @@ const Detail = () => {
         return (
             <TouchableOpacity
                 onPress={() => alert(item.title)}
-                style={{marginLeft: 20, marginBottom: 20, backgroundColor: themes.colors.shinyGray, height: 50, flexDirection: 'row', alignItems: 'center'}}
+                style={{marginLeft: 20, marginBottom: 20, backgroundColor: themes.colors.view, height: 50, flexDirection: 'row', alignItems: 'center'}}
             >
                 <Text style={{width: '90%'}}>
                     {item.title}
@@ -548,7 +548,7 @@ const styles = StyleSheet.create({
         width: 50
     },  
     RegisterButton: {
-        backgroundColor: themes.colors.black,
+        backgroundColor: 'black',
         width: '16%',
         height: 35,
         marginLeft: 5,

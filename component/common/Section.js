@@ -17,14 +17,22 @@ const Section = ({title, horizontal=true, children, show=true}) => {
                     {title}
                 </Text>
                 {/* 상황값 필요 */}
-                <TouchableOpacity
-                    onPress={() => navigation.navigate("Detail")}
-
-                >
-                    <Text size={12} color={themes.fontsColor.SubTitle} style={styles.more}>
-                        {show === true ? ("더보기") : (null)}
-                    </Text>
-                </TouchableOpacity>
+                {title==="NCS" ? 
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate("NcsBbs")}
+                    >
+                        <Text size={12} color={themes.fontsColor.SubTitle} style={styles.more}>
+                            {show === true ? ("더보기") : (null)}
+                        </Text>
+                    </TouchableOpacity> 
+                :   <TouchableOpacity
+                        onPress={() => navigation.navigate("PsatBbs")}
+                    >
+                        <Text size={12} color={themes.fontsColor.SubTitle} style={styles.more}>
+                            {show === true ? ("더보기") : (null)}
+                        </Text>
+                    </TouchableOpacity>
+                } 
             </View>
             
             <ScrollView

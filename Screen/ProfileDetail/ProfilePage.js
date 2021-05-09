@@ -44,7 +44,7 @@ const ProfilePage = () => {
         <View style={styles.profile}>
             <View style={{display: 'flex'}}  >
                 <ImageBackground 
-                    source={require('../../images/ImageBackground.png')}
+                    source={require('../../images/voodooimage.jpeg')}
                     style={styles.profileContainer}
                     imageStyle={styles.profileBackground}
                 >
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 6,
         borderTopRightRadius: 6,
         backgroundColor: 'white',
-        shadowColor: themes.colors.black,
+        shadowColor: themes.colors.black,        
         shadowOffset: {width: 0, height: 0},
         shadowRadius: 8,
         shadowOpacity: 0.2,
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
     divider: {
         width: '100%',
         borderWidth: 1,
-        borderColor: themes.colors.shinyGray
+        borderColor: themes.colors.view
     }
 
 });

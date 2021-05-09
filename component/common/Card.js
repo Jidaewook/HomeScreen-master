@@ -3,6 +3,7 @@ import { withNavigation } from '@react-navigation/compat';
 import PropTypes from 'prop-types';
 import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
+import themes from '../../config/themes';
 
 // import { argonTheme } from '../constants';
 
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   shadow: {
-    shadowColor: theme.COLORS.BLACK,
+    shadowColor: 'black',
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
     shadowOpacity: 0.1,

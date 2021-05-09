@@ -1,24 +1,17 @@
 import React, {useState, useEffect, useLayoutEffect} from 'react';
-import {View, Text, TouchableOpacity, ActivityIndicator, SafeAreaView, StyleSheet, Alert } from 'react-native';
+import {View, Text, TouchableOpacity, ActivityIndicator, SafeAreaView, StyleSheet } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import themes from '../../../config/themes';
-import {FontAwesome, AntDesign, MaterialCommunityIcons} from '@expo/vector-icons';
+import {FontAwesome} from '@expo/vector-icons';
 import PostModal from '../../../component/common/modal/Post';
 import { ScrollView } from 'react-native-gesture-handler';
-import BadgePill from '../../../component/common/BadgePill';
-import HLine from '../../../component/common/HLine';
+
 import axios from 'axios';
 import { postApi } from '../../../api';
 
-import moment from 'moment';
-import Moment from 'react-moment';
-import 'moment-timezone';
+import PostList from '../../../component/common/PostList';
 
 const PostPage = () => {
-
-    const SECTIONS = [
-        
-    ];
 
     const navigation = useNavigation();
 
@@ -60,10 +53,6 @@ const PostPage = () => {
             })
     }
 
-    const goToPostDetail = (id) => {
-        navigation.navigate("PostDetail", {id})
-        console.log("+++++++++++++", id)
-    };
 
     const [posts, setPosts] = useState({
         bbs: [],
@@ -98,10 +87,6 @@ const PostPage = () => {
         
         console.log(new Date().getDate());
     }, [])
-
-    const momentDate = (date) => {
-        moment(date).format('L')
-    }
 
     // const now = () => (
     //     const date = new Date().getDate(); //Current Date
@@ -151,7 +136,7 @@ const PostPage = () => {
                 onPress={() => handleTab(tab)}
                 style={[styles.tab, isActive ? styles.active : null]}
             >
-                <Text style={{fontSize: 15, fontWeight: 'bold', color: isActive ? 'black' : 'gray'}}>
+                <Text style={{fontSize: 15, fontWeight: 'bold', color: isActive ? themes.colors.basic : themes.colors.gray}}>
                     {tab}
                 </Text>
                 
@@ -173,164 +158,107 @@ const PostPage = () => {
             >
                 {loading ? (
                     <View style={{marginTop: 200, justifyContent: 'center'}}>
-                        <ActivityIndicator color={'black'} size={'large'} />
+                        <ActivityIndicator color={themes.colors.basic} size={'large'} />
                     </View> 
                 ) : (
                     <> 
-                        {active === '자유게시판' ? (
-                        
-                            <View
-                                style={{backgroundColor: themes.bgColor.tablecolor}}
-                            >
-                                {free.map(f => (
-                                    <TouchableOpacity
-                                        onPress={() => goToPostDetail(f._id)}
-                                    >
-                                        <View
-                                            style={styles.postList}
-                                        >
-                                            <View
-                                                style={{flexDirection: 'row'}}
-                                                // onPress={() => goToPostDetail(item.id)}
-                                            >
-                                                {f.tag.map(t => (
-                                                    <View style={{paddingLeft: 10}}>
-                                                        <BadgePill 
-                                                            title={"#"+t}
-                                                            textStyle={[styles.badgePill, {paddingVertical: 5, paddingHorizontal: 10, opacity: 1 }]}
-                    
-                                                        />
-                                                    </View>    
-                                                ))}
-                                            </View>
-        
-                                            {/* <Text
-                                                style={styles.badgePill}
-                                            > */}
-                                                <Moment from={Date.now()} element={Text}>
-                                                    <Text>
-                                                        {f.createdAt}
-                                                    </Text>
-                                                </Moment>
-                                                {/* {moment(f.createdAt).format('YYYY/MM/DD')} */}
-                                                {/* {momentDate(f.createdAt)} */}
-                                                {/* {f.createdAt.slice(0,10)} */}
-                                            {/* </Text> */}
-                                        </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={[styles.titleStyle, {width: '65%'}]}>
-                                                {f.Title}
-                                            </Text>
-                                            <View style={{width: '35%', flexDirection: 'row', marginTop: 15}}>
-                                                <View style={{flexDirection: 'row'}}>
-                                                    <AntDesign name="like2" size={16} color={themes.colors.gray} />
-                                                    <Text style={styles.postProperty}>
-                                                        50
-                                                    </Text>
-                                                </View>
-                                                <View style={{marginLeft: 10, flexDirection: 'row'}}>
-                                                    <MaterialCommunityIcons name="message-reply-text" size={16} color={themes.colors.gray} />
-                                                    <Text style={styles.postProperty}>
-                                                        10
-                                                    </Text>
-                                                </View>
-                                            </View>
-                                        </View>
-                                        <HLine color={{backgroundColor: '#bfbdb4'}} />
-                                    </TouchableOpacity>
-                                ))}
-                            </View>
-                        ) : null}
+                        {active === '자유게시판' ? <PostList datas={free} /> : null }
         
                         {active === '질문게시판' ? (
-                            <View>
-                                {qna.map(q => (
-                                    <TouchableOpacity style={{backgroundColor: '#ffffff'}}
-                                        onPress={() => goToPostDetail(q._id)}
+                            // <View>
+                            //     {qna.map(q => (
+                            //         <TouchableOpacity
+                            //             onPress={() => goToPostDetail(q._id)}
 
-                                    >
-                                        <View style={styles.postList} 
-                                        >
-                                            <View style={{flexDirection: 'row'}} >
-                                                {q.tag.map(t => (
-                                                    <View style={{paddingLeft: 10}} >
-                                                        <BadgePill 
-                                                            title={'#'+t}
-                                                            textStyle={[styles.badgePill, {paddingVertical: 5, paddingHorizontal: 10, opacity: 1}]}
-                                                        />
-                                                    </View>
-                                                ))}
-                                            </View>
-                                            <Text style={styles.badgePill}>
-                                                {q.createdAt.slice(0, 10)}
-                                            </Text>
-                                        </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={[styles.titleStyle, {width: '65%'}]}>
-                                                {q.title}
-                                            </Text>
-                                            <View style={{width: '35%', flexDirection: 'row', marginTop: 15}}>
-                                                <View style={{flexDirection: 'row'}}>
-                                                    <AntDesign name="like2" size={16} color={themes.colors.gray} />
-                                                    <Text style={styles.postProperty}>
-                                                        50
-                                                    </Text>
-                                                </View>
-                                                <View style={{marginLeft: 10, flexDirection: 'row'}}>
-                                                    <MaterialCommunityIcons name="message-reply-text" size={16} color={themes.colors.gray} />
-                                                    <Text style={styles.postProperty}>
-                                                        10
-                                                    </Text>
-                                                </View>
-                                            </View>
-                                        </View>
-                                        <HLine color={{backgroundColor: '#bfbdb4'}} />
-                                    </TouchableOpacity>
-                                ))}
-                            </View>
+                            //         >
+                            //             <View style={styles.postList} 
+                            //             >
+                            //                 <View style={{flexDirection: 'row'}} >
+                            //                     {q.tag.map(t => (
+                            //                         <View style={{paddingLeft: 10}} >
+                            //                             <BadgePill 
+                            //                                 title={'#'+t}
+                            //                                 textStyle={[styles.badgePill, {paddingVertical: 5, paddingHorizontal: 10, opacity: 1}]}
+                            //                             />
+                            //                         </View>
+                            //                     ))}
+                            //                 </View>
+                            //                 <Moment from={Date.now()} element={Text} style={{color: themes.colors.gray, fontSize: 12}}>
+                            //                     {q.createdAt}
+                            //                 </Moment>
+                            //             </View>
+                            //             <View style={{flexDirection: 'row'}}>
+                            //                 <Text style={[styles.titleStyle, {width: '65%'}]}>
+                            //                     {q.title}
+                            //                 </Text>
+                            //                 <View style={{width: '35%', flexDirection: 'row', marginTop: 15}}>
+                            //                     <View style={{flexDirection: 'row'}}>
+                            //                         <AntDesign name="like2" size={16} color={themes.colors.gray} />
+                            //                         <Text style={styles.postProperty}>
+                            //                             50
+                            //                         </Text>
+                            //                     </View>
+                            //                     <View style={{marginLeft: 10, flexDirection: 'row'}}>
+                            //                         <MaterialCommunityIcons name="message-reply-text" size={16} color={themes.colors.gray} />
+                            //                         <Text style={styles.postProperty}>
+                            //                             10
+                            //                         </Text>
+                            //                     </View>
+                            //                 </View>
+                            //             </View>
+                            //             <HLine color={{backgroundColor: themes.colors.brightGray}} />
+                            //         </TouchableOpacity>
+                            //     ))}
+                            // </View>
+                            <PostList 
+                                datas={qna}
+                            />
                         ) : null}
                         {active === '합격수기' ? (
-                            <View>
-                            {pass.map(p => (
-                                <View style={{backgroundColor: '#ffffff'}}>
-                                    <View style={styles.postList} >
-                                        <View style={{flexDirection: 'row'}} >
-                                                    {p.tag.map(t => (
-                                                        <View style={{paddingLeft: 10}} >
-                                                            <BadgePill 
-                                                                title={'#'+t}
-                                                                textStyle={[styles.badgePill, {paddingVertical: 5, paddingHorizontal: 10, opacity: 1}]}
-                                                            />
-                                                        </View>
-                                                    ))}
-                                                </View>
-                                                <Text style={styles.badgePill}>
-                                                    {p.createdAt.slice(0, 10)}
-                                                </Text>
-                                        </View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={[styles.titleStyle, {width: '65%'}]}>
-                                                {p.title}
-                                            </Text>
-                                            <View style={{width: '35%', flexDirection: 'row', marginTop: 15}}>
-                                                <View style={{flexDirection: 'row'}}>
-                                                    <AntDesign name="like2" size={16} color={themes.colors.gray} />
-                                                    <Text style={styles.postProperty}>
-                                                        50
-                                                    </Text>
-                                                </View>
-                                                <View style={{marginLeft: 10, flexDirection: 'row'}}>
-                                                    <MaterialCommunityIcons name="message-reply-text" size={16} color={themes.colors.gray} />
-                                                    <Text style={styles.postProperty}>
-                                                        10
-                                                    </Text>
-                                                </View>
-                                            </View>
-                                        </View>
-                                    <HLine color={{backgroundColor: '#bfbdb4'}} />
-                                </View>
-                            ))}
-                        </View>
+                        //     <View>
+                        //     {pass.map(p => (
+                        //         <View>
+                        //             <View style={styles.postList} >
+                        //                 <View style={{flexDirection: 'row'}} >
+                        //                             {p.tag.map(t => (
+                        //                                 <View style={{paddingLeft: 10}} >
+                        //                                     <BadgePill 
+                        //                                         title={'#'+t}
+                        //                                         textStyle={[styles.badgePill, {paddingVertical: 5, paddingHorizontal: 10, opacity: 1}]}
+                        //                                     />
+                        //                                 </View>
+                        //                             ))}
+                        //                         </View>
+                        //                         <Moment from={Date.now()} element={Text} style={{color: themes.colors.gray, fontSize: 12}}>
+                        //                         {p.createdAt}
+                        //                     </Moment>
+                        //                 </View>
+                        //                 <View style={{flexDirection: 'row'}}>
+                        //                     <Text style={[styles.titleStyle, {width: '65%'}]}>
+                        //                         {p.title}
+                        //                     </Text>
+                        //                     <View style={{width: '35%', flexDirection: 'row', marginTop: 15}}>
+                        //                         <View style={{flexDirection: 'row'}}>
+                        //                             <AntDesign name="like2" size={16} color={themes.colors.gray} />
+                        //                             <Text style={styles.postProperty}>
+                        //                                 50
+                        //                             </Text>
+                        //                         </View>
+                        //                         <View style={{marginLeft: 10, flexDirection: 'row'}}>
+                        //                             <MaterialCommunityIcons name="message-reply-text" size={16} color={themes.colors.gray} />
+                        //                             <Text style={styles.postProperty}>
+                        //                                 10
+                        //                             </Text>
+                        //                         </View>
+                        //                     </View>
+                        //                 </View>
+                        //             <HLine color={{backgroundColor: themes.colors.brightGray}} />
+                        //         </View>
+                        //     ))}
+                        // </View>
+                            <PostList 
+                                datas={free}
+                            />
                         ) : null}
                         {postModal ? <PostModal visible={postModal} close={() => {setPostModal(false)}} complete={() => {setPostModal(false)}} /> : (null)}
                     </>
@@ -363,7 +291,7 @@ const styles = StyleSheet.create({
         paddingVertical: 15
     },
     active: {
-        borderBottomColor: 'gray',
+        borderBottomColor: themes.colors.basic,
         // themes.colors.title,
         borderBottomWidth: 3
     },
@@ -371,35 +299,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row', 
         alignItems: 'center', 
         justifyContent: 'space-between', 
-        // marginBottom: 10,
-        // marginTop: 10,
         paddingVertical: 10, 
         paddingRight: 10
     },
-    badgePill: {
-        fontSize: 10, 
-        letterSpacing: -0.6, 
-        color: 'black', 
-        opacity: .5
-    },
-    badgeDate: {
-        fontSize: 10, 
-        letterSpacing: -0.6, 
-        color: 'black', 
-        opacity: .5,
-        paddingRight: 10
-    },
-    titleStyle: {
-        fontSize: 16,
-        letterSpacing: -.72,
-        fontWeight: '500',
-        color: themes.fontsColor.table,
-        paddingVertical: 10,
-        marginHorizontal: 15
-    },
-    postProperty: {
-        marginLeft: 5, 
-        color: themes.colors.gray
-    }
+
 
 })

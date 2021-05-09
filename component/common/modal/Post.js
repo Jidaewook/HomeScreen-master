@@ -34,8 +34,8 @@ const Post = ({visible, close, complete}) => {
     const [desc, setDesc] = useState('');
     const [tag, setTag] = useState('');
 
-    const [inquire, setInquire] = useState('문의구분');
-    const [list, setList] = useState('문의구분');
+    const [inquire, setInquire] = useState('게시판');
+    const [list, setList] = useState('게시판');
     const [value, setValue] = useState('');
 
     const refRBSheet = useRef();
@@ -68,7 +68,7 @@ const Post = ({visible, close, complete}) => {
     const registerPost = () => {   
         
         
-        if(inquire === "문의구분" || title === "" || desc === ""){
+        if(inquire === "게시판" || title === "" || desc === ""){
             return alert("빈 칸이 있으면 등록할 수 없습니다.")
         } 
 
@@ -92,15 +92,23 @@ const Post = ({visible, close, complete}) => {
                 animationType="slide"
                 visible={visible}
                 onRequestClose={close}
+                presentationStyle={'overfullScreen'}
             >
                 <SafeAreaView
-                    style={{ marginLeft: 20, marginRight: 20}}
+                    style={{ backgroundColor: themes.colors.background
+                    }}
                 >
                     <View
-                        style={{marginTop: 20, flexDirection: 'row', justifyContent: 'space-between'}}
+                    style={{ marginLeft: 20, marginRight: 20, backgroundColor: themes.colors.background
+                    }}
+                    >
+
+                    <View
+                        style={{marginTop: 20, flexDirection: 'row', justifyContent: 'space-between', backgroundColor: themes.colors.background }}
                     >
                         <Text
-                            style={{fontSize: 30, fontWeight: 'bold'}}
+                            style={{fontSize: 30, fontWeight: 'bold', color: themes.colors.basic
+                        }}
                         >
                             글쓰기
                         </Text>
@@ -109,7 +117,7 @@ const Post = ({visible, close, complete}) => {
                             onPress={close}
                             style={{marginRight: 15}}
                         >
-                            <AntDesign name="close" size={24} color="black" />
+                            <AntDesign name="close" size={24} color={themes.colors.basic} />
                         </TouchableOpacity>
                             
                     </View>
@@ -123,11 +131,11 @@ const Post = ({visible, close, complete}) => {
                                 onPress={() => openBottom()}
                             >
                                 <Text
-                                    style={{color: 'black', fontWeight: 'bold'}}
+                                    style={{color: 'black', fontWeight: 'bold', color: themes.colors.basic}}
                                 >
                                     {list}
                                 </Text>
-                                <AntDesign name="down" size={12} color="black" 
+                                <AntDesign name="down" size={12} color={themes.colors.basic}
                                     style={{opacity: 0.3}}
                                 />
                             </TouchableOpacity>
@@ -138,7 +146,7 @@ const Post = ({visible, close, complete}) => {
                                 closeOnPressMask={true}
                                 customStyles={{
                                     wrapper: {
-                                        backgroundColor: 'rgba(0, 0, 0, 0.2)'
+                                        backgroundColor: 'rgba(0, 0, 0, 0.3)'
                                         
                                     },
                                     draggableIcon: {
@@ -148,21 +156,22 @@ const Post = ({visible, close, complete}) => {
                                     container: {
                                         borderTopLeftRadius: 5,
                                         borderTopRightRadius: 5,
-                                        paddingHorizontal: 10
+                                        paddingHorizontal: 10,
+                                        backgroundColor: themes.colors.background
                                     }
                                 }}
                             >
-                                <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10, marginLeft: 25}}>
+                                <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 20, marginLeft: 25}}>
                                     <Text
-                                        style={{flex: 1, fontSize: 16, color: themes.colors.gray, fontWeight: 'bold', textAlign: 'center'}}
+                                        style={{flex: 1, fontSize: 16, color: themes.colors.basic, fontWeight: 'bold', textAlign: 'center'}}
                                     >
-                                        카테고리
+                                        게시판 선택
                                     </Text>
                                     
                                         <AntDesign 
                                             name="close" 
                                             size={20} 
-                                            color="black" 
+                                            color={themes.colors.basic}
                                             style={{marginLeft: 'auto'}}
                                             onPress={()=> closeBottom()}
                                         />
@@ -174,7 +183,7 @@ const Post = ({visible, close, complete}) => {
                                 >
                                     {postCategory.map(category => (
                                         <>
-                                            <Text style={{color: 'black', margin: 10, fontSize: 16, fontWeight: 'bold', color: themes.colors.buttonText}}
+                                            <Text style={{margin: 10, fontSize: 16, fontWeight: 'bold', color: themes.colors.darkgray}}
                                                 onPress={() => inquireMenu(category)}
                                             >
                                                 {category}
@@ -257,14 +266,21 @@ const Post = ({visible, close, complete}) => {
                         <RegisterBtn 
                             title={'등록'}
                             containerStyle={{
-                                backgroundColor: themes.colors.lightgray,
-                                borderColor: themes.colors.gray,
-                                borderRadius: 4
+                                backgroundColor: themes.colors.table,
+                                borderColor: themes.colors.basic,
+                                borderRadius: 4,
+                            }}
+                            textStyle={{
+                                color: themes.colors.basic,
+                                fontWeight: 'bold',
+                                fontSize: 16
                             }}
                             onPress={registerPost} 
                             // 인콰이어메뉴 참고해서 등록으로 모달이 닫히게끔 설정
                         />
                     </View>
+                    </View>
+
                 </SafeAreaView>
                 
             </Modal>

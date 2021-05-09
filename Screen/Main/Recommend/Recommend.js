@@ -14,6 +14,7 @@ import {
   Animated,
   TouchableOpacity,
   Platform,
+  Button
 } from 'react-native';
 const { width, height } = Dimensions.get('window');
 import { getMovies } from '../../../movieApi';
@@ -22,6 +23,8 @@ import Rating from '../../../component/common/Ratings';
 import {useNavigation} from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Alert } from 'react-native';
+import themes from '../../../config/themes';
+import { theme } from 'galio-framework';
  
 const SPACING = 10;
 const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.72 : width * 0.74;
@@ -165,7 +168,7 @@ const BACKDROP_HEIGHT = height * 0.65;
                    padding: SPACING * 2,
                    alignItems: 'center',
                    transform: [{ translateY }],
-                   backgroundColor: 'white',
+                   backgroundColor: themes.colors.table,
                    borderRadius: 34,
                  }}
                 
@@ -179,7 +182,7 @@ const BACKDROP_HEIGHT = height * 0.65;
                     </Text>
                     <Rating rating={item.rating} />
                     <Genres genres={item.genres} />
-                    <Text style={{ fontSize: 12 }} numberOfLines={3}>
+                    <Text style={{ fontSize: 12, margin: 5 }} numberOfLines={3}>
                     {item.description}
                     </Text>
                     <TouchableOpacity
@@ -188,9 +191,13 @@ const BACKDROP_HEIGHT = height * 0.65;
                       }}
                       
                     >
-                      <Text>
-                        자세히보기
+                      <TouchableOpacity style={styles.showDetail}>
+                      <Text style={{color: themes.colors.recommend}}>
+                        자세히 보기
                       </Text>
+                      </TouchableOpacity>
+                      
+                      
                     </TouchableOpacity>
                  
                </Animated.View>
@@ -210,6 +217,7 @@ const BACKDROP_HEIGHT = height * 0.65;
    },
    container: {
      flex: 1,
+     backgroundColor: themes.colors.background
    },
    paragraph: {
      margin: 24,
@@ -225,4 +233,12 @@ const BACKDROP_HEIGHT = height * 0.65;
      margin: 0,
      marginBottom: 10,
    },
+   showDetail: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 20,
+    fontSize: 14,
+    backgroundColor: themes.colors.basic,
+    marginTop: 15,
+   }
  });

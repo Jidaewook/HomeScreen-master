@@ -4,8 +4,10 @@ import HomeStack from '../navigation/Stack';
 import PostStack from '../navigation/PostStack';
 import RecommendStack from '../navigation/RecommendStack';
 import ProfileStack from '../navigation/ProfileStack';
-import {Ionicons} from '@expo/vector-icons';
+import {Feather} from '@expo/vector-icons';
 import {Platform} from 'react-native';
+import themes from '../config/themes';
+import { color } from 'react-native-reanimated';
 
 const Tabs = createBottomTabNavigator();
 
@@ -23,29 +25,37 @@ export default () => {
         <Tabs.Navigator
             screenOptions={({route}) => ({
                 tabBarIcon: ({focused}) => {
-                    let iconName = Platform.OS === "ios" ? "ios-" : "md-";
+                    let iconName
                     if (route.name === "Home") {
-                        iconName += "home";
+                        iconName = "home";
                     } else if (route.name === "List") {
-                        iconName += "list";
+                        iconName = "server";
                     } else if (route.name === "Recommend") {
-                        iconName += "bulb";
+                        iconName = "tv";
                     } else if (route.name === "Profile") {
-                        iconName += "contact"
+                        iconName = "user"
                     }
                     return (
-                        <Ionicons 
+                        <Feather 
                             name={iconName}
-                            color={focused ? "green" : "grey"}
-                            size={28}
+                            color={focused ? themes.colors.basic : themes.colors.lightgray}
+                            size={24}
                         />  
                     );
                 }
             })}
             
             tabBarOptions={{
-                showLabel: false
+                activeTintColor: themes.colors.basic,
+                inactiveTintColor: themes.colors.lightgray,
+                showLabel: true,
+                labelStyle: {
+                    fontSize: 12, 
+                    marginTop: -10                
+                },
             }}
+
+
         >
                         
             

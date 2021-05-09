@@ -8,7 +8,7 @@ const BadgePill = ({title, containerStyle, textStyle}) => {
             style={[styles.badge, containerStyle]}
         >
             <Text
-                style={[{fontSize: 12, letterSpacing: -0.78, color: themes.colors.title}, textStyle]}
+                style={[{fontSize: 12, letterSpacing: -0.78, color: 'red'}, textStyle]}
             >
                 {title}
             </Text>
@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     badge: {
         backgroundColor: themes.colors.main,
         borderColor: themes.colors.lightgray,
+        color: themes.colors.darkgray,
         borderWidth: 1,
         borderRadius: 16,
         flexDirection: 'row',

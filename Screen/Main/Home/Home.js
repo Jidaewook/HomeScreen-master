@@ -139,8 +139,8 @@
 //                       controlsProps={{
 //                         prevTitle: '이전',
 //                         nextTitle: '다음',
-//                         prevTitleStyle: {color: 'black', backgroundColor: themes.colors.shinyGray},
-//                         nextTitleStyle: {color: 'black', backgroundColor: themes.colors.shinyGray}
+//                         prevTitleStyle: {color: 'black', backgroundColor: themes.colors.Gray},
+//                         nextTitleStyle: {color: 'black', backgroundColor: themes.colors.Gray}
 //                       }}
 
 //                     >
@@ -283,6 +283,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { TextInput } from 'react-native-gesture-handler';
 import Swiper from 'react-native-web-swiper';
 
+import NcsBbs from '../Detail/NcsBbs';
 import Slide from '../../../component/common/Slide';
 import themes from '../../../config/themes';
 import Section from '../../../component/common/Section';
@@ -383,17 +384,17 @@ const Home = () => {
   // }
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-      <StatusBar translucent={false} backgroundColor='purple' />
+    <SafeAreaView style={{flex: 1, backgroundColor: themes.colors.main}}>
+      <StatusBar translucent={false} backgroundColor={themes.colors.basic} />
       <View style={styles.header}>
-        <MaterialIcons name="sort" size={28} color={'white'} />
+        <MaterialIcons name="sort" size={28} color={themes.colors.main} />
         <TouchableOpacity
           onPress={() => navigation.navigate("Notification")} 
         >
           <MaterialIcons 
             name="notifications-none" 
             size={28} 
-            color={'white'} 
+            color={themes.colors.main} 
           />
         </TouchableOpacity>
 
@@ -401,7 +402,7 @@ const Home = () => {
       </View>
         <View
           style={{
-            backgroundColor: 'purple',
+            backgroundColor: themes.colors.basic,
             height: 120,
             paddingHorizontal: 20
           }}
@@ -465,7 +466,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 20,
       flexDirection: 'row',
       justifyContent: 'space-between',
-      backgroundColor: 'purple',
+      backgroundColor: themes.colors.basic,
     },
     headerTitle: {
       color: 'white',

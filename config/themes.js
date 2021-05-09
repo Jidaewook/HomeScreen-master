@@ -1,21 +1,33 @@
 const colors={
-    main: '#fff',
-    basic: "#d1fff3",
-    view: '#90a6a0',
+    // main: '#fff',
+    // basic: "#d1fff3",
+    main : '#fff',
+    basic: '#492540',
+    view: '#AC5B98',
+    table: '#F8EDF5',
     theme: '#30e682', 
     search: '#fff', 
     title: '#a8e0d1',
-    black: 'black',
-    lightgray: 'lightgray',
     gray: 'gray',
     faintgray: '#f4f4f4',
     darkgray: '#363636',
     postListGray: '#e3e3e3',
     postListSky: '#e0f3ff',
     postListOrange: '#ffefc4',
-    line: '#e6e6e6',
+    black: 'black',
+
+    // background
+    shinyGray: '#f2f2f2',
     brightGray: '#e8e8e8',
-    shinyGray: '#f2f2f2'
+    line: '#e6e6e6',
+    lightgray: 'lightgray',
+    white: '#fff',
+    background: '#FFF7FD',
+
+
+
+
+
 
 }
 

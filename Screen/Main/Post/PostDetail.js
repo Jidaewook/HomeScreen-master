@@ -191,44 +191,45 @@ const PostDetail = ({
                 closeOnPressMask={true}
                 customStyles={{
                     wrapper: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.2)'
+                        backgroundColor: themes.colors.background
                         
                     },
                     draggableIcon: {
-                        backgroundColor: themes.colors.main,
+                        backgroundColor: themes.colors.basic,
                         
                     },
                     container: {
                         borderTopLeftRadius: 5,
                         borderTopRightRadius: 5,
-                        paddingHorizontal: 10
+                        paddingHorizontal: 10,
+                        backgroundColor: themes.colors.background
                     }
                 }}
             >
-                <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10, marginLeft: 25}}>
+                <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10, marginLeft: 25, backgroundColor: themes.colors.background}}>
                     <Text
-                        style={{flex: 1, fontSize: 16, color: themes.colors.gray, fontWeight: 'bold', textAlign: 'center'}}
+                        style={{flex: 1, fontSize: 16, color: themes.colors.basic, fontWeight: 'bold', textAlign: 'center'}}
                     >
                         댓글 더 보기
                     </Text>
                         <AntDesign 
                             name="close" 
                             size={20} 
-                            color="black" 
+                            color={themes.colors.basic}
                             style={{marginLeft: 'auto'}}
                             onPress={()=> closeBottom()}
                         />
                 </View>
                 
                 <HLine />
-                <ScrollView>
+                <ScrollView style={{backgroundColor: themes.colors.background}}>
                     {comments.map(c => (
                         <>
-                            <View style={{backgroundColor: themes.colors.main, marginTop: 15}}>
+                            <View style={{backgroundColor: themes.colors.background, marginTop: 15}}>
                                 <View style={{flexDirection: 'row'}}>
                                     <View style={{flexDirection: 'row', justifyContent: 'flex-start', width: '55%'}}>
                                         <View>
-                                            <MaterialCommunityIcons name="face-profile" size={24} color="black" />
+                                            <MaterialCommunityIcons name="face-profile" size={24} color={themes.colors.basic} />
                                         </View>
                                         <View style={{marginLeft: 10, marginTop: 3}}>
                                             <Text style={{fontWeight: 'bold'}}>
@@ -238,14 +239,14 @@ const PostDetail = ({
                                         </View>
                                     </View>
                                     <View style={{marginLeft: 10, marginTop: 4, alignItems: 'flex-end', width: '40%'}}>
-                                        <Text style={{fontSize: 10, color: themes.colors.gray}}>
+                                        <Text style={{fontSize: 10, color: themes.colors.basic}}>
                                             {c.date}
                                         </Text>
                                     </View>
                                 </View>
                             
                                 <View style={{alignItems: 'flex-start', marginTop: 5, marginLeft: 35}}>
-                                    <Text style={{fontSize: 15, color: themes.colors.darkgray, marginBottom: 10}}>
+                                    <Text style={{fontSize: 15, color: themes.colors.basic, marginBottom: 10}}>
                                         {c.comment}
                                     </Text>
                                 </View>
@@ -263,21 +264,23 @@ export default PostDetail;
 
 const styles = StyleSheet.create({
     Container: {
-        backgroundColor: themes.colors.main
+        backgroundColor: themes.colors.background
     },
     Title: {
-        backgroundColor: themes.colors.main,
+        backgroundColor: themes.colors.background,
         marginTop: 20,
         marginLeft: 20,
         fontSize: 20,
-        fontWeight: '600'
+        fontWeight: '600',
+        color: themes.colors.basic
     },
     Writer: {
         marginTop: 20,
         marginLeft: 20,
         fontSize: 16,
         fontWeight: '500',
-        width: '25%'
+        width: '25%',
+        color: themes.colors.basic
     },
     Date: {
         marginTop: 20,
@@ -290,57 +293,62 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginLeft: 20,
         fontSize: 16,
-        color: themes.colors.black
+        color: themes.colors.basic
     },
     Likes: {
         marginLeft: 20, 
         marginTop: 20,
         fontSize: 22,
-        color: themes.colors.gray
+        color: themes.colors.basic
     },
     Count: {
         marginLeft: 10, 
         marginTop: 20,
         fontSize: 22,
-        color: themes.colors.gray
+        color: themes.colors.basic
     },
     Tag: {
         marginLeft: 20,
         marginTop: 10,
         fontSize: 12,
-        color: themes.colors.gray,
+        color: themes.colors.basic,
     },
     CommentTitle: {
         marginTop: 15,
         marginLeft: 20,
         fontSize: 16,
         fontWeight: 'bold',
-        width: '8%'
+        width: '8%',
+        color: themes.colors.basic
     },
     CommentCount: {
         marginTop: 15,
         marginLeft: 5,
         fontSize: 16,
-        width: '68%'
+        width: '68%',
+        color: themes.colors.basic
     },
     CommentMore: {
         marginTop: 15,
         marginLeft: 5,
         fontSize: 16,
-        color: themes.colors.gray
+        color: themes.colors.basic
     },
     CommentFirst: {
         marginTop: 15,
         marginLeft: 10,
         fontSize: 16,
-        width: '85%'
+        width: '85%',
+        color: themes.colors.basic
+
     },
     CommentName: {
         marginTop: 15,
         marginLeft: 20,
         fontSize: 16,
         fontWeight: 'bold',
-        width: '15%'
-        
+        width: '15%',
+        color: themes.colors.basic
+
     }
 })

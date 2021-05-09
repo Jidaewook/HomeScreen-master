@@ -30,7 +30,7 @@ const ProfileSubTitle = styled.Text`
 `;
 
 const Container = styled.View`
-    background-color: ${themes.colors.shinyGray};
+    background-color: ${themes.colors.view};
     flex-direction: row;
     align-items: center;
     padding: 5px;
