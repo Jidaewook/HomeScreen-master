@@ -68,7 +68,7 @@ const MenuItem = [
       }
 ]
 
-const Setting = ({navigation}) => {
+const Setting = () => {
 
     // const navigation = useNavigation();
     const ProfilePage = () => {

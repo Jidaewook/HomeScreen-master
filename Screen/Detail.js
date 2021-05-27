@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {View, Image, Text, StatusBar, StyleSheet, Dimensions, TextInput, FlatList, ScrollView, TouchableOpacity, SafeAreaView, Button, ActivityIndicator} from "react-native";
 import YoutubePlayer from 'react-native-youtube-iframe';
 import {useNavigation} from '@react-navigation/native';
-import {lectureApi, noticeApi} from '../api';
+// import {lectureApi, noticeApi} from '../api';
+import movieApi from '../movieApi';
 import Section from '../component/common/Section';
 import Card from '../component/common/Card';
 import themes from '../config/themes';
@@ -93,8 +94,8 @@ const articles = [
   ]
 
 // const Detail = ({route: {params: {id, category}}}) => {
-const Detail = () => {
-    
+const Detail = ({key}) => {
+    console.log('kkkkk', key)
     const navigation = useNavigation();
 
     const [result, setResult] = useState({
@@ -103,33 +104,35 @@ const Detail = () => {
         dataError: null
     });
 
-    const getData = async () => {
-        console.log("xxxxxxxxx", category)
+    const [moviesDetial, setMoviesDetail] = useState({});
 
-        if (category === "notice") {
-            const [notice, noticeError] = await noticeApi.noticeDetail(id)
-            setResult({
-                loading: false,
-                data: notice,
-                dataError: noticeError
-            })
-        } else if (category === "ncs") {
-            const [ncs, ncsError] = await lectureApi.ncsDetail(id);
-            console.log("ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ", ncs)
+    const getData = async ({key}) => {
+        // console.log("xxxxxxxxx", category)
 
-            setResult({
-                loading: false,
-                data: ncs,
-                dataError: ncsError
-            })
-        } else if (category === "psat") {
-            const [psat, psatError] = await lectureApi.psatDetail(id);
-            setResult({
-                loading: false,
-                data: psat,
-                dataError: psatError
-            })
-        };
+        // if (category === "notice") {
+        //     const [notice, noticeError] = await movieApi.noticeDetail(id)
+        //     setResult({
+        //         loading: false,
+        //         data: notice,
+        //         dataError: noticeError
+        //     })
+        // } else if (category === "ncs") {
+        //     const [ncs, ncsError] = await movieApi.ncsDetail(id);
+        //     console.log("ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ", ncs)
+
+        //     setResult({
+        //         loading: false,
+        //         data: ncs,
+        //         dataError: ncsError
+        //     })
+        // } else if (category === "psat") {
+        //     const [psat, psatError] = await movieApi.psatDetail(id);
+        //     setResult({
+        //         loading: false,
+        //         data: psat,
+        //         dataError: psatError
+        //     })
+        // };
 
         // setLectures({
             
@@ -143,7 +146,7 @@ const Detail = () => {
     }
 
     useEffect(() => {
-        getData()
+        getData({key})
     }, {})
 
     // const navigation = useNavigation();

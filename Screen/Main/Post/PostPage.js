@@ -165,97 +165,11 @@ const PostPage = () => {
                         {active === '자유게시판' ? <PostList datas={free} /> : null }
         
                         {active === '질문게시판' ? (
-                            // <View>
-                            //     {qna.map(q => (
-                            //         <TouchableOpacity
-                            //             onPress={() => goToPostDetail(q._id)}
-
-                            //         >
-                            //             <View style={styles.postList} 
-                            //             >
-                            //                 <View style={{flexDirection: 'row'}} >
-                            //                     {q.tag.map(t => (
-                            //                         <View style={{paddingLeft: 10}} >
-                            //                             <BadgePill 
-                            //                                 title={'#'+t}
-                            //                                 textStyle={[styles.badgePill, {paddingVertical: 5, paddingHorizontal: 10, opacity: 1}]}
-                            //                             />
-                            //                         </View>
-                            //                     ))}
-                            //                 </View>
-                            //                 <Moment from={Date.now()} element={Text} style={{color: themes.colors.gray, fontSize: 12}}>
-                            //                     {q.createdAt}
-                            //                 </Moment>
-                            //             </View>
-                            //             <View style={{flexDirection: 'row'}}>
-                            //                 <Text style={[styles.titleStyle, {width: '65%'}]}>
-                            //                     {q.title}
-                            //                 </Text>
-                            //                 <View style={{width: '35%', flexDirection: 'row', marginTop: 15}}>
-                            //                     <View style={{flexDirection: 'row'}}>
-                            //                         <AntDesign name="like2" size={16} color={themes.colors.gray} />
-                            //                         <Text style={styles.postProperty}>
-                            //                             50
-                            //                         </Text>
-                            //                     </View>
-                            //                     <View style={{marginLeft: 10, flexDirection: 'row'}}>
-                            //                         <MaterialCommunityIcons name="message-reply-text" size={16} color={themes.colors.gray} />
-                            //                         <Text style={styles.postProperty}>
-                            //                             10
-                            //                         </Text>
-                            //                     </View>
-                            //                 </View>
-                            //             </View>
-                            //             <HLine color={{backgroundColor: themes.colors.brightGray}} />
-                            //         </TouchableOpacity>
-                            //     ))}
-                            // </View>
                             <PostList 
                                 datas={qna}
                             />
                         ) : null}
                         {active === '합격수기' ? (
-                        //     <View>
-                        //     {pass.map(p => (
-                        //         <View>
-                        //             <View style={styles.postList} >
-                        //                 <View style={{flexDirection: 'row'}} >
-                        //                             {p.tag.map(t => (
-                        //                                 <View style={{paddingLeft: 10}} >
-                        //                                     <BadgePill 
-                        //                                         title={'#'+t}
-                        //                                         textStyle={[styles.badgePill, {paddingVertical: 5, paddingHorizontal: 10, opacity: 1}]}
-                        //                                     />
-                        //                                 </View>
-                        //                             ))}
-                        //                         </View>
-                        //                         <Moment from={Date.now()} element={Text} style={{color: themes.colors.gray, fontSize: 12}}>
-                        //                         {p.createdAt}
-                        //                     </Moment>
-                        //                 </View>
-                        //                 <View style={{flexDirection: 'row'}}>
-                        //                     <Text style={[styles.titleStyle, {width: '65%'}]}>
-                        //                         {p.title}
-                        //                     </Text>
-                        //                     <View style={{width: '35%', flexDirection: 'row', marginTop: 15}}>
-                        //                         <View style={{flexDirection: 'row'}}>
-                        //                             <AntDesign name="like2" size={16} color={themes.colors.gray} />
-                        //                             <Text style={styles.postProperty}>
-                        //                                 50
-                        //                             </Text>
-                        //                         </View>
-                        //                         <View style={{marginLeft: 10, flexDirection: 'row'}}>
-                        //                             <MaterialCommunityIcons name="message-reply-text" size={16} color={themes.colors.gray} />
-                        //                             <Text style={styles.postProperty}>
-                        //                                 10
-                        //                             </Text>
-                        //                         </View>
-                        //                     </View>
-                        //                 </View>
-                        //             <HLine color={{backgroundColor: themes.colors.brightGray}} />
-                        //         </View>
-                        //     ))}
-                        // </View>
                             <PostList 
                                 datas={free}
                             />

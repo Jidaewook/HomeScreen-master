@@ -79,11 +79,7 @@ const Post = ({visible, close, complete}) => {
         })
             .then(result => complete)
             .catch(err => console.log(err))
-            
-
     }
-
-
 
     return (
         <DismissKeyboard>
@@ -107,7 +103,7 @@ const Post = ({visible, close, complete}) => {
                         style={{marginTop: 20, flexDirection: 'row', justifyContent: 'space-between', backgroundColor: themes.colors.background }}
                     >
                         <Text
-                            style={{fontSize: 30, fontWeight: 'bold', color: themes.colors.basic
+                            style={{fontSize: 30, fontWeight: 'bold', color: themes.colors.black
                         }}
                         >
                             글쓰기
@@ -266,8 +262,8 @@ const Post = ({visible, close, complete}) => {
                         <RegisterBtn 
                             title={'등록'}
                             containerStyle={{
-                                backgroundColor: themes.colors.table,
-                                borderColor: themes.colors.basic,
+                                backgroundColor: themes.colors.brightGray,
+                                borderColor: themes.colors.black,
                                 borderRadius: 4,
                             }}
                             textStyle={{

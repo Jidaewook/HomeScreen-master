@@ -22,7 +22,7 @@ const colors={
     line: '#e6e6e6',
     lightgray: 'lightgray',
     white: '#fff',
-    background: '#FFF7FD',
+    background: 'white',
 
 
 
@@ -37,7 +37,8 @@ const fontsColor={
     more: 'gray',
     contentTitle: '#6e6e6e',
     contentDuration: '#ffdbdb',
-    table: '#635a5a'
+    table: '#635a5a',
+    buttonText: 'white'
 }
 
 const bgColor={

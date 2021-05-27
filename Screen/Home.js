@@ -18,6 +18,7 @@ import themes from '../config/themes';
 
 import {lectureApi, noticeApi} from '../api';
 import movieApi from '../movieApi';
+import Axios from 'axios';
 
 const Common = styled.SafeAreaView`
     ${Platform.select({
@@ -184,7 +185,8 @@ const Home = ({}) => {
     const [loading, setLoading] = useState(true);
 
     const getData = async () => {
-        const [ncs, ncsError] = await lectureApi.ncs();
+        // const [ncs, ncsError] = await lectureApi.ncs();
+        const [ncs, ncsError] = Axios('http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs');
         const [psat, psatError] = await lectureApi.psat();
         // const [notice, noticeError] = await noticeApi.notice(); 
         const [movie, movieError] = await movieApi.movie();

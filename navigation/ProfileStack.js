@@ -9,6 +9,7 @@ import Alarm from '../Screen/Main/Setting/Alarm';
 import Frequency from '../Screen/Main/Setting/Frequency';
 import Service from '../Screen/Main/Setting/Service';
 import ProfileEdit from '../Screen/ProfileDetail/ProfileEdit';
+import Detail from '../Screen/Detail';
 
 const ProfileStack = createStackNavigator();
 
@@ -28,6 +29,8 @@ export default () => (
         <ProfileStack.Screen name="Frequency" component={Frequency} />
         <ProfileStack.Screen name="Service" component={Service} />
         <ProfileStack.Screen name="ProfileEdit" component={ProfileEdit} />
+        <ProfileStack.Screen name="Detail" component={Detail} />
+
 
     </ProfileStack.Navigator>
 )

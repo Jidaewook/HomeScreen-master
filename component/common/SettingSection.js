@@ -58,7 +58,6 @@ const SettingSection = ({title}) => {
                         <ProfileTitle>
                             {title}
                         </ProfileTitle>
-                        {/* {subTitle && <ProfileSubTitle>{subTitle}</ProfileSubTitle>} */}
                     </ProfileContainer>
                     
                     

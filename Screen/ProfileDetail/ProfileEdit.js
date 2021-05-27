@@ -101,28 +101,26 @@ const styles = StyleSheet.create({
 
     },
     TextContainer: {
-        // width: '%',
-        // fontWeight: '200',
         justifyContent: 'center',
         alignItems: 'center',
         fontWeight: 'bold',
-        color: themes.colors.gray,
+        color: themes.colors.basic,
         fontSize: 14
 
     },
     EditContainer: {
-        // fontWeight: 'bold',
         justifyContent: 'center',
         marginTop: 15,
         fontSize: 14,
-        color: '#6abd79'
+        color: themes.colors.basic
     },
 
     ContentContainer: {
         width: '85%',
-        // fontWeight: '400',
         justifyContent: 'center',
         marginTop: 15,
+        marginLeft: 10,
+        marginRight: -10,
         fontSize: 16,
         fontWeight: 'bold',
         color: themes.colors.darkgray

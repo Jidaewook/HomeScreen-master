@@ -277,7 +277,7 @@
 
 
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {Text, View, SafeAreaView, StatusBar, StyleSheet, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { TextInput } from 'react-native-gesture-handler';
@@ -289,6 +289,8 @@ import themes from '../../../config/themes';
 import Section from '../../../component/common/Section';
 import Card from '../../../component/common/Card';
 import {useNavigation} from '@react-navigation/native';
+import Axios from 'axios';
+import { Alert } from 'react-native';
 
 
 const {width} = Dimensions.get("screen");
@@ -376,7 +378,39 @@ const articles = [
     // }
 ]
 
+
+
 const Home = () => {
+  const [ncs, setNcs] = useState([]);
+  const [psat, setPsat] = useState([]);
+  
+  const getData = async() => {
+    Axios.get("http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs")
+      .then(res => {
+        // console.log(res.data.results)
+        setNcs(res.data.results)
+      })
+      .catch(err => {
+        console.log(err)
+      });
+  }
+
+  const getPsat = async() => {
+    Axios.get("http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/psat")
+      .then(res => {
+        // console.log(res.data.results)
+        setPsat(res.data.results)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  useEffect(() => {
+    getData()
+    getPsat()
+  }, []);
+  
   const navigation = useNavigation();
 
   // const goToNotice = (screen) => {
@@ -424,7 +458,7 @@ const Home = () => {
         <View style={styles.group}>                   
           <View style={{display:'flex', flexDirection: 'row'}}>
             <Section title={'NCS'}>
-              {articles.map(i => (
+              {ncs.map(i => (
                 <TouchableOpacity
                   onPress={()=> navigation.navigate('Detail')}
                 >
@@ -438,12 +472,16 @@ const Home = () => {
           </View>
           <View style={{display:'flex', flexDirection: 'row'}}>
             <Section title={'PSAT'}>
-              {articles.map(i => (
-                <Card 
-                    item={i}
-                    full
-                    style={{marginRight: themes.sizes.base, width: 250}}
-                />
+              {psat.map(i => (
+                // <TouchableOpacity
+                //   onPress=(() => ())
+                // >
+                  <Card 
+                      item={i}
+                      full
+                      style={{marginRight: themes.sizes.base, width: 250}}
+                  />
+                // </TouchableOpacity>
               ))}
             </Section>
           </View>

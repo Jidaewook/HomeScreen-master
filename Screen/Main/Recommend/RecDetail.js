@@ -2,12 +2,12 @@ import React, {useState, useEffect} from 'react';
 import {View, Image, Text, StatusBar, StyleSheet, Dimensions, TextInput, FlatList, ScrollView, TouchableOpacity, SafeAreaView, Button, ActivityIndicator} from "react-native";
 import YoutubePlayer from 'react-native-youtube-iframe';
 import {useNavigation} from '@react-navigation/native';
-import {lectureApi, noticeApi} from '../api';
-import MovieApi, { getMovies } from '../movieApi';
-import Section from '../component/common/Section';
-import Card from '../component/common/Card';
-import themes from '../config/themes';
-import Genres from '../component/common/Genres';
+import {lectureApi, noticeApi} from '../../../api';
+import MovieApi, { getMovies } from '../../../movieApi';
+import Section from '../../../component/common/Section';
+import Card from '../../../component/common/Card';
+import themes from '../../../config/themes';
+import Genres from '../../../component/common/Genres';
 import { Feather } from '@expo/vector-icons';
 import { theme } from 'galio-framework';
 
@@ -39,8 +39,11 @@ const articles = [
             100
           ],
           rating: 6.5,
-          poster_path: require("../assets/images/thumb/sample2.png"),
-          backdrop_path: require('../assets/images/thumb/back2.jpeg'),
+          poster_path: 'https://images.unsplash.com/photo-1516559828984-fb3b99548b21?ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80',
+          backdrop_path: 'https://images.unsplash.com/photo-1516559828984-fb3b99548b21?ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80',
+
+        //   poster_path: require("../assets/images/thumb/sample2.png"),
+        //   backdrop_path: require('../assets/images/thumb/back2.jpeg'),
           professor: {},
           comments: [],
           likes: [],
@@ -55,8 +58,8 @@ const articles = [
             102
           ],
           rating: 6.5,
-          poster_path: require("../assets/images/thumb/sample3.jpeg"),
-          backdrop_path: require('../assets/images/thumb/back3.jpeg'),
+        //   poster_path: require("../assets/images/thumb/sample3.jpeg"),
+        //   backdrop_path: require('../assets/images/thumb/back3.jpeg'),
           professor: {},
           comments: [],
           likes: [],
@@ -71,8 +74,8 @@ const articles = [
             102
           ],
           rating: 8.5,
-          poster_path: require("../assets/images/thumb/sample4.jpeg"),
-          backdrop_path: require('../assets/images/thumb/back4.jpeg'),
+        //   poster_path: require("../assets/images/thumb/sample4.jpeg"),
+        //   backdrop_path: require('../assets/images/thumb/back4.jpeg'),
           professor: {},
           comments: [],
           likes: [],
@@ -87,8 +90,8 @@ const articles = [
             102
           ],
           rating: 10.0,
-          poster_path: require("../assets/images/thumb/sample5.jpeg"),
-          backdrop_path: require('../assets/images/thumb/back5.jpeg'),
+        //   poster_path: require("../assets/images/thumb/sample5.jpeg"),
+        //   backdrop_path: require('../assets/images/thumb/back5.jpeg'),
           professor: {},
           comments: [],
           likes: [],
@@ -98,7 +101,7 @@ const articles = [
 
 
 // const Detail = ({route: {params: {id, category}}}) => {
-const Detail = ({route: {params: {id}}}) => {
+const RecDetail = ({route: {params: {id}}}) => {
     
     const navigation = useNavigation();
 
@@ -137,28 +140,12 @@ const Detail = ({route: {params: {id}}}) => {
                 dataError: psatError
             })
         };
-
-        // setLectures({
-            
-        // });
-
-        // setResult({
-        //     loading: false,
-        //     data,
-        //     dataError
-        // })
     }
 
     useEffect(() => {
         getData()
         
     }, {})
-
-    // const navigation = useNavigation();
-    // const goToDetail = (id) => {
-    //     console.log("ID", id)
-    //     navigation.navigate("Detail", {id})
-    // };
 
     const [loading, setLoading] = useState(true);
 
@@ -422,7 +409,7 @@ const Detail = ({route: {params: {id}}}) => {
     );
 };
 
-export default Detail;
+export default RecDetail;
 
 
 const styles = StyleSheet.create({

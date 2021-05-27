@@ -1,8 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {Recommend, Detail2} from '../Screen/Main/Recommend/index';
-import RecDetail from '../Screen/RecDetail';
+import {Recommend} from '../Screen/Main/Recommend/index';
+import RecDetail from '../Screen/Main/Recommend/RecDetail';
 
 const RecommendStack = createStackNavigator();
 
@@ -15,14 +15,8 @@ export default () => {
                 options={{headerShown: false}}
             />
            <RecommendStack.Screen 
-                name={"Detail"}
+                name={"RecDetail"}
                 component={RecDetail}
-                
-
-            />
-            <RecommendStack.Screen 
-                name={"Detail2"}
-                component={Detail2}
             />
         </RecommendStack.Navigator>
     );

@@ -44,7 +44,7 @@ const ProfilePage = () => {
         <View style={styles.profile}>
             <View style={{display: 'flex'}}  >
                 <ImageBackground 
-                    source={require('../../images/voodooimage.jpeg')}
+                    source={require('../../assets/images/profileBack.png')}
                     style={styles.profileContainer}
                     imageStyle={styles.profileBackground}
                 >
@@ -123,12 +123,15 @@ const ProfilePage = () => {
                                 <ScrollView horizontal={true} style={{marginTop: 10}} showsHorizontalScrollIndicator={false}>
                                     {viewItems.map(item => (
                                         <>
-                                            <Image 
-                                                style={{width: 100, height: 100, borderRadius: 10, marginRight: 10, marginTop: 10}}
-                                                source={item.image}
+                                            <TouchableOpacity
+                                                onPress={() => navigation.navigate("Detail")} 
                                             >
-                                                
-                                            </Image>    
+                                                <Image 
+                                                    style={{width: 100, height: 100, borderRadius: 10, marginRight: 10, marginTop: 10}}
+                                                    source={item.image}
+                                                >
+                                                </Image>    
+                                            </TouchableOpacity>
                                         </>
                                     ))} 
                                 </ScrollView>
@@ -145,16 +148,18 @@ const ProfilePage = () => {
                                 </View>
                                 <ScrollView horizontal={true} style={{marginTop: 10}} showsHorizontalScrollIndicator={false}>
                                     {viewItems.map(item => (
-                                        <Image 
-                                            style={{width: 100, height: 100, borderRadius: 10, marginRight: 10, marginTop: 10}}
-                                            source={item.image}
+                                        <TouchableOpacity
+                                            onPress={() => navigation.navigate("Detail")} 
                                         >
-
-                                        </Image>    
+                                            <Image 
+                                                style={{width: 100, height: 100, borderRadius: 10, marginRight: 10, marginTop: 10}}
+                                                source={item.image}
+                                            >
+                                            </Image>   
+                                        </TouchableOpacity>
                                     ))} 
                                 </ScrollView>
                             </View>
-                            
                         </View>
                     </ScrollView>
                 </ImageBackground>

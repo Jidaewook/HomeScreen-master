@@ -1,7 +1,4 @@
-/**
- * Inspiration: https://dribbble.com/shots/8257559-Movie-2-0
- *
- */
+
 import * as React from 'react';
 import {
   StatusBar,
@@ -67,7 +64,8 @@ const BACKDROP_HEIGHT = height * 0.65;
                }}
              >
                <Image
-                 source={item.backdrop}
+                //  source={item.backdrop}
+                source={require('../../../assets/bg1.png')}
                  style={{
                    width,
                    height: BACKDROP_HEIGHT,
@@ -113,6 +111,7 @@ const BACKDROP_HEIGHT = height * 0.65;
         //                 console.log(err)
         //             });
        const movies = await getMovies();
+       console.log("++++++", movies)
     //    // Add empty items to create fake space
     //    // [empty_item, ...movies, empty_item]
        setMovies([{ key: 'empty-left' }, ...movies, { key: 'empty-right' }]);
@@ -144,9 +143,9 @@ const BACKDROP_HEIGHT = height * 0.65;
          )}
          scrollEventThrottle={16}
          renderItem={({ item, index }) => {
-           if (!item.poster) {
-             return <View style={{ width: EMPTY_ITEM_SIZE }} />;
-           }
+          //  if (!item.poster) {
+          //    return <View style={{ width: EMPTY_ITEM_SIZE }} />;
+          //  }
  
            const inputRange = [
              (index - 2) * ITEM_SIZE,
@@ -174,14 +173,18 @@ const BACKDROP_HEIGHT = height * 0.65;
                 
                >
                     <Image
-                      source={item.poster}
+                      // source={item.poster}
+                      source={require('../../../assets/images/baked-fries.jpg')}
                       style={styles.posterImage}
                     />
                     <Text onPress={() => Alert.alert('alertt')} style={{ fontSize: 16 }} numberOfLines={1}>
                     {item.title}
                     </Text>
-                    <Rating rating={item.rating} />
-                    <Genres genres={item.genres} />
+                    {/* <Rating rating={item.rating} /> */}
+                    {/* <Genres genres={item.genres} /> */}
+                    <Text>
+                      ***{item.genres}***
+                    </Text>
                     <Text style={{ fontSize: 12, margin: 5 }} numberOfLines={3}>
                     {item.description}
                     </Text>
@@ -191,10 +194,13 @@ const BACKDROP_HEIGHT = height * 0.65;
                       }}
                       
                     >
-                      <TouchableOpacity style={styles.showDetail}>
-                      <Text style={{color: themes.colors.recommend}}>
-                        자세히 보기
-                      </Text>
+                      <TouchableOpacity 
+                        style={styles.showDetail}
+                        onPress={() => navigation.navigate("Detail")} 
+                      >
+                        <Text style={{color: themes.fontsColor.buttonText}}>
+                          자세히 보기
+                        </Text>
                       </TouchableOpacity>
                       
                       

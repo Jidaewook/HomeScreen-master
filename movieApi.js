@@ -8,12 +8,13 @@ const genres = {
   35: '정보능력',
   36: '기술능력',
   37: '직업윤리',
-  53: 'Thriller',
-  80: 'Crime',
-  99: 'Documentary',
+  53: '언어논리',
+  80: '자료해석',
+  99: '상황판단',
   100: '계산',
   101: '추론',
   102: '설명',
+  103: '학습지',
   878: 'Science Fiction',
   9648: 'Mystery',
   10402: 'Music',
@@ -106,38 +107,39 @@ const results = [
     },
 ]
 
-const API_URL = `https://api.themoviedb.org/3/discover/movie?api_key=8a919d63fb74ef8af3e7074f3f1ca20f&sort_by=popularity.desc`;
+const API_URL = `http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/psat`;
 const getImagePath = (path) =>
   `https://image.tmdb.org/t/p/w440_and_h660_face${path}`;
 const getBackdropPath = (path) =>
   `https://image.tmdb.org/t/p/w370_and_h556_multi_faces${path}`;
 
 export const getMovies = async () => {
-  // const { results } = await fetch(API_URL).then((x) => x.json());
+  const { results } = await fetch(API_URL).then((x) => x.json());
+  // await fetch(API_URL).then((x) => console.log(x));
   const movies = results.map(
     ({
-      id,
+      _id,
       title,
-      poster_path,
-      backdrop_path,
+      // poster_path,
+      // backdrop_path,
       rating,
       desc,
       professor,
       comments,
       likes,
-      genre_ids,
+      genres_ids,
     }) => ({
-      key: String(id),
+      key: String(_id),
       title,
-      poster: poster_path,
-      backdrop: backdrop_path,
+      // poster: poster_path,
+      // backdrop: backdrop_path,
       rating,
       description: desc,
       professor,
       comments,
       likes,
       // releaseDate: release_date,
-      genres: genre_ids.map((genre) => genres[genre]),
+      genres: genres_ids.map((genre) => genres[genre]),
     })
   );
 
