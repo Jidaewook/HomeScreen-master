@@ -53,7 +53,7 @@ const PostList = ({datas}) => {
                     </View>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={[styles.titleStyle, {width: '65%'}]}>
-                            {data.Title}
+                            {data.title}
                         </Text>
                         <View style={{width: '35%', flexDirection: 'row', marginTop: 15}}>
                             <View style={{flexDirection: 'row'}}>

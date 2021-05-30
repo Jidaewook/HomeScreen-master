@@ -383,6 +383,7 @@ const articles = [
 const Home = () => {
   const [ncs, setNcs] = useState([]);
   const [psat, setPsat] = useState([]);
+  const [notice, setNotice] = useState([]);
   
   const getData = async() => {
     Axios.get("http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs")
@@ -406,16 +407,27 @@ const Home = () => {
       })
   }
 
+  const getNotice = async() => {
+    Axios.get("http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/notice")
+      .then(res => {
+        setNotice(res.data.results)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   useEffect(() => {
     getData()
     getPsat()
+    getNotice()
   }, []);
   
   const navigation = useNavigation();
-
-  // const goToNotice = (screen) => {
-  //     navigation.navigate(screen)
-  // }
+  const goToDetail = (id, genre) => {
+    navigation.navigate("Detail", {id, genre})
+    console.log("112391283019283012983", genre)
+};
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: themes.colors.main}}>
@@ -459,29 +471,30 @@ const Home = () => {
           <View style={{display:'flex', flexDirection: 'row'}}>
             <Section title={'NCS'}>
               {ncs.map(i => (
-                <TouchableOpacity
-                  onPress={()=> navigation.navigate('Detail')}
-                >
+                // <TouchableOpacity
+                //   onPress={()=> navigation.navigate("Detail", {key})}
+                  
+                // >
                   <Card 
                     item={i}
                     style={{marginRight: themes.sizes.base, width: 150}}
                   />
-                </TouchableOpacity>
+                // </TouchableOpacity>
               ))}
             </Section>
           </View>
           <View style={{display:'flex', flexDirection: 'row'}}>
             <Section title={'PSAT'}>
               {psat.map(i => (
-                // <TouchableOpacity
-                //   onPress=(() => ())
-                // >
+                <TouchableOpacity
+                  onPress={()=> goToDetail(i.key)}
+                >
                   <Card 
                       item={i}
                       full
                       style={{marginRight: themes.sizes.base, width: 250}}
                   />
-                // </TouchableOpacity>
+                </TouchableOpacity>
               ))}
             </Section>
           </View>

@@ -60,26 +60,36 @@ const Post = ({visible, close, complete}) => {
             setList("질문게시판")
         } else if (param === "합격수기") {
             setInquire("pass")
-            setList("합격수기게시판")
+            setList("합격수기")
         }
         closeBottom();
     }
 
     const registerPost = () => {   
-        
+        const userData = {
+            category: list,
+            title: title,
+            desc: desc,
+            tag: tag
+        }
+        // console.log('!!!', userData);
         
         if(inquire === "게시판" || title === "" || desc === ""){
             return alert("빈 칸이 있으면 등록할 수 없습니다.")
         } 
 
-        axios.post(`https://hidden-earth-75958.herokuapp.com/${inquire}`, {
-            title: title,
-            desc: desc,
-            tag: [tag]
-        })
-            .then(result => complete)
-            .catch(err => console.log(err))
+        axios
+            .post(`http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/bbs`, userData)
+            .then(() => {
+                // console.log('result!!!!', result.data)
+                close
+
+            })
+            .catch(err => console.log("!!!!!!!!!", err))
+
     }
+
+
 
     return (
         <DismissKeyboard>

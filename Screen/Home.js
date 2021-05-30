@@ -104,71 +104,7 @@ const you_Sam_Data = [
         likes: [],
         url: `https://youtu.be/16iF_hKs034`
         },
-        // {
-        //   id: 1101822002,
-        //   title: '상황구성_위치추론 (1)',
-        //   desc: "문제해결능력, 위치추론 기초이론",
-        //   genre_ids: [
-        //     14,
-        //     100
-        //   ],
-        //   rating: 6.5,
-        //   poster_path: require("../HomeScreen-master/assets/images/thumb/sample5.jpeg"),
-        //   backdrop_path: require('../HomeScreen-master/assets/images/thumb/back2.jpeg'),
-        //   professor: {},
-        //   comments: [],
-        //   likes: [],
-        //   url: `https://youtu.be/X3nq35bfJmA`
-        // },
-        // {
-        //   id: 1101822003,
-        //   title: '상황구성_위치추론 (2)',
-        //   desc: "문제해결능력, 위치추론 기본이론. 문제해결 접근법을 적용하라",
-        //   genre_ids: [
-        //     14,
-        //     102
-        //   ],
-        //   rating: 6.5,
-        //   poster_path: require("../HomeScreen-master/assets/images/thumb/sample2.png"),
-        //   backdrop_path: require('../HomeScreen-master/assets/images/thumb/back3.jpeg'),
-        //   professor: {},
-        //   comments: [],
-        //   likes: [],
-        //   url: `https://youtu.be/h03HjVWloQU`
-        // },
-        // {
-        //   id: 1101822004,
-        //   title: '상황구성_요일추론 (1)',
-        //   desc: "문제해결능력, 요일문제는 단순하다. 정해진 틀에서 빠르게 해결하라",
-        //   genre_ids: [
-        //     14,
-        //     102
-        //   ],
-        //   rating: 8.5,
-        //   poster_path: require("../HomeScreen-master/assets/images/thumb/sample3.jpeg"),
-        //   backdrop_path: require('../HomeScreen-master/assets/images/thumb/back4.jpeg'),
-        //   professor: {},
-        //   comments: [],
-        //   likes: [],
-        //   url: `https://youtu.be/X3nq35bfJmA`
-        // },
-        // {
-        //   id: 1101822005,
-        //   title: '상황구성_요일추론 (2)',
-        //   desc: "문제해결능력, 요일추론 접근법 확인과 실전 적용",
-        //   genre_ids: [
-        //     14,
-        //     102
-        //   ],
-        //   rating: 10.0,
-        //   poster_path: require("../HomeScreen-master/assets/images/thumb/sample4.jpeg"),
-        //   backdrop_path: require('../HomeScreen-master/assets/images/thumb/back5.jpeg'),
-        //   professor: {},
-        //   comments: [],
-        //   likes: [],
-        //   url: `https://youtu.be/X3nq35bfJmA`
-        // }
-    
+
 ]
 
 const Home = ({}) => {

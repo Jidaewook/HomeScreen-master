@@ -7,9 +7,9 @@ import PostModal from '../../../component/common/modal/Post';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import axios from 'axios';
-import { postApi } from '../../../api';
 
 import PostList from '../../../component/common/PostList';
+
 
 const PostPage = () => {
 
@@ -19,91 +19,23 @@ const PostPage = () => {
 
     //게시판 초기 탭 설정
     const [active, setActive] = useState('자유게시판');
-
-    const [qna, setQna] = useState([]);
-
-    const [free, setFree] = useState([]);
-
-    const [pass, setPass] = useState([]);
-
-    const getQnaData = async () => {
-        axios.get("https://hidden-earth-75958.herokuapp.com/qnas")
-            .then(qnas => {
-                setQna(qnas.data)
-                setLoading(false)
-            })
-            // .then(qnas => console.log('QQQQQQ', qnas.data))
-            .catch(err => console.log(err));
-    }
-
-    const getFreeData = async () => {
-        axios.get("https://hidden-earth-75958.herokuapp.com/bbs")
-            .then(frees => {
-                setFree(frees.data)
-                setLoading(false)
-            })
-            .catch(err => console.log(err));
-    }
-
-    const getPassData = async () => {
-        axios.get("https://hidden-earth-75958.herokuapp.com/reviews")
-            .then(pass => {
-                setPass(pass.data)
-                setLoading(false)
-            })
-    }
-
-
-    const [posts, setPosts] = useState({
-        bbs: [],
-        qna: [],
-        pass: [],
-        bbsError: null,
-        qnaError: null,
-        passError: null
-    });
     
+    const [bbs, setBbs] = useState([]);
 
-    const getPostData = async () => {
-        const [bbsData, bbsDataError] = await postApi.bbs();
-        const [qnaData, qnaDataError] = await postApi.qna();
-        const [passData, passDataError] = await postApi.pass();
-        
-        setPosts({
-            qna,
-            qnaError,
-            pass,
-            passError,
-            free,
-            freeError
-        });
+
+    const getBbsData = async() => {
+        axios   
+            .get("http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/bbs")
+            .then(bbss => {
+                setBbs(bbss.data.results)
+                setLoading(false)
+            })
+            .catch(err => console.log(err))
     }
 
     useEffect(() => {
-        getQnaData();
-        getFreeData();
-        getPassData();
-        getPostData();
-        
-        console.log(new Date().getDate());
+        getBbsData();
     }, [])
-
-    // const now = () => (
-    //     const date = new Date().getDate(); //Current Date
-    //     const month = new Date().getMonth() + 1; //Current Month
-    //     const year = new Date().getFullYear(); //Current Year
-    //     const hours = new Date().getHours(); //Current Hours
-    //     const min = new Date().getMinutes(); //Current Minutes
-    //     const sec = new Date().getSeconds(); //Current Seconds
-
-    //     return (
-    //         console.log(            date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec
-    //         )
-    //         date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec
-    //     )
-
-        
-    // )
 
     //게시판 탭 설정
     const tabs = ['자유게시판', '질문게시판', '합격수기'];
@@ -112,7 +44,6 @@ const PostPage = () => {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-          
           headerRight: () => (
             <TouchableOpacity
               onPress={() => setPostModal(true)}
@@ -145,7 +76,21 @@ const PostPage = () => {
     }
 
     const handleTab = tab => {
+        // setActive(tab)
+        console.log(tab)
+        // const filtered = bbs.filter(item => {
+        //     console.log(item)
+        //     item.category.includes(tab.toLowerCase())
+        // });
+        const filtered = bbs.filter(item =>
+            console.log(item)
+            // item.category.includes(tab.toLowerCase())
+        );
+        console.log(filtered)
         setActive(tab)
+        setBbs(filtered)
+
+        
     }
 
     return (
@@ -162,19 +107,27 @@ const PostPage = () => {
                     </View> 
                 ) : (
                     <> 
-                        {active === '자유게시판' ? <PostList datas={free} /> : null }
+                        {active === '자유게시판' 
+                            ? <PostList datas={bbs} /> 
+                            : null 
+                        }
         
-                        {active === '질문게시판' ? (
-                            <PostList 
-                                datas={qna}
-                            />
+                        {/* {active === '질문게시판' ? (
+                            
                         ) : null}
                         {active === '합격수기' ? (
                             <PostList 
-                                datas={free}
+                                // datas={free}
                             />
-                        ) : null}
-                        {postModal ? <PostModal visible={postModal} close={() => {setPostModal(false)}} complete={() => {setPostModal(false)}} /> : (null)}
+                        ) : null} */}
+                        {postModal 
+                            ? 
+                                (<PostModal 
+                                    visible={postModal} 
+                                    close={() => setPostModal(false)} 
+                                    complete={() => setPostModal(false)}
+                                />) 
+                            : null}
                     </>
                 )}
                 
