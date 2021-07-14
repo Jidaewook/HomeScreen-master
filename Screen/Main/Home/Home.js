@@ -291,6 +291,7 @@ import Card from '../../../component/common/Card';
 import {useNavigation} from '@react-navigation/native';
 import Axios from 'axios';
 import { Alert } from 'react-native';
+import { theme } from 'galio-framework';
 
 
 const {width} = Dimensions.get("screen");
@@ -430,8 +431,17 @@ const Home = () => {
 };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: themes.colors.main}}>
-      <StatusBar translucent={false} backgroundColor={themes.colors.basic} />
+    <SafeAreaView 
+      style={{flex: 1, backgroundColor: themes.colors.main}}
+    >
+      <StatusBar 
+        backgroundColor={themes.colors.main}
+        translucent={false} 
+        animated={true}
+        hidden={false}
+        barStyle={'dark-content'}
+        
+      />
       <View style={styles.header}>
         <MaterialIcons name="sort" size={28} color={themes.colors.main} />
         <TouchableOpacity

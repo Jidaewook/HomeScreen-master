@@ -6,6 +6,7 @@ import {AntDesign} from '@expo/vector-icons';
 import axios from 'axios';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import themes from '../config/themes';
+import {useNavigation} from '@react-navigation/native';
 
 const Common = styled.SafeAreaView`
   background-color: white;
@@ -70,7 +71,7 @@ const MenuItem = [
 
 const Setting = () => {
 
-    // const navigation = useNavigation();
+    const navigation = useNavigation();
     const ProfilePage = () => {
       navigation.navigate("ProfilePage")
     };

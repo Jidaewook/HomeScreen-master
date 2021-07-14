@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     divider: {
         width: '100%',
         borderWidth: 1,
-        borderColor: themes.colors.view
+        borderColor: themes.colors.brightGray
     }
 
 });

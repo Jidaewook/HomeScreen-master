@@ -24,13 +24,13 @@ const ProfileTitle = styled.Text`
     margin-left: 15px;
 `;
 
-const ProfileSubTitle = styled.Text`
-    font-size: 13px;
-    color: ${themes.colors.view};
-`;
+// const ProfileSubTitle = styled.Text`
+//     font-size: 13px;
+//     color: ${themes.colors.view};
+// `;
 
 const Container = styled.View`
-    background-color: ${themes.colors.view};
+    background-color: ${themes.colors.brightGray};
     flex-direction: row;
     align-items: center;
     padding: 5px;
