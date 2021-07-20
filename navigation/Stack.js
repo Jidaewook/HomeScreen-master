@@ -9,6 +9,8 @@ import NcsBbs from '../Screen/Main/Detail/NcsBbs';
 import PsatBbs from '../Screen/Main/Detail/PsatBbs';
 import CommunicationList from '../Screen/Main/Detail/NcsBbsList/CommunicationList';
 import MathList from '../Screen/Main/Detail/NcsBbsList/MathList';
+import morePsat from '../Screen/Main/BBS/morePsat';
+import moreNcs from '../Screen/Main/BBS/moreNcs';
 import Setting from '../Screen/Setting';
 import BackBtn from '../component/common/BackBtn';
 import Header from '../component/common/Header';
@@ -93,6 +95,26 @@ export default () => {
                     }
                 }}
                 name="PsatBbs" component={PsatBbs} 
+            />
+            <HomeStack.Screen 
+                options={{
+                    title: "",
+                    headerShown: true,
+                    headerStyle: {
+                        height: 100,
+                    }
+                }}
+                name="morePsat" component={morePsat} 
+            />
+            <HomeStack.Screen 
+                options={{
+                    title: "",
+                    headerShown: true,
+                    headerStyle: {
+                        height: 100,
+                    }
+                }}
+                name="moreNcs" component={moreNcs} 
             />
             
         </HomeStack.Navigator>

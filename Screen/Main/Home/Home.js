@@ -329,54 +329,6 @@ const articles = [
       likes: [],
       url: `https://youtu.be/X3nq35bfJmA`
     },
-    // {
-    //   id: 1101822003,
-    //   title: '상황구성_위치추론 (2)',
-    //   desc: "문제해결능력, 위치추론 기본이론. 문제해결 접근법을 적용하라",
-    //   genre_ids: [
-    //     14,
-    //     102
-    //   ],
-    //   rating: 6.5,
-    //   poster_path: require("../HomeScreen-master/assets/images/thumb/sample2.png"),
-    //   backdrop_path: require('../HomeScreen-master/assets/images/thumb/back3.jpeg'),
-    //   professor: {},
-    //   comments: [],
-    //   likes: [],
-    //   url: `https://youtu.be/h03HjVWloQU`
-    // },
-    // {
-    //   id: 1101822004,
-    //   title: '상황구성_요일추론 (1)',
-    //   desc: "문제해결능력, 요일문제는 단순하다. 정해진 틀에서 빠르게 해결하라",
-    //   genre_ids: [
-    //     14,
-    //     102
-    //   ],
-    //   rating: 8.5,
-    //   poster_path: require("../HomeScreen-master/assets/images/thumb/sample3.jpeg"),
-    //   backdrop_path: require('../HomeScreen-master/assets/images/thumb/back4.jpeg'),
-    //   professor: {},
-    //   comments: [],
-    //   likes: [],
-    //   url: `https://youtu.be/X3nq35bfJmA`
-    // },
-    // {
-    //   id: 1101822005,
-    //   title: '상황구성_요일추론 (2)',
-    //   desc: "문제해결능력, 요일추론 접근법 확인과 실전 적용",
-    //   genre_ids: [
-    //     14,
-    //     102
-    //   ],
-    //   rating: 10.0,
-    //   poster_path: require("../HomeScreen-master/assets/images/thumb/sample4.jpeg"),
-    //   backdrop_path: require('../HomeScreen-master/assets/images/thumb/back5.jpeg'),
-    //   professor: {},
-    //   comments: [],
-    //   likes: [],
-    //   url: `https://youtu.be/X3nq35bfJmA`
-    // }
 ]
 
 
@@ -385,11 +337,10 @@ const Home = () => {
   const [ncs, setNcs] = useState([]);
   const [psat, setPsat] = useState([]);
   const [notice, setNotice] = useState([]);
-  
-  const getData = async() => {
+
+  const getNcs = async() => {
     Axios.get("http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs")
       .then(res => {
-        // console.log(res.data.results)
         setNcs(res.data.results)
       })
       .catch(err => {
@@ -419,14 +370,14 @@ const Home = () => {
   }
 
   useEffect(() => {
-    getData()
+    getNcs()
     getPsat()
     getNotice()
   }, []);
   
   const navigation = useNavigation();
   const goToDetail = (id, genre) => {
-    navigation.navigate("Detail", {id, genre})
+    navigation.navigate("Detail", {id: key})
     console.log("112391283019283012983", genre)
 };
 
@@ -478,20 +429,15 @@ const Home = () => {
         <View style={{height: 50}} />
         <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.group}>                   
-          <View style={{display:'flex', flexDirection: 'row'}}>
+          <View style={{display:'flex'}}>
             <Section title={'NCS'}>
               {ncs.map(i => (
-                // <TouchableOpacity
-                //   onPress={()=> navigation.navigate("Detail", {key})}
-                  
-                // >
                   <Card 
                     item={i}
                     style={{marginRight: themes.sizes.base, width: 150}}
                   />
-                // </TouchableOpacity>
               ))}
-            </Section>
+            </Section>            
           </View>
           <View style={{display:'flex', flexDirection: 'row'}}>
             <Section title={'PSAT'}>

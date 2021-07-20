@@ -15,22 +15,18 @@ const Alarm = () => {
             <HLine />
             <View style={styles.Container}>
                 <Text style={styles.TitleContainer}>
-                    학습 알람
+                    NCS 알람
                 </Text>
                 <ToggleSwitch />
-
             </View>
             <HLine />
-
             <View style={styles.Container}>
                 <Text style={styles.TitleContainer}>
-                    푸시 알림
+                    PSAT 알람
                 </Text>
                 <ToggleSwitch />
-
             </View>
             <HLine />
-
         </ScrollView>
     );
 };

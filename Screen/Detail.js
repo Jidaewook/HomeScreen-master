@@ -9,6 +9,7 @@ import Card from '../component/common/Card';
 import themes from '../config/themes';
 import { Feather } from '@expo/vector-icons';
 import { theme } from 'galio-framework';
+import Axios from 'axios';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
@@ -107,6 +108,10 @@ const Detail = ({key}) => {
     const [moviesDetial, setMoviesDetail] = useState({});
 
     const getData = async ({key}) => {
+        // NCS 디테일과 PSAT 디테일 키값을 따로 가져갈 수 없을까
+
+        // await Axios.get(`http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs`)
+
         // console.log("xxxxxxxxx", category)
 
         // if (category === "notice") {

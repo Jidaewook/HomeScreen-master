@@ -19,14 +19,14 @@ const Section = ({title, horizontal=true, children, show=true}) => {
                 {/* 상황값 필요 */}
                 {title==="NCS" ? 
                     <TouchableOpacity
-                        onPress={() => navigation.navigate("NcsBbs")}
+                        onPress={() => navigation.navigate("moreNcs")}
                     >
                         <Text size={12} color={themes.fontsColor.SubTitle} style={styles.more}>
                             {show === true ? ("더보기") : (null)}
                         </Text>
                     </TouchableOpacity> 
                 :   <TouchableOpacity
-                        onPress={() => navigation.navigate("PsatBbs")}
+                        onPress={() => navigation.navigate("morePsat")}
                     >
                         <Text size={12} color={themes.fontsColor.SubTitle} style={styles.more}>
                             {show === true ? ("더보기") : (null)}

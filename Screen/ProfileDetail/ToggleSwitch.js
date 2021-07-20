@@ -9,8 +9,8 @@ const ToggleSwitch = () => {
     return (
         <View style={styles.containter}>
             <Switch 
-                trackColor={{ false: 'white', true: '#68a3a3'}}
-                thumbColor={isEnabled ? '#e3fff8' : '#f4f3f4'}
+                trackColor={{ false: 'white', true: themes.colors.view}}
+                thumbColor={isEnabled ? themes.colors.brightGray : '#f4f3f4'}
                 ios_backgroundColor={themes.colors.gray}
                 onValueChange={toggleSwitch}
                 value={isEnabled}
