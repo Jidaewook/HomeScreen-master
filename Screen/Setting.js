@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {AsyncStorage, SectionList, StatusBar, Linking, View, Alert, Text, StyleSheet} from 'react-native';
+import {AsyncStorage, SectionList, StatusBar, SafeAreaView, View, Alert, Text, StyleSheet} from 'react-native';
 import styled from 'styled-components';
 import SettingSection from '../component/common/SettingSection';
 import {AntDesign} from '@expo/vector-icons';
@@ -7,7 +7,8 @@ import axios from 'axios';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import themes from '../config/themes';
 import {useNavigation} from '@react-navigation/native';
-import { SafeAreaView } from 'react-native';
+import * as Linking from 'expo-linking';
+
 
 const Common = styled.SafeAreaView`
   background-color: white;
@@ -80,9 +81,8 @@ const Setting = () => {
     navigation.navigate(a)
   };
 
-  const openOnPressMail = (email) => {
-    const url = `mailto:dw4157@naver.com`;
-    Linking.canOpenURL(url)
+  const openOnPressMail = () => {
+    Linking.openURL("mailto:dw4157@naver.com")
             .then((supported) => {
               if (supported) {
                 return Linking.openURL(url)
@@ -149,13 +149,7 @@ const Setting = () => {
             style={styles.itemBox}
             onPress={() => {
               switch (item.title) {
-                case "서비스문의" :
-                  openOnPressMail();
-                  break
-                case "오류신고" : 
-                  openOnPressMail();
-                  break
-                case "구독문의" : 
+                case "서비스문의", "오류신고", "구독문의" :
                   openOnPressMail();
                   break
                 case "로그아웃" :

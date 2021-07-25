@@ -281,62 +281,19 @@ import React, { useEffect, useState } from 'react';
 import {Text, View, SafeAreaView, StatusBar, StyleSheet, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { TextInput } from 'react-native-gesture-handler';
-import Swiper from 'react-native-web-swiper';
 
-import NcsBbs from '../Detail/NcsBbs';
-import Slide from '../../../component/common/Slide';
 import themes from '../../../config/themes';
 import Section from '../../../component/common/Section';
 import Card from '../../../component/common/Card';
-import {useNavigation} from '@react-navigation/native';
+// import {useNavigation} from '@react-navigation/native';
 import Axios from 'axios';
-import { Alert } from 'react-native';
-import { theme } from 'galio-framework';
-
 
 const {width} = Dimensions.get("screen");
-
-const articles = [
-  {
-    id: 1101822001,
-    title: '시간, 속력, 거리 (1)',
-    desc: "수리능력 중 응용수리 영역의 첫 번째 난관, 시간/속력/거리 첫번째 시간",
-    genre_ids: [
-      14,
-      101
-    ],
-    rating: 5.5,
-    poster_path: 'https://images.unsplash.com/photo-1516559828984-fb3b99548b21?ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80',
-    backdrop_path: 'https://images.unsplash.com/photo-1516559828984-fb3b99548b21?ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80',
-    professor: {},
-    comments: [],
-    likes: [],
-    url: `https://youtu.be/16iF_hKs034`
-    },
-    {
-      id: 1101822002,
-      title: '상황구성_위치추론 (1)',
-      desc: "문제해결능력, 위치추론 기초이론",
-      genre_ids: [
-        14,
-        100
-      ],
-      rating: 6.5,
-      poster_path: 'https://images.unsplash.com/photo-1519368358672-25b03afee3bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2004&q=80',
-      backdrop_path: 'https://images.unsplash.com/photo-1519368358672-25b03afee3bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2004&q=80',
-      professor: {},
-      comments: [],
-      likes: [],
-      url: `https://youtu.be/X3nq35bfJmA`
-    },
-]
-
 
 
 const Home = () => {
   const [ncs, setNcs] = useState([]);
   const [psat, setPsat] = useState([]);
-  const [notice, setNotice] = useState([]);
 
   const getNcs = async() => {
     Axios.get("http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs")
@@ -351,18 +308,8 @@ const Home = () => {
   const getPsat = async() => {
     Axios.get("http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/psat")
       .then(res => {
-        // console.log(res.data.results)
+        console.log(res.data.results)
         setPsat(res.data.results)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-
-  const getNotice = async() => {
-    Axios.get("http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/notice")
-      .then(res => {
-        setNotice(res.data.results)
       })
       .catch(err => {
         console.log(err)
@@ -372,14 +319,12 @@ const Home = () => {
   useEffect(() => {
     getNcs()
     getPsat()
-    getNotice()
   }, []);
   
-  const navigation = useNavigation();
-  const goToDetail = (id, genre) => {
-    navigation.navigate("Detail", {id: key})
-    console.log("112391283019283012983", genre)
-};
+//   const navigation = useNavigation();
+//   const goToDetail = (id) => {
+//     navigation.navigate("Detail", {id})
+// };
 
   return (
     <SafeAreaView 
@@ -442,15 +387,11 @@ const Home = () => {
           <View style={{display:'flex', flexDirection: 'row'}}>
             <Section title={'PSAT'}>
               {psat.map(i => (
-                <TouchableOpacity
-                  onPress={()=> goToDetail(i.key)}
-                >
                   <Card 
                       item={i}
                       full
                       style={{marginRight: themes.sizes.base, width: 250}}
                   />
-                </TouchableOpacity>
               ))}
             </Section>
           </View>

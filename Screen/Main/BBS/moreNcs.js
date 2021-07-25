@@ -1,24 +1,28 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, ActivityIndicator} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, ActivityIndicator, FlatList, Image, Dimensions, ImageBackground} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 // import moment from 'moment';
-// import Moment from 'react-moment';
+import Moment from 'react-moment';
 
 import {COLORS, theme} from '../../../consts';
 import BadgePill from '../../../component/common/BadgePill';
+import themes from '../../../config/themes';
 
+const {width, height} = Dimensions.get('window');
 
 const moreNcs = () => {
     const navigation = useNavigation();
 
-    const categories = ['전체강의', 'Major4', 'Minor6']
+    const categories = ['전체강의', '주요-강의', '주요-학습지', 'Minor6', '썰방']
     
     const [active, setActive] = useState('전체강의');
 
     const [loading, setLoading] = useState(true);
 
     const [ncs, setNcs] = useState([]);
+
+    const nowTime = Date.now();
 
     const getNcsData = async() => {
         await axios.get(`http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs`)
@@ -63,36 +67,84 @@ const moreNcs = () => {
     }
 
     return (
-        <SafeAreaView style={styles.safeView}>
+        <SafeAreaView style={{backgroundColor: COLORS.light, height: '100%'}}>
             <View style={styles.categories}>
                 {categories.map(category => renderCategory(category))}
             </View>
             <View style={{backgroundColor: COLORS.light}}>
-                {ncs.map(item => (
-                        <TouchableOpacity>
-                            <View style={styles.bbsList}>
-                                <View style={{flexDirection: 'row'}}> 
-                                    {/* {item.tag.map(t => (
-                                        <View style={{paddingLeft: 10}}>
-                                            <BadgePill
-                                                title={"#"+t}
-                                                textStyle={[styles.badgePill, {paddingVertical: 5, paddingHorizontal: 10, opacity: 1 }]}
-                                            />
-                                        </View>
-                                    ))} */}
-                                </View>
-                                {/* <Moment from={Date.now()} element={Text} style={{color: COLORS.gray, fontSize: theme.sizes.h5}}>
-                                    {item.createdAt}
-                                </Moment> */}
-                            </View>
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={[styles.titleStyle, {width: '65%'}]}>
-                                    {item.title}
+                <FlatList 
+                    showsVerticalScrollIndicator={false}
+                    numColumns={2}
+                    // ListHeaderComponent={
+                    //     <ScrollView
+                    //         pagingEnabled={true}
+                    //         horizontal
+                    //         showsHorizontalScrollIndicator={false}
+                    //         style={{
+                    //             height: 150,
+                    //             width: '100%'
+                    //         }}
+                    //     >
+                    //         <Text>
+                    //             광고영역
+                    //         </Text>
+                    //     </ScrollView>
+                    // }
+                    data={ncs}
+                    keyExtractor={(item) => item._id}
+                    renderItem={({item}) => (
+                        <View style={styles.cardView}>
+                            <ImageBackground source={require('../../../assets/cloudy.jpeg')} style={styles.bgImage}>
+                            
+                            <View style={{height: 20, marginTop: 240 }}>
+                                <Text style={styles.cardContent}>
+                                    {item.title.slice(0,15)}
                                 </Text>
                             </View>
+                            <View>
+                                <Text style={styles.cardDesc}>
+                                    {item.desc.slice(0,20)}
+                                </Text>
+                            </View>
+                            </ImageBackground>
+                            <View style={styles.footer}>
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate('Detail', {id: item._id})}
+                                >
+
+                                    <Text>바로가기</Text>
+                                </TouchableOpacity>
+                            </View>
                             
-                        </TouchableOpacity>
-                ))}
+                        </View>
+                    )}
+                />
+                    
+
+                    {/* <View style={styles.bbsList}>
+                        <View style={{flexDirection: 'row'}}> 
+                            <Text>
+                                {nowTime}
+                            </Text>
+                            {item.tag.map(t => (
+                                <View style={{paddingLeft: 10}}>
+                                    <BadgePill
+                                        title={"#"+t}
+                                        textStyle={[styles.badgePill, {paddingVertical: 5, paddingHorizontal: 10, opacity: 1 }]}
+                                    />
+                                </View>
+                            ))}
+                        </View>
+                        <Moment from={Date.now()} element={Text} style={{color: COLORS.gray, fontSize: theme.sizes.h5}}>
+                            {item.createdAt}
+                        </Moment>
+                    </View>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={[styles.titleStyle, {width: '65%'}]}>
+                            {item.title}
+                        </Text>
+                    </View> */}
+                    
             </View>
 
         </SafeAreaView>
@@ -128,18 +180,75 @@ const styles = StyleSheet.create({
         paddingRight: 10
 
     }, 
-    titleStyle: {
-        fontSize: theme.sizes.h4,
-        letterSpacing: -.72,
-        fontWeight: '500',
-        color: COLORS.black,
-        paddingVertical: 10,
-        marginHorizontal: 15
-    },
+    // titleStyle: {
+    //     fontSize: theme.sizes.h4,
+    //     letterSpacing: -.72,
+    //     fontWeight: '500',
+    //     color: COLORS.black,
+    //     paddingVertical: 10,
+    //     marginHorizontal: 15
+    // },
     badgePill: {
         fontSize: theme.sizes.h5,
         letterSpacing: -0.6,
         color: COLORS.black,
         opacity: .5
+    },
+    bgImage: {
+        flex: 1, 
+        width: '100%', 
+        height: '100%', 
+        resizeMode: 'stretch', 
+        marginTop: 5, 
+        // marginRight: 5, 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        // borderRadius: 100,
+        opacity: 0.9
+    },
+    cardView: {
+        // backgroundColor: COLORS.gray1,
+        flex: 1, 
+        margin: 20,
+        // width: width,
+        height: 200,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        // flexGrow: 0
+    }, 
+    cardContent: {
+        // backgroundColor: COLORS.gray1,
+        flex: 1,
+        marginTop: 0,
+        // marginLeft: 10,
+        // marginRight: 10,
+        width: '90%',
+        height: 30,
+        textAlign: 'left',
+        // justifyContent: 'center',
+        alignItems: 'flex-start',
+        fontWeight: 'bold',
+        fontSize: themes.sizes.h3
+    },
+    cardDesc: {
+        flex: 1,
+        // marginLeft: 10,
+        // marginRight: 10,
+        width: '90%',
+        height: 30,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        textAlign: 'left',
+        // backgroundColor: COLORS.purple
+    },  
+    footer: {
+        backgroundColor: COLORS.tertiary,
+        margin: 0,
+        height: 30,
+        width: '100%',
+        justifyContent: 'center',
+        textAlign: 'center',
+        alignItems: 'center'
     }
 })

@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {View, Image, Text, StatusBar, StyleSheet, Dimensions, TextInput, FlatList, ScrollView, TouchableOpacity, SafeAreaView, Button, ActivityIndicator} from "react-native";
+import {View, Text, StatusBar, StyleSheet, Dimensions, TextInput, FlatList, ScrollView, TouchableOpacity, SafeAreaView, Button, ActivityIndicator} from "react-native";
 import YoutubePlayer from 'react-native-youtube-iframe';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+
 // import {lectureApi, noticeApi} from '../api';
 import movieApi from '../movieApi';
 import Section from '../component/common/Section';
@@ -9,7 +10,7 @@ import Card from '../component/common/Card';
 import themes from '../config/themes';
 import { Feather } from '@expo/vector-icons';
 import { theme } from 'galio-framework';
-import Axios from 'axios';
+import axios from 'axios';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
@@ -95,78 +96,109 @@ const articles = [
   ]
 
 // const Detail = ({route: {params: {id, category}}}) => {
-const Detail = ({key}) => {
-    console.log('kkkkk', key)
-    const navigation = useNavigation();
-
-    const [result, setResult] = useState({
-        loading: true,
-        data: {}, 
-        dataError: null
-    });
-
-    const [moviesDetial, setMoviesDetail] = useState({});
-
-    const getData = async ({key}) => {
-        // NCS 디테일과 PSAT 디테일 키값을 따로 가져갈 수 없을까
-
-        // await Axios.get(`http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs`)
-
-        // console.log("xxxxxxxxx", category)
-
-        // if (category === "notice") {
-        //     const [notice, noticeError] = await movieApi.noticeDetail(id)
-        //     setResult({
-        //         loading: false,
-        //         data: notice,
-        //         dataError: noticeError
-        //     })
-        // } else if (category === "ncs") {
-        //     const [ncs, ncsError] = await movieApi.ncsDetail(id);
-        //     console.log("ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ", ncs)
-
-        //     setResult({
-        //         loading: false,
-        //         data: ncs,
-        //         dataError: ncsError
-        //     })
-        // } else if (category === "psat") {
-        //     const [psat, psatError] = await movieApi.psatDetail(id);
-        //     setResult({
-        //         loading: false,
-        //         data: psat,
-        //         dataError: psatError
-        //     })
-        // };
-
-        // setLectures({
-            
-        // });
-
-        // setResult({
-        //     loading: false,
-        //     data,
-        //     dataError
-        // })
-    }
-
-    useEffect(() => {
-        getData({key})
-    }, {})
+const Detail = () => {
+    // console.log('kkkkk', route.params.id)
 
     // const navigation = useNavigation();
-    // const goToDetail = (id) => {
-    //     console.log("ID", id)
-    //     navigation.navigate("Detail", {id})
-    // };
+
+    const route = useRoute();
+
+    console.log("route!!!!!!!", route.params.id)
+
+    const [detail, setDetail] = useState({});
 
     const [loading, setLoading] = useState(true);
 
-    const [active, setActive] = useState('주요내용');
+    const getDetail = async () => {
+        await axios.get(`http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs/${route.params.id}`)
+                    .then(res => {
+                        // console.log(res.data)
+                        setDetail(res.data)
+                        setLoading(false)
+                        console.log("!!!!!!!!", detail.results.title)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+    }
 
-    const tabs = ['주요내용', '관련영상', '관련기출', '질문&답변'];
+    useEffect(() => {
+        getDetail();
+    }, {})
 
-    const [text, onChangeText] = React.useState("Useless Text");
+
+    // const [result, setResult] = useState({
+    //     loading: true,
+    //     data: {}, 
+    //     dataError: null
+    // });
+
+    // const [moviesDetail, setMoviesDetail] = useState({});
+
+    // const [loading, setLoading] = useState(true);
+    // const [youtubeLoading, setYoutubeLoading] = useState(true);
+
+    // const getData = async ({id}) => {
+
+
+    //     // NCS 디테일과 PSAT 디테일 키값을 따로 가져갈 수 없을까
+
+    //     // await Axios.get(`http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs/${route.params.id}`)
+
+    //     // // console.log("xxxxxxxxx", category)
+
+    //     // if (category === "notice") {
+    //     //     const [notice, noticeError] = await movieApi.noticeDetail(id)
+    //     //     setResult({
+    //     //         loading: false,
+    //     //         data: notice,
+    //     //         dataError: noticeError
+    //     //     })
+    //     // } else if (category === "ncs") {
+    //     //     const [ncs, ncsError] = await movieApi.ncsDetail(id);
+    //     //     console.log("ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ", ncs)
+
+    //     //     setResult({
+    //     //         loading: false,
+    //     //         data: ncs,
+    //     //         dataError: ncsError
+    //     //     })
+    //     // } else if (category === "psat") {
+    //     //     const [psat, psatError] = await movieApi.psatDetail(id);
+    //     //     setResult({
+    //     //         loading: false,
+    //     //         data: psat,
+    //     //         dataError: psatError
+    //     //     })
+    //     // };
+
+    //     // setLectures({
+            
+    //     // });
+
+    //     // setResult({
+    //     //     loading: false,
+    //     //     data,
+    //     //     dataError
+    //     // })
+    // }
+
+    // useEffect(() => {
+    //     getData({id}),
+    //     setYoutubeLoading(true)
+    // }, {})
+
+    // // const navigation = useNavigation();
+    // // const goToDetail = (id) => {
+    // //     console.log("ID", id)
+    // //     navigation.navigate("Detail", {id})
+    // // };
+
+    // const [active, setActive] = useState('주요내용');
+
+    // const tabs = ['주요내용', '관련영상', '관련기출', '질문&답변'];
+
+    // const [text, onChangeText] = React.useState("Useless Text");
 
     const renderTab = (tab) => {
         const isActive = active === tab;
@@ -270,154 +302,15 @@ const Detail = ({key}) => {
         <SafeAreaView
             style={styles.Container}
         >
-            <StatusBar backgroundColor="#f58084" />
-               
-            <YoutubePlayer 
-                height={HEIGHT/3.8}
-                width='100%'
-                play={false}
-                videoId={result.data.url}
-            />
-            <View style={[styles.tabs]}>
-                {tabs.map(tab => renderTab(tab))}
+            <View style={{flex: 1, width: '100%', height: '100%', alignItems: 'center'}}>
+                <Text style={{width: 100, height: 100}}>
+                    {detail.results.title}
+                    {/* Detail */}
+                </Text>
             </View>
-        </SafeAreaView>
-        {/* <SafeAreaView style={{
-            backgroundColor: "white",
-            justifyContent: "center",
-            // marginTop: 80       
-        }}> */}
-        <View style={{backgroundColor: 'white'}}>
-                    {active === '주요내용' ? (
-                        // <View>
-                                <ScrollView contentContainerStyle={{height: 1000}}>
-
-                                {articles.slice(0, 1).map(i => (
-                                    <View>
-                                        <Text style={styles.MainTitle}>
-                                        {i.title.slice(0, 20)}
-                                    </Text>
-                                    <Text style={styles.MainDesc}>
-                                        {i.desc}
-                                    </Text>
-                                    </View>
-                                    
-                                ))}
-                                    <View>
-                                        <Text style={styles.slogan}>
-                                            "각종 적성검사의 기본기를 
-                                        </Text>
-                                        <Text style={styles.slogan}> 
-                                            탄탄하게 다집니다."
-                                        </Text>
-                                        
-                                    </View>
-                                    {/* <View style={{height: 150}}>
-                                            
-                                    </View> */}
-                                    <View>
-                                    <Text style={styles.TeacherSub}>
-                                        | 경력
-                                    </Text>
-                                    <Text style={styles.MainDesc}>
-                                        8년(2014년 ~)
-                                    </Text>
-                                    <Text style={styles.TeacherSub}>
-                                        | 전공
-                                    </Text>
-                                    <Text style={styles.MainDesc}>
-                                        경영학 박사과정
-                                    </Text>
-                                    <Text style={styles.TeacherSub}>
-                                        | 성적
-                                    </Text>
-                                    <Text style={styles.MainDesc}>
-                                        2012년 자료해석 90점,{"\n"}
-                                        '13~'18 평균 85점 이상{"\n"}
-                                        LH 등 각종 기관 필기 합격{"\n"}{"\n"}
-                                    </Text>
-                                    <Text style={styles.TeacherSub}>
-                                        | 참여
-                                    </Text>
-                                    <Text style={styles.MainDesc}>
-                                        NCS 기출문제 출제위원{"\n"}
-                                        PSAT 전국 모의고사 출제위원{"\n"}
-                                    </Text>
-                                </View>
-                                </ScrollView>
-                                
-
-                        // </View>
-                        
-                    ) : (null)}
-                    {active === '관련영상' ? (
-                        <FlatList 
-                            data={articles}
-                            keyExtractor={(item) => item.title}
-                            horizontal={false}
-                            showsHorizontalScrollIndicator={false}
-                            renderItem={renderItem}
-                            style={{width: '98%', marginBottom: 10}}
-                        />
-
-                    ) : (null)}
-                    {active === '관련기출' ? (
-                        <ScrollView style={{height: 500}}>
-                            <View style={{margin: 10}}>
-                                <Section title={'추론형'} show={false}>
-                                    {articles.map(i => (
-                                        <Card 
-                                            item={i}
-                                            // horizontal
-                                            full
-                                            style={{marginRight: theme.SIZES.BASE, width: 250}}
-                                        />
-                                    ))}
-                                </Section>
-                            </View>
-                            {/* <View style={{margin: 10}}>
-                                <Section title={'2016년'} show={false}>
-                                    {articles.map(i => (
-                                        <Card 
-                                            item={i}
-                                            // horizontal
-                                            full
-                                            style={{marginRight: theme.SIZES.BASE, width: 250}}
-                                        />
-                                    ))}
-                                </Section>
-                            </View> */}
-                        </ScrollView>
-                    ) : (null)}
-                    {active === '질문&답변' ? (
-                        <View>
-                            <View>
-                            
-                                <Text style={styles.CommentTitle}>
-                                    질문과 답변
-                                </Text>
-                                <Text style={{marginLeft: 20, marginRight: 20, color: themes.colors.gray, marginTop: 5}}>
-                                    질문에 대한 답변은 개인 쪽지나 영상 콘텐츠로 제공됩니다.
-                                </Text>
-                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                    <TextInput
-                                        onChangeText={onChangeText}
-                                        value={text}
-                                        style={styles.CommentInput}
-                                    />
-                                    <TouchableOpacity
-                                        style={styles.RegisterButton}
-                                    >
-                                        <Text style={{fontSize: 16, fontWeight: 'bold', justifyContent: 'center', color: 'white'}}>등록</Text>
-                                    </TouchableOpacity>
-                                </View>  
-                                {renderComment(comments)}
-                            </View>
-                        </View>
-                    
-                    ) : (null)}
-                </View>
-        {/* </SafeAreaView>          */}
+            
+           
+        </SafeAreaView>         
     </> 
     );
 };
