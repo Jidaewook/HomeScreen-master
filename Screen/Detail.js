@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, Text, StatusBar, StyleSheet, Dimensions, TextInput, FlatList, ScrollView, TouchableOpacity, SafeAreaView, Button, ActivityIndicator} from "react-native";
+import {View, Text, StatusBar, StyleSheet, Dimensions, TextInput, FlatList, ScrollView, TouchableOpacity, SafeAreaView, Button, ImageBackground, ActivityIndicator} from "react-native";
 import YoutubePlayer from 'react-native-youtube-iframe';
 import {useNavigation, useRoute} from '@react-navigation/native';
 
@@ -94,6 +94,8 @@ const articles = [
   ]
 
 const Detail = ({route}) => {
+
+    const navigation = useNavigation();
     
     const {id} = route.params;
 
@@ -165,14 +167,14 @@ const Detail = ({route}) => {
     const renderItem = ({item, index}) => {
         return (
             <TouchableOpacity
-                onPress={() => alert(item.title)}
-                style={{marginLeft: 20, marginBottom: 20, backgroundColor: themes.colors.view, height: 50, flexDirection: 'row', alignItems: 'center'}}
+                onPress={() => navigation.navigate('Detail', {id: item._id})}
+                style={{marginLeft: 20, marginBottom: 20, backgroundColor: COLORS.gray4, height: 50, flexDirection: 'row', alignItems: 'center'}}
             >
                 <Text style={{width: '90%'}}>
                     {item.title}
                 </Text>
                 <View style={{width: '10%'}}>
-                <Feather name="play-circle" size={24} color="black" />  
+                    <Feather name="play-circle" size={24} color="black" />  
                 </View>
             </TouchableOpacity>
             
@@ -182,13 +184,93 @@ const Detail = ({route}) => {
     function renderReply(data) {
         return(
             <FlatList 
-                data={data}
-                keyExtractor={(item) => item.name}
-                horizontal={false}
-                showsHorizontalScrollIndicator={false}
-                renderItem={renderComment}
-                // style={{marginBottom: 100}}
+                
             />
+
+            
+        )
+    }
+
+    const renderGichul = ({item, index}) => {
+        return(
+            <FlatList 
+                showsVerticalScrollIndicator={false}
+
+                data={data}
+                // 기출 별도의 api 필요
+                keyExtractor={(item) => item._id}
+                renderItem={({item}) => (
+                    <View style={styles.cardView}>
+                        <ImageBackground source={require('../assets/half-moon.png')} style={styles.bgImage}>
+                        <View style={{height: 20, marginTop: 240 }}>
+                            <Text style={styles.cardContent}>
+                                {item.title.slice(0,15)}
+                            </Text>
+                        </View>
+                        <View>
+                            <Text style={styles.cardDesc}>
+                                {item.desc.slice(0,20)}
+                            </Text>
+                        </View>
+                        </ImageBackground>
+                        <View style={styles.footer}>
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate('Detail', {id: item._id})}
+                            >
+                                <Text>바로가기</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                )}
+            />
+
+            // <FlatList 
+            //         showsVerticalScrollIndicator={false}
+            //         numColumns={2}
+            //         // ListHeaderComponent={
+            //         //     <ScrollView
+            //         //         pagingEnabled={true}
+            //         //         horizontal
+            //         //         showsHorizontalScrollIndicator={false}
+            //         //         style={{
+            //         //             height: 150,
+            //         //             width: '100%'
+            //         //         }}
+            //         //     >
+            //         //         <Text>
+            //         //             광고영역
+            //         //         </Text>
+            //         //     </ScrollView>
+            //         // }
+            //         data={ncs}
+            //         keyExtractor={(item) => item._id}
+            //         renderItem={({item}) => (
+            //             <View style={styles.cardView}>
+            //                 <ImageBackground source={require('../../../assets/cloudy.jpeg')} style={styles.bgImage}>
+                            
+            //                 <View style={{height: 20, marginTop: 240 }}>
+            //                     <Text style={styles.cardContent}>
+            //                         {item.title.slice(0,15)}
+            //                     </Text>
+            //                 </View>
+            //                 <View>
+            //                     <Text style={styles.cardDesc}>
+            //                         {item.desc.slice(0,20)}
+            //                     </Text>
+            //                 </View>
+            //                 </ImageBackground>
+            //                 <View style={styles.footer}>
+            //                     <TouchableOpacity
+            //                         onPress={() => navigation.navigate('Detail', {id: item._id})}
+            //                     >
+
+            //                         <Text>바로가기</Text>
+            //                     </TouchableOpacity>
+            //                 </View>
+                            
+            //             </View>
+            //         )}
+            //     />
         )
     }
 
@@ -321,10 +403,22 @@ const Detail = ({route}) => {
                 {active === '관련영상' ? (
                     <FlatList
                         data={data}
-                        keyExtractor={(item) => item.title}
+                        keyExtractor={(item) => item._id}
                         horizontal={false}
                         showsHorizontalScrollIndicator={false}
                         renderItem={renderItem}
+                        style={{width: '90%', marginBottom: 10}}
+                    />
+                        
+                ) : (null)}
+                {active === '관련기출' ? (
+                    <FlatList
+                        data={data}
+                        keyExtractor={(item) => item._id}
+                        horizontal={true}
+                        // numColumns={2}
+                        showsHorizontalScrollIndicator={false}
+                        renderItem={renderGichul}
                         style={{width: '90%', marginBottom: 10}}
                     />
                         
@@ -507,5 +601,102 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    category: {
+        marginRight: 20,
+        paddingVertical: 15
+    },
+    active: {
+        borderBottomColor: COLORS.black,
+        borderBottomWidth: 3
+    },
+    safeView: {
+
+    },
+    categories: {
+        borderBottomColor: COLORS.gray2,
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        marginVertical: 1,
+        marginHorizontal: 15,
+        flexDirection: 'row'
+    },
+    bbsList: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 10,
+        paddingRight: 10
+
+    }, 
+    // titleStyle: {
+    //     fontSize: theme.sizes.h4,
+    //     letterSpacing: -.72,
+    //     fontWeight: '500',
+    //     color: COLORS.black,
+    //     paddingVertical: 10,
+    //     marginHorizontal: 15
+    // },
+    badgePill: {
+        fontSize: theme.sizes.h5,
+        letterSpacing: -0.6,
+        color: COLORS.black,
+        opacity: .5
+    },
+    bgImage: {
+        flex: 1, 
+        width: '100%', 
+        height: '100%', 
+        resizeMode: 'stretch', 
+        marginTop: 5, 
+        // marginRight: 5, 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        // borderRadius: 100,
+        opacity: 0.9
+    },
+    cardView: {
+        // backgroundColor: COLORS.gray1,
+        flex: 1, 
+        margin: 20,
+        // width: width,
+        height: 200,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        // flexGrow: 0
+    }, 
+    cardContent: {
+        // backgroundColor: COLORS.gray1,
+        flex: 1,
+        marginTop: 0,
+        // marginLeft: 10,
+        // marginRight: 10,
+        width: '90%',
+        height: 30,
+        textAlign: 'left',
+        // justifyContent: 'center',
+        alignItems: 'flex-start',
+        fontWeight: 'bold',
+        fontSize: themes.sizes.h3
+    },
+    cardDesc: {
+        flex: 1,
+        // marginLeft: 10,
+        // marginRight: 10,
+        width: '90%',
+        height: 30,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        textAlign: 'left',
+        // backgroundColor: COLORS.purple
+    },  
+    footer: {
+        backgroundColor: COLORS.tertiary,
+        margin: 0,
+        height: 30,
+        width: '100%',
+        justifyContent: 'center',
+        textAlign: 'center',
+        alignItems: 'center'
     }
 });
