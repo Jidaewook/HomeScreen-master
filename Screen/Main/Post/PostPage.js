@@ -22,6 +22,7 @@ const PostPage = () => {
     
     const [bbs, setBbs] = useState([]);
 
+    const [filteredData, setFilteredData] = useState([]);
 
     const getBbsData = async() => {
         axios   
@@ -42,21 +43,21 @@ const PostPage = () => {
 
     const [postModal, setPostModal] = useState(false);
 
-    useLayoutEffect(() => {
-        navigation.setOptions({
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => setPostModal(true)}
-              style={{marginRight: 10}}>
-            <FontAwesome 
-                size={24}
-                color='black'
-                name='pencil-square-o'
-            />
-            </TouchableOpacity>
-          ),
-        });
-      }, [navigation]);
+    // useLayoutEffect(() => {
+    //     navigation.setOptions({
+    //       headerRight: () => (
+    //         <TouchableOpacity
+    //           onPress={() => setPostModal(true)}
+    //           style={{marginRight: 10}}>
+    //         <FontAwesome 
+    //             size={24}
+    //             color='black'
+    //             name='pencil-square-o'
+    //         />
+    //         </TouchableOpacity>
+    //       ),
+    //     });
+    //   }, [navigation]);
 
     const renderTab = (tab) => {
         const isActive = active === tab;
@@ -76,19 +77,12 @@ const PostPage = () => {
     }
 
     const handleTab = tab => {
-        // setActive(tab)
-        console.log(tab)
-        // const filtered = bbs.filter(item => {
-        //     console.log(item)
-        //     item.category.includes(tab.toLowerCase())
-        // });
         const filtered = bbs.filter(item =>
-            console.log(item)
-            // item.category.includes(tab.toLowerCase())
+            item.tag.includes(tab.toLowerCase())
         );
         console.log(filtered)
         setActive(tab)
-        setBbs(filtered)
+        setFilteredData(filtered)
 
         
     }
@@ -108,26 +102,25 @@ const PostPage = () => {
                 ) : (
                     <> 
                         {active === '자유게시판' 
-                            ? <PostList datas={bbs} /> 
+                            ? <PostList datas={filteredData} /> 
                             : null 
                         }
         
-                        {/* {active === '질문게시판' ? (
-                            
-                        ) : null}
-                        {active === '합격수기' ? (
-                            <PostList 
-                                // datas={free}
-                            />
-                        ) : null} */}
-                        {postModal 
+                        {active === '질문게시판' ? 
+                            <PostList datas={filteredData} />
+                            : null}
+                        {active === '합격수기' ? 
+                            <PostList datas={filteredData} />
+                            : null}
+                        {postModal && <PostModal />}
+                        {/* {postModal 
                             ? 
                                 (<PostModal 
-                                    visible={postModal} 
-                                    close={() => setPostModal(false)} 
-                                    complete={() => setPostModal(false)}
+                                    // visible={postModal} 
+                                    
+                                    // complete={() => setPostModal(false)}
                                 />) 
-                            : null}
+                            : null} */}
                     </>
                 )}
                 

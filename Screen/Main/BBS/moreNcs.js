@@ -14,7 +14,7 @@ const {width, height} = Dimensions.get('window');
 const moreNcs = () => {
     const navigation = useNavigation();
 
-    const categories = ['전체강의', '주요-강의', '주요-학습지', 'Minor6', '썰방']
+    const categories = ['전체강의', '수리능력', '학습지', '모듈과목', '썰방']
     
     const [active, setActive] = useState('전체강의');
 
@@ -23,6 +23,8 @@ const moreNcs = () => {
     const [ncs, setNcs] = useState([]);
 
     const nowTime = Date.now();
+
+    const [filteredData, setFilteredData] = useState([]);
 
     const getNcsData = async() => {
         await axios.get(`http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs`)
@@ -57,13 +59,12 @@ const moreNcs = () => {
     }
 
     const handleCategory = category => {
-        console.log(category)
         const filtered = ncs.filter(item => 
-            console.log("filterItem", item)    
+            item.genres_ids.includes(category.toLowerCase())
         );
         console.log("filtered", filtered)
         setActive(category)
-        setNcs(filtered)
+        setFilteredData(filtered)
     }
 
     return (
@@ -90,7 +91,7 @@ const moreNcs = () => {
                     //         </Text>
                     //     </ScrollView>
                     // }
-                    data={ncs}
+                    data={filteredData.length == 0 ? (ncs) : (filteredData)}
                     keyExtractor={(item) => item._id}
                     renderItem={({item}) => (
                         <View style={styles.cardView}>
@@ -119,32 +120,6 @@ const moreNcs = () => {
                         </View>
                     )}
                 />
-                    
-
-                    {/* <View style={styles.bbsList}>
-                        <View style={{flexDirection: 'row'}}> 
-                            <Text>
-                                {nowTime}
-                            </Text>
-                            {item.tag.map(t => (
-                                <View style={{paddingLeft: 10}}>
-                                    <BadgePill
-                                        title={"#"+t}
-                                        textStyle={[styles.badgePill, {paddingVertical: 5, paddingHorizontal: 10, opacity: 1 }]}
-                                    />
-                                </View>
-                            ))}
-                        </View>
-                        <Moment from={Date.now()} element={Text} style={{color: COLORS.gray, fontSize: theme.sizes.h5}}>
-                            {item.createdAt}
-                        </Moment>
-                    </View>
-                    <View style={{flexDirection: 'row'}}>
-                        <Text style={[styles.titleStyle, {width: '65%'}]}>
-                            {item.title}
-                        </Text>
-                    </View> */}
-                    
             </View>
 
         </SafeAreaView>

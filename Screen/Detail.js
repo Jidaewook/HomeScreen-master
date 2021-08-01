@@ -119,7 +119,7 @@ const Detail = ({route}) => {
                         // console.log(res.data)
                         setDetail(res.data.results)
                         setLoading(false)
-                        console.log("!!!!!!!!", detail.results.title)
+                        console.log("!!!!!!!!", detail.url)
                     })
                     .catch(err => {
                         console.log(err)
@@ -321,139 +321,174 @@ const Detail = ({route}) => {
     }
 
     return (
-    <>  
-        <SafeAreaView
-            style={styles.Container}
-        >
-            <StatusBar backgroundColor="black" />
-            <View 
-                style={{width: WIDTH, height: HEIGHT/3, alignItems: 'center'}}
-            >
-                <YoutubePlayer 
-                    videoId={detail.url}
-                    play={playing}
-                    height={300}
-
-                />
-                <Button title={playing ? "pause" : "play"} onPress={togglePlaying} />
-                
-            </View>
-            <View style={[styles.tabs]}>
-                {tabs.map(tab => renderTab(tab))}
-            </View>
-            {/* <Text style={{width: 100, height: 200}}>
-                    {detail.title}
-                    {detail.url}
-            </Text> */}
-           
-        </SafeAreaView>      
-        <View>
-        {active === '주요내용' ? (
-                    <ScrollView 
-                        style={styles.Container}
-                        
-                    >
-                        <SafeAreaView>
+        <>
+            <SafeAreaView style={styles.Container}>
+                <View style={{width: WIDTH, height: HEIGHT/3, alignItems: 'center'}}>
+                    <YoutubePlayer 
+                        videoId={detail.url}
+                        play={playing}
+                        height={300}
+                        playList={'PLbpi6ZahtOH6Blw3RGYpWkSByi_T7Rygb'}
+                    />
+                </View>
+                <View style={[styles.tabs]}>
+                    {tabs.map(tab => renderTab(tab))}
+                </View>
+                <ScrollView contentContainerStyle={{height: '130%', paddingBottom: 30, paddingHorizontal: 10}}>
+                    {active === '주요내용' && (
+                        <View style={{flex: 1}}>
                             <Text style={styles.MainTitle}>
                                 {detail.title}
                             </Text>
                             <Text style={styles.MainDesc}>
                                 {detail.desc}
                             </Text>
-                        </SafeAreaView>
-                        <SafeAreaView>
-                            <Text style={styles.slogan}>
-                                각종 적성검사의 기본기를
+                            <Text style={styles.MainTitle}>
+                                주요내용
                             </Text>
-                            <Text style={styles.slogan}>
-                                탄탄하게 다집니다!!
+                            <Text style={styles.MainTitle}>
+                                주요내용
                             </Text>
-                        </SafeAreaView>
-                        <SafeAreaView>
-                            <Text style={styles.TeacherSub}>
-                                | 경력
+                            <Text style={styles.MainTitle}>
+                                주요내용
                             </Text>
-                            <Text style={styles.MainDesc}>
-                                8년(2014년 ~)
+                            <Text style={styles.MainTitle}>
+                                주요내용
                             </Text>
-                            <Text style={styles.TeacherSub}>
-                                | 전공
+                            <Text style={styles.MainTitle}>
+                                주요내용
                             </Text>
-                            <Text style={styles.MainDesc}>
-                                경영학 박사과정
+                            <Text style={styles.MainTitle}>
+                                주요내용
                             </Text>
-                            <Text style={styles.TeacherSub}>
-                                | 성적
+                            <Text style={styles.MainTitle}>
+                                주요내용
                             </Text>
-                            <Text style={styles.MainDesc}>
-                                2012년 자료해석 90점,{"\n"}
-                                '13~'18 평균 85점 이상{"\n"}
-                                LH 등 각종 기관 필기 합격{"\n"}{"\n"}
+                            <Text style={styles.MainTitle}>
+                                주요내용
                             </Text>
-                            <Text style={styles.TeacherSub}>
-                                | 참여
+                            <Text style={styles.MainTitle}>
+                                주요내용
                             </Text>
-                            <Text style={styles.MainDesc}>
-                                NCS 기출문제 출제위원{"\n"}
-                                PSAT 전국 모의고사 출제위원{"\n"}
-                            </Text>
-                        </SafeAreaView>
-                    </ScrollView>
-                ) : (null)}
-                {active === '관련영상' ? (
-                    <FlatList
-                        data={data}
-                        keyExtractor={(item) => item._id}
-                        horizontal={false}
-                        showsHorizontalScrollIndicator={false}
-                        renderItem={renderItem}
-                        style={{width: '90%', marginBottom: 10}}
-                    />
-                        
-                ) : (null)}
-                {active === '관련기출' ? (
-                    <FlatList
-                        data={data}
-                        keyExtractor={(item) => item._id}
-                        horizontal={true}
-                        // numColumns={2}
-                        showsHorizontalScrollIndicator={false}
-                        renderItem={renderGichul}
-                        style={{width: '90%', marginBottom: 10}}
-                    />
-                        
-                ) : (null)}
-                {active === '질문&답변' ? (
-                    <View>
-                        <View>
-                            <Text style={styles.CommentTitle}>
-                                질문과 답변
-                            </Text>
-                            <Text style={{marginTop: 20, marginHorizontal: 20, color: COLORS.gray}}>
-                                질문에 대한 답변은 개인 쪽지로 드리거나 영상 콘텐츠로 제작되어 공개됩니다.
-                            </Text>
-                            <View style={{flexDirection: 'row'}}>
-                                <TextInput 
-                                    style={styles.CommentInput}
-                                    value={text}
-                                    onChangeText={onChangeText}
-                                />
-                                <TouchableOpacity 
-                                    style={styles.RegisterButton}
-                                >
-                                    <Text style={styles.CommentBtnTxt}>
-                                        등록
-                                    </Text> 
-                                </TouchableOpacity>
-                            </View>
-                            {renderComment(detail)}
-                            {/* {renderComment(Detail.comments)} */}
-
                         </View>
-                    </View>
-                ) : (null)}
-        </View>   
-    </> 
+                    )}
+
+                    {active === '관련영상' && (
+                        <View style={{flex: 1}}>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                        </View>
+                    )}
+                    {active === '관련기출' && (
+                        <View style={{flex: 1}}>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                        </View>
+                    )}
+                    {active === '질문&답변' && (
+                        <View style={{flex: 1}}>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                            <Text style={styles.MainTitle}>
+                                주요내용
+                            </Text>
+                        </View>
+                    )}
+
+                </ScrollView>
+
+            </SafeAreaView>   
+        </> 
     );
 };
 
@@ -467,6 +502,7 @@ const styles = StyleSheet.create({
         // justifyContent: "center",
         marginLeft: 0,
         marginRight: 0,
+        marginHorizontal: 20,
         // height: HEIGHT+150
     },
     tab: {

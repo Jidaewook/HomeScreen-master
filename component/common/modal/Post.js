@@ -37,6 +37,7 @@ const Post = ({visible, close, complete}) => {
     const [inquire, setInquire] = useState('게시판');
     const [list, setList] = useState('게시판');
     const [value, setValue] = useState('');
+    const [show, setShow] = useState(true);
 
     const refRBSheet = useRef();
 
@@ -81,11 +82,11 @@ const Post = ({visible, close, complete}) => {
         axios
             .post(`http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/bbs`, userData)
             .then(() => {
-                // console.log('result!!!!', result.data)
-                close
-
+                
+                
             })
             .catch(err => console.log("!!!!!!!!!", err))
+        
 
     }
 
@@ -96,8 +97,8 @@ const Post = ({visible, close, complete}) => {
 
             <Modal
                 animationType="slide"
-                visible={visible}
-                onRequestClose={close}
+                visible={show}
+                onRequestClose={setShow(false)}
                 presentationStyle={'overfullScreen'}
             >
                 <SafeAreaView
@@ -120,7 +121,7 @@ const Post = ({visible, close, complete}) => {
                         </Text>
                         
                         <TouchableOpacity
-                            onPress={close}
+                            onPress={setShow(false)}
                             style={{marginRight: 15}}
                         >
                             <AntDesign name="close" size={24} color={themes.colors.basic} />
