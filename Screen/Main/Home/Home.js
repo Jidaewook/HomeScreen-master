@@ -96,7 +96,7 @@ const Home = () => {
           </View>
         </View>
         <View style={{height: 50}} />
-        <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.group}>                   
           <View style={{display:'flex'}}>
             <Section title={'NCS'}>

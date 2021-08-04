@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, Text, StatusBar, StyleSheet, Dimensions, TextInput, FlatList, ScrollView, TouchableOpacity, SafeAreaView, Button, ImageBackground, ActivityIndicator} from "react-native";
+import {View, Text, StatusBar, StyleSheet, Dimensions, RefreshControl, TextInput, FlatList, ScrollView, TouchableOpacity, SafeAreaView, Button, ImageBackground, ActivityIndicator} from "react-native";
 import YoutubePlayer from 'react-native-youtube-iframe';
 import {useNavigation, useRoute} from '@react-navigation/native';
 
@@ -10,46 +10,6 @@ import { Feather } from '@expo/vector-icons';
 import axios from 'axios';
 import { COLORS, theme } from '../consts';
 
-const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
-
-const articles = [
-    {
-      title: 'Ice cream is made with carrageenan …',
-      image: 'https://images.unsplash.com/photo-1516559828984-fb3b99548b21?ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80',
-      cta: 'View article', 
-      desc: '아이스크림은 캐리건으로부터 만들어졌다. 본 강의에서 다룰 내용은 아이스크림의 연혁과 아이스크림을 처음 제조한 사람에 대한 내용이 될 것이다.',
-      horizontal: true
-    },
-    {
-      title: 'Is makeup one of your daily esse …',
-      image: 'https://images.unsplash.com/photo-1519368358672-25b03afee3bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2004&q=80',
-      cta: 'View article',
-      desc: '마감기한 3/6',
-
-    },
-    {
-      title: 'Coffee is more than just a drink: It’s …',
-      image: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80',
-      cta: 'View article' ,
-      desc: '마감기한 3/6',
-
-    },
-    {
-      title: 'Fashion is a popular style, especially in …',
-      image: 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1326&q=80',
-      cta: 'View article' ,
-      desc: '마감기한 3/6',
-
-    },
-    {
-      title: 'Argon is a great free UI packag …',
-      image: 'https://images.unsplash.com/photo-1482686115713-0fbcaced6e28?fit=crop&w=1947&q=80',
-      cta: 'View article', 
-      desc: '마감기한 3/6',
-
-      horizontal: true
-    },
-  ]
 
   const comments = [
     {
@@ -108,13 +68,15 @@ const Detail = ({route}) => {
     const tabs = ['주요내용', '관련영상', '관련기출', '질문&답변'];
     const [text, onChangeText] = useState('Useless Text');
     const [playing, setPlaying] = useState(false);
+    const [refresh, setRefresh] = useState(false);
+
 
     const togglePlaying = useCallback(() => {
         setPlaying((prev) => !prev);
     }, [])
 
-    const getDetail = async () => {
-        await axios.get(`http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs/${id}`)
+    const getDetail = async (detailId) => {
+        await axios.get(`http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs/${detailId}`)
                     .then(res => {
                         // console.log(res.data)
                         setDetail(res.data.results)
@@ -137,9 +99,14 @@ const Detail = ({route}) => {
                         })
     }
 
+    // const onPress = useCallback(async(id) => {
+    //     setRefresh(true);
+    //     getDetail(id)
+    //     setRefresh(false);
+    // }, [refresh]);
 
     useEffect(() => {
-        getDetail();
+        getDetail(id);
         getData();
     }, {})
 
@@ -155,7 +122,6 @@ const Detail = ({route}) => {
                 <Text style={{fontSize: 15, fontWeight: 'bold', color: isActive ? 'black' : 'gray'}}>
                     {tab}
                 </Text>
-                
             </TouchableOpacity>
         )
     }
@@ -167,7 +133,10 @@ const Detail = ({route}) => {
     const renderItem = ({item, index}) => {
         return (
             <TouchableOpacity
-                onPress={() => navigation.navigate('Detail', {id: item._id})}
+                onPress={() => {
+                    getDetail(item._id)
+                    handleTab("주요내용")
+                }}
                 style={{marginLeft: 20, marginBottom: 20, backgroundColor: COLORS.gray4, height: 50, flexDirection: 'row', alignItems: 'center'}}
             >
                 <Text style={{width: '90%'}}>
@@ -177,7 +146,6 @@ const Detail = ({route}) => {
                     <Feather name="play-circle" size={24} color="black" />  
                 </View>
             </TouchableOpacity>
-            
         )
     }
 
@@ -193,90 +161,36 @@ const Detail = ({route}) => {
 
     const renderGichul = ({item, index}) => {
         return(
-            <FlatList 
-                showsVerticalScrollIndicator={false}
+            <View style={styles.cardView}>
+                <ImageBackground source={require('../assets/images/thumb/sample.jpeg')} style={styles.bgImage}>
+                
+                <View style={{height: 20, marginTop: 240, justifyContent: 'center', }}>
+                    <Text style={styles.cardContent}>
+                        {item.title.slice(0,15)}
+                    </Text>
+                </View>
+                <View>
+                    <Text style={styles.cardDesc}>
+                        {item.desc.slice(0,20)}
+                    </Text>
+                </View>
+                </ImageBackground>
+                <View style={styles.footer}>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('Detail2', {id: item._id})}
+                    >
 
-                data={data}
-                // 기출 별도의 api 필요
-                keyExtractor={(item) => item._id}
-                renderItem={({item}) => (
-                    <View style={styles.cardView}>
-                        <ImageBackground source={require('../assets/half-moon.png')} style={styles.bgImage}>
-                        <View style={{height: 20, marginTop: 240 }}>
-                            <Text style={styles.cardContent}>
-                                {item.title.slice(0,15)}
-                            </Text>
-                        </View>
-                        <View>
-                            <Text style={styles.cardDesc}>
-                                {item.desc.slice(0,20)}
-                            </Text>
-                        </View>
-                        </ImageBackground>
-                        <View style={styles.footer}>
-                            <TouchableOpacity
-                                onPress={() => navigation.navigate('Detail', {id: item._id})}
-                            >
-                                <Text>바로가기</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                )}
-            />
-
-            // <FlatList 
-            //         showsVerticalScrollIndicator={false}
-            //         numColumns={2}
-            //         // ListHeaderComponent={
-            //         //     <ScrollView
-            //         //         pagingEnabled={true}
-            //         //         horizontal
-            //         //         showsHorizontalScrollIndicator={false}
-            //         //         style={{
-            //         //             height: 150,
-            //         //             width: '100%'
-            //         //         }}
-            //         //     >
-            //         //         <Text>
-            //         //             광고영역
-            //         //         </Text>
-            //         //     </ScrollView>
-            //         // }
-            //         data={ncs}
-            //         keyExtractor={(item) => item._id}
-            //         renderItem={({item}) => (
-            //             <View style={styles.cardView}>
-            //                 <ImageBackground source={require('../../../assets/cloudy.jpeg')} style={styles.bgImage}>
-                            
-            //                 <View style={{height: 20, marginTop: 240 }}>
-            //                     <Text style={styles.cardContent}>
-            //                         {item.title.slice(0,15)}
-            //                     </Text>
-            //                 </View>
-            //                 <View>
-            //                     <Text style={styles.cardDesc}>
-            //                         {item.desc.slice(0,20)}
-            //                     </Text>
-            //                 </View>
-            //                 </ImageBackground>
-            //                 <View style={styles.footer}>
-            //                     <TouchableOpacity
-            //                         onPress={() => navigation.navigate('Detail', {id: item._id})}
-            //                     >
-
-            //                         <Text>바로가기</Text>
-            //                     </TouchableOpacity>
-            //                 </View>
-                            
-            //             </View>
-            //         )}
-            //     />
+                        <Text>바로가기</Text>
+                    </TouchableOpacity>
+                </View>
+                
+            </View>
         )
     }
 
     const renderComment = ({item}) => {
         return (
-            <ScrollView style={{height: 500}}>
+            <View style={{height: '200%'}}>
                 {comments.map(item => (
                     <View 
                         style={{
@@ -315,7 +229,7 @@ const Detail = ({route}) => {
                         </View>
                     </View>
                 ))}
-            </ScrollView>
+            </View>
             
         )
     }
@@ -323,166 +237,126 @@ const Detail = ({route}) => {
     return (
         <>
             <SafeAreaView style={styles.Container}>
-                <View style={{width: WIDTH, height: HEIGHT/3, alignItems: 'center'}}>
+                <View>
                     <YoutubePlayer 
-                        videoId={detail.url}
-                        play={playing}
-                        height={300}
-                        playList={'PLbpi6ZahtOH6Blw3RGYpWkSByi_T7Rygb'}
+                        height={250}
+                        play={true}
+                        videoId={'https://www.youtube.com/watch?v=Phczgr5dyw4'}
                     />
                 </View>
                 <View style={[styles.tabs]}>
                     {tabs.map(tab => renderTab(tab))}
                 </View>
-                <ScrollView contentContainerStyle={{height: '130%', paddingBottom: 30, paddingHorizontal: 10}}>
+                <ScrollView style={{height: 1200}} showsVerticalScrollIndicator={false}> 
+
                     {active === '주요내용' && (
-                        <View style={{flex: 1}}>
-                            <Text style={styles.MainTitle}>
-                                {detail.title}
-                            </Text>
-                            <Text style={styles.MainDesc}>
-                                {detail.desc}
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                        </View>
+                        <ScrollView style={[styles.Container]}  contentContainerStyle={{height: '140%', paddingBottom: 30, paddingHorizontal: 10}}>
+                            <View>
+                                <Text style={styles.MainTitle}>
+                                    {detail.title}
+                                </Text>
+                                <Text style={styles.MainDesc}>
+                                    {detail.desc}
+                                </Text>
+                            </View>
+                            <View>
+                                <Text style={styles.slogan}>
+                                    각종 적성검사의 기본기를
+                                </Text>
+                                <Text style={styles.slogan}>
+                                    탄탄하게 다집니다!!
+                                </Text>
+                            </View>
+                            <View>
+                                <Text style={styles.TeacherSub}>
+                                    | 경력
+                                </Text>
+                                <Text style={styles.MainDesc}>
+                                    8년(2014년 ~)
+                                </Text>
+                                <Text style={styles.TeacherSub}>
+                                    | 전공
+                                </Text>
+                                <Text style={styles.MainDesc}>
+                                    경영학 박사과정
+                                </Text>
+                                <Text style={styles.TeacherSub}>
+                                    | 성적
+                                </Text>
+                                <Text style={styles.MainDesc}>
+                                    2012년 자료해석 90점,{"\n"}
+                                    '13~'18 평균 85점 이상{"\n"}
+                                    LH 등 각종 기관 필기 합격{"\n"}{"\n"}
+                                </Text>
+                                <Text style={styles.TeacherSub}>
+                                    | 참여
+                                </Text>
+                                <Text style={styles.MainDesc}>
+                                    NCS 기출문제 출제위원{"\n"}
+                                    PSAT 전국 모의고사 출제위원{"\n"}
+                                </Text>
+                            </View>
+                        </ScrollView>
                     )}
 
                     {active === '관련영상' && (
-                        <View style={{flex: 1}}>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                        </View>
+                        <FlatList
+                            data={data}
+                            keyExtractor={(item) => item.title}
+                            horizontal={false}
+                            showsHorizontalScrollIndicator={false}
+                            renderItem={renderItem}
+                            style={{width: '90%', marginTop: 10, marginBottom: 10, height: 500}}
+                        />
                     )}
                     {active === '관련기출' && (
-                        <View style={{flex: 1}}>
-                            <Text style={styles.MainTitle}>
-                                주요내용
+                        <ScrollView style={[styles.Container]}  contentContainerStyle={{height: '180%', paddingBottom: 30, paddingHorizontal: 10}}>                            
+                            <Text style={styles.Gichul}>
+                                관련 기출은 무엇이 있을까?
                             </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
+                            <Text style={styles.Gichul}>
+                                적성검사 완성은 무조건 기출!!!
                             </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                        </View>
+                            <FlatList
+                                data={data}
+                                keyExtractor={(item) => item.title}
+                                horizontal={false}
+                                showsHorizontalScrollIndicator={false}
+                                renderItem={renderGichul}
+                                style={{width: '100%', marginBottom: 10}}
+                            />
+                        </ScrollView>
+                        
                     )}
                     {active === '질문&답변' && (
-                        <View style={{flex: 1}}>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                            <Text style={styles.MainTitle}>
-                                주요내용
-                            </Text>
-                        </View>
+                        <ScrollView style={[styles.Container]}  contentContainerStyle={{height: '170%', paddingBottom: 30, paddingHorizontal: 10}}>
+                            <View>
+                                <Text style={styles.CommentTitle}>
+                                    질문과 답변
+                                </Text>
+                                <Text style={{marginTop: 20, marginHorizontal: 20, color: COLORS.gray}}>
+                                    질문에 대한 답변은 개인 쪽지로 드리거나 영상 콘텐츠로 제작되어 공개됩니다.
+                                </Text>
+                                <View style={{flexDirection: 'row'}}>
+                                    <TextInput 
+                                        style={styles.CommentInput}
+                                        value={text}
+                                        onChangeText={onChangeText}
+                                    />
+                                    <TouchableOpacity 
+                                        style={styles.CommentBtn}
+                                        onPress={() => alert("등록하시겠습니까?")}
+
+                                    >
+                                        <Text style={styles.CommentBtnTxt}>
+                                            등록
+                                        </Text> 
+                                    </TouchableOpacity>
+                                </View>
+                                {renderComment(detail)}
+
+                            </View>
+                        </ScrollView>
                     )}
 
                 </ScrollView>
@@ -504,6 +378,7 @@ const styles = StyleSheet.create({
         marginRight: 0,
         marginHorizontal: 20,
         // height: HEIGHT+150
+        
     },
     tab: {
         marginRight: 20,
@@ -595,6 +470,7 @@ const styles = StyleSheet.create({
         color: themes.colors.gray
     },
     CommentFirst: {
+        marginTop: 10,
         marginBottom: 15,
         marginLeft: 30,
         fontSize: 16,
@@ -691,15 +567,14 @@ const styles = StyleSheet.create({
         opacity: 0.9
     },
     cardView: {
-        // backgroundColor: COLORS.gray1,
         flex: 1, 
         margin: 20,
-        // width: width,
+        width: 350,
         height: 200,
+        marginLeft: 35,
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        // flexGrow: 0
     }, 
     cardContent: {
         // backgroundColor: COLORS.gray1,
@@ -734,5 +609,25 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         textAlign: 'center',
         alignItems: 'center'
+    },
+    CommentBtn: {
+        borderWidth: 1,
+        borderColor: COLORS.gray2,
+        backgroundColor: COLORS.gray5,
+        width: 50,
+        height: 35, 
+        marginLeft: 10,
+        marginTop: 20
+    },
+    CommentBtnTxt: {
+        textAlign: 'center',
+        marginTop: 10
+    },
+    Gichul: {
+        marginLeft: 30,
+        marginTop: 10,
+        marginBottom: 20,
+        fontSize: theme.sizes.h3,
+        fontWeight: 'bold'
     }
 });

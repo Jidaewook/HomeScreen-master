@@ -9,6 +9,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import axios from 'axios';
 
 import PostList from '../../../component/common/PostList';
+import { theme } from 'galio-framework';
+import { COLORS } from '../../../consts';
 
 
 const PostPage = () => {
@@ -18,7 +20,7 @@ const PostPage = () => {
     const [loading, setLoading] = useState(true);
 
     //게시판 초기 탭 설정
-    const [active, setActive] = useState('자유게시판');
+    const [active, setActive] = useState('전체');
     
     const [bbs, setBbs] = useState([]);
 
@@ -36,10 +38,11 @@ const PostPage = () => {
 
     useEffect(() => {
         getBbsData();
+        setFilteredData();
     }, [])
 
     //게시판 탭 설정
-    const tabs = ['자유게시판', '질문게시판', '합격수기'];
+    const tabs = ['전체', '자유게시판', '질문게시판', '합격수기'];
 
     const [postModal, setPostModal] = useState(false);
 
@@ -97,21 +100,14 @@ const PostPage = () => {
             >
                 {loading ? (
                     <View style={{marginTop: 200, justifyContent: 'center'}}>
-                        <ActivityIndicator color={themes.colors.basic} size={'large'} />
+                        <ActivityIndicator color={COLORS.black} size={'large'} />
                     </View> 
                 ) : (
                     <> 
-                        {active === '자유게시판' 
-                            ? <PostList datas={filteredData} /> 
-                            : null 
-                        }
-        
-                        {active === '질문게시판' ? 
-                            <PostList datas={filteredData} />
-                            : null}
-                        {active === '합격수기' ? 
-                            <PostList datas={filteredData} />
-                            : null}
+                        {active === '전체' && <PostList datas={bbs}/>}
+                        {active === '자유게시판' && <PostList datas={filteredData} /> }
+                        {active === '질문게시판' && <PostList datas={filteredData} /> }
+                        {active === '합격수기' && <PostList datas={filteredData} /> }
                         {postModal && <PostModal />}
                         {/* {postModal 
                             ? 
