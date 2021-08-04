@@ -5,6 +5,7 @@ import themes from '../../../config/themes';
 import { useNavigation } from '@react-navigation/core';
 import axios from 'axios';
 import {LinearGradient} from 'expo-linear-gradient';
+import {BASE_URL} from '../../../constants';
 
 const {width, height} = Dimensions.get('screen');
 const SPACING = 10;
@@ -76,14 +77,21 @@ const RecommendPage = () => {
     const navigation = useNavigation();
 
     const getRecoms = async () => {
-        await axios.get('http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs')
-                    .then(res => {
-                        setRecoms(res.data.results);
-                        console.log(res.data.results)
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
+        try {
+            const {data} = await axios.get(`${BASE_URL}/ncs`)
+            setRecoms(data.results);
+        } catch(err) {
+            console.log(err)
+        }
+        
+        // await axios.get('http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs')
+        //             .then(res => {
+        //                 setRecoms(res.data.results);
+        //                 console.log(res.data.results)
+        //             })
+        //             .catch(err => {
+        //                 console.log(err)
+        //             })
     };
 
     useEffect(() => {

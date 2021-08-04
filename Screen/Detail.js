@@ -9,6 +9,7 @@ import themes from '../config/themes';
 import { Feather } from '@expo/vector-icons';
 import axios from 'axios';
 import { COLORS, theme } from '../consts';
+import {BASE_URL} from '../constants';
 
 
   const comments = [
@@ -75,28 +76,24 @@ const Detail = ({route}) => {
         setPlaying((prev) => !prev);
     }, [])
 
+
+
     const getDetail = async (detailId) => {
-        await axios.get(`http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs/${detailId}`)
-                    .then(res => {
-                        // console.log(res.data)
-                        setDetail(res.data.results)
-                        setLoading(false)
-                        console.log("!!!!!!!!", detail.url)
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
+        try {
+            const {data} = await axios.get(`${BASE_URL}/ncs/${detailId}`)
+            setDetail(data.results)
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     const getData = async () => {
-            await axios.get(`http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs/`)
-                        .then(res => {
-                            setData(res.data.results)
-                            console.log('Deatil!!!', res.data.results)
-                        })
-                        .catch(err => {
-                            console.log(err)
-                        })
+        try {
+            const {data} = await axios.get(`${BASE_URL}/ncs`)
+            setData(data.results)
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     // const onPress = useCallback(async(id) => {

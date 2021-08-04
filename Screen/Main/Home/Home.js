@@ -8,6 +8,7 @@ import Section from '../../../component/common/Section';
 import Card from '../../../component/common/Card';
 import {useNavigation} from '@react-navigation/native';
 import Axios from 'axios';
+import { BASE_URL } from '../../../constants';
 
 const {width} = Dimensions.get("screen");
 
@@ -20,24 +21,36 @@ const Home = () => {
   const [psat, setPsat] = useState([]);
 
   const getNcs = async() => {
-    Axios.get("http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs")
-      .then(res => {
-        setNcs(res.data.results)
-      })
-      .catch(err => {
-        console.log(err)
-      });
+    try {
+      const {data} = await Axios.get(`${BASE_URL}/ncs`)
+      setNcs(data.results)
+    } catch (err) {
+      console.log(err)
+    }
+    // Axios.get("http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs")
+    //   .then(res => {
+    //     setNcs(res.data.results)
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //   });
   }
 
   const getPsat = async() => {
-    Axios.get("http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/psat")
-      .then(res => {
-        console.log(res.data.results)
-        setPsat(res.data.results)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    try {
+      const {data} = await Axios.get(`${BASE_URL}/psat`)
+      setPsat(data.results)
+    } catch(err) {
+      console.log(err)
+    }
+    // Axios.get("http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/psat")
+    //   .then(res => {
+    //     console.log(res.data.results)
+    //     setPsat(res.data.results)
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //   })
   }
 
   useEffect(() => {
