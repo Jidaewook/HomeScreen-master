@@ -1,7 +1,7 @@
 import React from 'react';
 import { withNavigation } from '@react-navigation/compat';
 import PropTypes from 'prop-types';
-import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
 import themes from '../../config/themes';
 
@@ -10,7 +10,7 @@ import themes from '../../config/themes';
 
 class Card extends React.Component {
   render() {
-    const { navigation, item, horizontal, full, style, ctaColor, imageStyle } = this.props;
+    const { navigation, item, horizontal, full, style, ctaColor, imageStyle, goTo } = this.props;
     
     const imageStyles = [
       full ? styles.fullImage : styles.horizontalImage,
@@ -24,17 +24,15 @@ class Card extends React.Component {
 
     return (
       <Block row={horizontal} card flex style={cardContainer}>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Detail', {id: item._id, tag: 'ncs'})}>
+        <TouchableOpacity onPress={goTo}>
           <Block flex style={imgContainer}>
-            <Image source={{uri: item.poster_path}} style={imageStyles} />
+            <Image source={{uri: item.poster}} style={imageStyles} />
           </Block>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Detail', {id: item._id, tag: 'psat'})}>
           <Block flex space="between" style={styles.cardDescription}>
             <Text size={14} style={styles.cardTitle}>{item.title}</Text>
             <Text size={12} muted={!ctaColor} color={ctaColor} bold>{item.cta}</Text>
           </Block>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
       </Block>
     );
   }

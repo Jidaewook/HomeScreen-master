@@ -1,9 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, Image, StyleSheet, ScrollView} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import themes from '../../config/themes';
 
 const ProfileEdit = () => {
+
+    const [name, setName] = useState('관리자');
+    const [institue, setInstitue] = useState('없음');
+    const [area, setArea] = useState('대한민국');
+    const [introduce, setIntroduce] = useState('2022년 상반기 토지주택공사에 합격하고 싶네요.자신 있는 과목은 의사소통이고,자신 없는 과목은 문제해결능력입니다.제가 토지주택공사에 입사하고 싶은 이유는, 횡령이 쉽기 때문입니다.');
+    const [editing, setEditing] = useState(false);
+
+    const toggleEdit = (name) => {
+        setEditing(!editing ? name : null );
+        
+    }
+
+
+
     return (
         <ScrollView
             style={{marginLeft: 15}}
@@ -34,7 +48,7 @@ const ProfileEdit = () => {
                 </View>
                 <View style={{flexDirection: 'row'}}>
                 <Text style={styles.ContentContainer}>
-                    관리자
+                    {name}
                 </Text>
                 <TouchableOpacity style={{justifyContent: 'flex-end', alignItems: 'center'}}>
                     <Text style={styles.EditContainer}>
@@ -52,7 +66,7 @@ const ProfileEdit = () => {
                 </View>
                 <View style={{flexDirection: 'row'}}>
                 <Text style={styles.ContentContainer}>
-                    LH
+                    {institue}
                 </Text>
                 <TouchableOpacity style={{justifyContent: 'flex-end', alignItems: 'center'}}>
                     <Text style={styles.EditContainer}>
@@ -70,7 +84,7 @@ const ProfileEdit = () => {
                 </View>
                 <View style={{flexDirection: 'row'}}>
                     <Text style={styles.ContentContainer}>
-                        경기도 부천
+                        {area}
                     </Text>
                     <TouchableOpacity style={{justifyContent: 'flex-end', alignItems: 'center'}}>
                         <Text style={styles.EditContainer}>
@@ -95,11 +109,7 @@ const ProfileEdit = () => {
             </View>
             <View style={{flexDirection: 'row'}}>
                 <Text style={styles.introduce}>
-                    2022년 상반기 토지주택공사에 합격하고 싶네요.
-                    자신 있는 과목은 의사소통이고,
-                    자신 없는 과목은 문제해결능력입니다. 
-
-                    제가 토지주택공사에 입사하고 싶은 이유는, 횡령이 쉽기 때문입니다.
+                    {introduce}
                 </Text>
                 <TouchableOpacity style={{justifyContent: 'flex-end', alignItems: 'center'}}>
                     <Text style={styles.EditContainer}>

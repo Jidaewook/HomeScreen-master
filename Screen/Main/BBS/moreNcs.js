@@ -104,7 +104,7 @@ const moreNcs = () => {
                             </View>
                             <View>
                                 <Text style={styles.cardDesc}>
-                                    {item.desc.slice(0,20)}
+                                    {item.desc.slice(0,16)}
                                 </Text>
                             </View>
                             </ImageBackground>
@@ -193,15 +193,11 @@ const styles = StyleSheet.create({
         // flexGrow: 0
     }, 
     cardContent: {
-        // backgroundColor: COLORS.gray1,
         flex: 1,
         marginTop: 0,
-        // marginLeft: 10,
-        // marginRight: 10,
         width: '90%',
         height: 30,
         textAlign: 'left',
-        // justifyContent: 'center',
         alignItems: 'flex-start',
         fontWeight: 'bold',
         fontSize: themes.sizes.h3

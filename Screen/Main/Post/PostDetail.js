@@ -12,6 +12,7 @@ import HLine from '../../../component/common/HLine';
 import Moment from 'moment';
 import 'moment-timezone';
 import moment from 'moment';
+import axios from 'axios';
 
 
 const PostDetail = ({
@@ -30,6 +31,8 @@ const PostDetail = ({
         dataError: null
     })
 
+    const [detailBbs, setDetailBbs] = useState([]);
+
     const refRBSheet = useRef();
 
     const openBottom = () => {
@@ -39,6 +42,15 @@ const PostDetail = ({
     const closeBottom = () => {
         refRBSheet.current.close();
     }
+
+    const getDetailBbs = async (bbsId) => {
+        try {
+            const {data} = await axios.get(`${BASE_URL}/bbs/${bbsId}`)
+            setDetailBbs(data.results)
+        } catch (err) {
+            console.log(err)
+        }
+    } 
 
     const [comments, setComments] = useState([
         {
@@ -119,13 +131,6 @@ const PostDetail = ({
                 <Text style={styles.Date}>
                     {momentDate(result.data.published_at)}
                 </Text>
-                
-                {/* <Moment fromNow format="YYYY/MM/DD">
-                    <Text style={styles.Date}>
-                        {result.data.published_at}
-                        
-                    </Text>
-                </Moment> */}
             </View>
             <View>
                 <Text style={styles.Desc}>

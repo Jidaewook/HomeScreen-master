@@ -5976,10 +5976,10 @@ react-native-webview@10.7.0:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
 
-react-native-youtube-iframe@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-youtube-iframe/-/react-native-youtube-iframe-1.3.0.tgz#65c4faa4fcfa608a2a61582423687d049767ecc3"
-  integrity sha512-7uPK72TbQQvDoss3mn6h1Mydf4fuNo/sOt0PtixJxJmBmi61DsqRDwEroMmv/F6eGRAfF9qWfGyALz4ITufULw==
+react-native-youtube-iframe@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-youtube-iframe/-/react-native-youtube-iframe-2.1.1.tgz#d88ee972963c72a3834955048dfd1c2a0731498b"
+  integrity sha512-vnLzA5zcnMwa1gMqGfvkjaE82NW1Nd2Up4Q1OUz6IKm69xSG/9/m4APZ5fCN8UMhy6lH95iagd497J7jwEwz3w==
   dependencies:
     events "^3.2.0"
 

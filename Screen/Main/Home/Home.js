@@ -9,6 +9,7 @@ import Card from '../../../component/common/Card';
 import {useNavigation} from '@react-navigation/native';
 import Axios from 'axios';
 import { BASE_URL } from '../../../constants';
+import { COLORS } from '../../../consts';
 
 const {width} = Dimensions.get("screen");
 
@@ -64,17 +65,19 @@ const Home = () => {
 // };
 
   return (
-    <SafeAreaView 
+    <View 
       style={{flex: 1, backgroundColor: themes.colors.main}}
     >
-      <StatusBar 
-        backgroundColor={themes.colors.main}
-        translucent={false} 
-        animated={true}
-        hidden={false}
-        barStyle={'dark-content'}
-        
-      />
+      
+        <StatusBar 
+          backgroundColor='black'
+          // translucent={true} 
+          // animated={true}
+          // hidden={false}
+          barStyle={'light-content'}
+          
+        />
+      
       <View style={styles.header}>
         <MaterialIcons name="sort" size={28} color={themes.colors.main} />
         <TouchableOpacity
@@ -108,26 +111,28 @@ const Home = () => {
             </View>
           </View>
         </View>
-        <View style={{height: 50}} />
+        <View style={{height: 30}} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.group}>                   
           <View style={{display:'flex'}}>
-            <Section title={'NCS'}>
+            <Section title={'주목! NCS'}>
               {ncs.map(i => (
                   <Card 
                     item={i}
                     style={{marginRight: themes.sizes.base, width: 150}}
+                    goTo={() => navigation.navigate("Detail", {id: i._id, isNcs: true})}
                   />
               ))}
             </Section>            
           </View>
           <View style={{display:'flex', flexDirection: 'row'}}>
-            <Section title={'PSAT'}>
+            <Section title={'주목! PSAT'}>
               {psat.map(i => (
                   <Card 
                       item={i}
                       full
                       style={{marginRight: themes.sizes.base, width: 250}}
+                      goTo={() => navigation.navigate("Detail", {id: i._id, isNcs: false})}
                   />
               ))}
             </Section>
@@ -135,7 +140,7 @@ const Home = () => {
         </View>
 
       </ScrollView>
-    </SafeAreaView>
+    </View>
 
 
 
@@ -148,6 +153,7 @@ export default Home;
 const styles = StyleSheet.create({
     header: {
       paddingVertical: 20,
+      paddingTop: 50,
       paddingHorizontal: 20,
       flexDirection: 'row',
       justifyContent: 'space-between',

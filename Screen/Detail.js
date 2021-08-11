@@ -1,15 +1,14 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, Text, StatusBar, StyleSheet, Dimensions, RefreshControl, TextInput, FlatList, ScrollView, TouchableOpacity, SafeAreaView, Button, ImageBackground, ActivityIndicator} from "react-native";
+import {View, Text, StyleSheet, TextInput, FlatList, ScrollView, TouchableOpacity, SafeAreaView, ImageBackground} from "react-native";
 import YoutubePlayer from 'react-native-youtube-iframe';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
-import Section from '../component/common/Section';
-import Card from '../component/common/Card';
 import themes from '../config/themes';
 import { Feather } from '@expo/vector-icons';
 import axios from 'axios';
 import { COLORS, theme } from '../consts';
 import {BASE_URL} from '../constants';
+import HLine from '../component/common/HLine';
 
 
   const comments = [
@@ -58,19 +57,18 @@ const Detail = ({route}) => {
 
     const navigation = useNavigation();
     
-    const {id} = route.params;
+    const {id, isNcs} = route.params;
+    // console.log("isNCSisNCSisNCSisNCSisNCS", isNcs)
 
-    console.log("route!!!!!!!", route.params.id)
+    // console.log("route!!!!!!!", route.params.id)
 
     const [detail, setDetail] = useState({});
-    const [data, setData] = useState([]);
+    // const [detailPsat, setDetailPsat] = useState({});
+    // const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [active, setActive] = useState('주요내용');
-    const tabs = ['주요내용', '관련영상', '관련기출', '질문&답변'];
     const [text, onChangeText] = useState('Useless Text');
     const [playing, setPlaying] = useState(false);
     const [refresh, setRefresh] = useState(false);
-
 
     const togglePlaying = useCallback(() => {
         setPlaying((prev) => !prev);
@@ -80,110 +78,28 @@ const Detail = ({route}) => {
 
     const getDetail = async (detailId) => {
         try {
-            const {data} = await axios.get(`${BASE_URL}/ncs/${detailId}`)
+            const {data} = isNcs 
+                ? await axios.get(`${BASE_URL}/ncs/${detailId}`)
+                : await axios.get(`${BASE_URL}/psat/${detailId}`)
             setDetail(data.results)
         } catch (err) {
             console.log(err)
         }
     }
 
-    const getData = async () => {
-        try {
-            const {data} = await axios.get(`${BASE_URL}/ncs`)
-            setData(data.results)
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    // const onPress = useCallback(async(id) => {
-    //     setRefresh(true);
-    //     getDetail(id)
-    //     setRefresh(false);
-    // }, [refresh]);
+    // const getData = async () => {
+    //     try {
+    //         const {data} = await axios.get(`${BASE_URL}/ncs`)
+    //         setData(data.results)
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
 
     useEffect(() => {
         getDetail(id);
-        getData();
+        // getData();
     }, {})
-
-    const renderTab = (tab) => {
-        const isActive = active === tab;
-
-        return (
-            <TouchableOpacity
-                key={`tab-${tab}`}
-                onPress={() => handleTab(tab)}
-                style={[styles.tab, isActive ? styles.active : null]}
-            >
-                <Text style={{fontSize: 15, fontWeight: 'bold', color: isActive ? 'black' : 'gray'}}>
-                    {tab}
-                </Text>
-            </TouchableOpacity>
-        )
-    }
-
-    const handleTab = tab => {
-        setActive(tab)
-    }
-
-    const renderItem = ({item, index}) => {
-        return (
-            <TouchableOpacity
-                onPress={() => {
-                    getDetail(item._id)
-                    handleTab("주요내용")
-                }}
-                style={{marginLeft: 20, marginBottom: 20, backgroundColor: COLORS.gray4, height: 50, flexDirection: 'row', alignItems: 'center'}}
-            >
-                <Text style={{width: '90%'}}>
-                    {item.title}
-                </Text>
-                <View style={{width: '10%'}}>
-                    <Feather name="play-circle" size={24} color="black" />  
-                </View>
-            </TouchableOpacity>
-        )
-    }
-
-    function renderReply(data) {
-        return(
-            <FlatList 
-                
-            />
-
-            
-        )
-    }
-
-    const renderGichul = ({item, index}) => {
-        return(
-            <View style={styles.cardView}>
-                <ImageBackground source={require('../assets/images/thumb/sample.jpeg')} style={styles.bgImage}>
-                
-                <View style={{height: 20, marginTop: 240, justifyContent: 'center', }}>
-                    <Text style={styles.cardContent}>
-                        {item.title.slice(0,15)}
-                    </Text>
-                </View>
-                <View>
-                    <Text style={styles.cardDesc}>
-                        {item.desc.slice(0,20)}
-                    </Text>
-                </View>
-                </ImageBackground>
-                <View style={styles.footer}>
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate('Detail2', {id: item._id})}
-                    >
-
-                        <Text>바로가기</Text>
-                    </TouchableOpacity>
-                </View>
-                
-            </View>
-        )
-    }
 
     const renderComment = ({item}) => {
         return (
@@ -192,7 +108,7 @@ const Detail = ({route}) => {
                     <View 
                         style={{
                             borderWidth: 0.5, 
-                            borderColor: themes.colors.brightGray,
+                            borderColor: themes.colors.white,
                             marginTop: 5
                         }}
                     >
@@ -236,127 +152,60 @@ const Detail = ({route}) => {
             <SafeAreaView style={styles.Container}>
                 <View>
                     <YoutubePlayer 
-                        height={250}
+                        height={230}
                         play={true}
-                        videoId={'https://www.youtube.com/watch?v=Phczgr5dyw4'}
+                        videoId={detail.url}
                     />
                 </View>
-                <View style={[styles.tabs]}>
-                    {tabs.map(tab => renderTab(tab))}
+                
+                <View style={{height: 1200}} showsVerticalScrollIndicator={false}> 
+                    <View>
+                        <Text style={styles.MainTitle}>
+                            {detail.title}
+                        </Text>
+                        <Text style={styles.MainDesc}>
+                            {detail.desc}
+                        </Text>
+                    </View>
+                    <View style={{marginBottom: 10}}>
+                        <Text style={styles.slogan}>
+                            각종 적성검사의 기본기를
+                        </Text>
+                        <Text style={styles.slogan}>
+                            탄탄하게 다집니다!!
+                        </Text>
+                    </View>
+                    <HLine />
+                    <ScrollView style={[styles.Container]}  contentContainerStyle={{height: '170%', paddingBottom: 30, paddingHorizontal: 10, marginTop: 15}}>
+                        <View>
+                            <Text style={styles.CommentTitle}>
+                                질문과 답변
+                            </Text>
+                            <Text style={{marginTop: 20, marginHorizontal: 20, color: COLORS.gray}}>
+                                질문에 대한 답변은 개인 쪽지로 드리거나 영상 콘텐츠로 제작되어 공개됩니다.
+                            </Text>
+                            <View style={{flexDirection: 'row'}}>
+                                <TextInput 
+                                    style={styles.CommentInput}
+                                    value={text}
+                                    onChangeText={onChangeText}
+                                />
+                                <TouchableOpacity 
+                                    style={styles.CommentBtn}
+                                    onPress={() => alert("등록하시겠습니까?")}
+
+                                >
+                                    <Text style={styles.CommentBtnTxt}>
+                                        등록
+                                    </Text> 
+                                </TouchableOpacity>
+                            </View>
+                            {renderComment(detail)}
+
+                        </View>
+                    </ScrollView>
+                
                 </View>
-                <ScrollView style={{height: 1200}} showsVerticalScrollIndicator={false}> 
-
-                    {active === '주요내용' && (
-                        <ScrollView style={[styles.Container]}  contentContainerStyle={{height: '140%', paddingBottom: 30, paddingHorizontal: 10}}>
-                            <View>
-                                <Text style={styles.MainTitle}>
-                                    {detail.title}
-                                </Text>
-                                <Text style={styles.MainDesc}>
-                                    {detail.desc}
-                                </Text>
-                            </View>
-                            <View>
-                                <Text style={styles.slogan}>
-                                    각종 적성검사의 기본기를
-                                </Text>
-                                <Text style={styles.slogan}>
-                                    탄탄하게 다집니다!!
-                                </Text>
-                            </View>
-                            <View>
-                                <Text style={styles.TeacherSub}>
-                                    | 경력
-                                </Text>
-                                <Text style={styles.MainDesc}>
-                                    8년(2014년 ~)
-                                </Text>
-                                <Text style={styles.TeacherSub}>
-                                    | 전공
-                                </Text>
-                                <Text style={styles.MainDesc}>
-                                    경영학 박사과정
-                                </Text>
-                                <Text style={styles.TeacherSub}>
-                                    | 성적
-                                </Text>
-                                <Text style={styles.MainDesc}>
-                                    2012년 자료해석 90점,{"\n"}
-                                    '13~'18 평균 85점 이상{"\n"}
-                                    LH 등 각종 기관 필기 합격{"\n"}{"\n"}
-                                </Text>
-                                <Text style={styles.TeacherSub}>
-                                    | 참여
-                                </Text>
-                                <Text style={styles.MainDesc}>
-                                    NCS 기출문제 출제위원{"\n"}
-                                    PSAT 전국 모의고사 출제위원{"\n"}
-                                </Text>
-                            </View>
-                        </ScrollView>
-                    )}
-
-                    {active === '관련영상' && (
-                        <FlatList
-                            data={data}
-                            keyExtractor={(item) => item.title}
-                            horizontal={false}
-                            showsHorizontalScrollIndicator={false}
-                            renderItem={renderItem}
-                            style={{width: '90%', marginTop: 10, marginBottom: 10, height: 500}}
-                        />
-                    )}
-                    {active === '관련기출' && (
-                        <ScrollView style={[styles.Container]}  contentContainerStyle={{height: '180%', paddingBottom: 30, paddingHorizontal: 10}}>                            
-                            <Text style={styles.Gichul}>
-                                관련 기출은 무엇이 있을까?
-                            </Text>
-                            <Text style={styles.Gichul}>
-                                적성검사 완성은 무조건 기출!!!
-                            </Text>
-                            <FlatList
-                                data={data}
-                                keyExtractor={(item) => item.title}
-                                horizontal={false}
-                                showsHorizontalScrollIndicator={false}
-                                renderItem={renderGichul}
-                                style={{width: '100%', marginBottom: 10}}
-                            />
-                        </ScrollView>
-                        
-                    )}
-                    {active === '질문&답변' && (
-                        <ScrollView style={[styles.Container]}  contentContainerStyle={{height: '170%', paddingBottom: 30, paddingHorizontal: 10}}>
-                            <View>
-                                <Text style={styles.CommentTitle}>
-                                    질문과 답변
-                                </Text>
-                                <Text style={{marginTop: 20, marginHorizontal: 20, color: COLORS.gray}}>
-                                    질문에 대한 답변은 개인 쪽지로 드리거나 영상 콘텐츠로 제작되어 공개됩니다.
-                                </Text>
-                                <View style={{flexDirection: 'row'}}>
-                                    <TextInput 
-                                        style={styles.CommentInput}
-                                        value={text}
-                                        onChangeText={onChangeText}
-                                    />
-                                    <TouchableOpacity 
-                                        style={styles.CommentBtn}
-                                        onPress={() => alert("등록하시겠습니까?")}
-
-                                    >
-                                        <Text style={styles.CommentBtnTxt}>
-                                            등록
-                                        </Text> 
-                                    </TouchableOpacity>
-                                </View>
-                                {renderComment(detail)}
-
-                            </View>
-                        </ScrollView>
-                    )}
-
-                </ScrollView>
 
             </SafeAreaView>   
         </> 
@@ -370,12 +219,9 @@ const styles = StyleSheet.create({
     
     Container: {
         backgroundColor: "white",
-        // justifyContent: "center",
         marginLeft: 0,
         marginRight: 0,
-        marginHorizontal: 20,
-        // height: HEIGHT+150
-        
+        marginHorizontal: 20,        
     },
     tab: {
         marginRight: 20,
@@ -383,7 +229,6 @@ const styles = StyleSheet.create({
     },
     active: {
         borderBottomColor: 'gray',
-        // themes.colors.title,
         borderBottomWidth: 3
     },
     tabs: {
@@ -418,7 +263,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         fontSize: 14,
         color: themes.colors.darkgray,
-        // fontWeight: 'bold'
     }, 
     slogan: {
         fontSize: 25,
@@ -428,12 +272,12 @@ const styles = StyleSheet.create({
         color: themes.colors.lightgray,
         marginLeft: 25,
         marginTop: 10, 
+        marginBottom: 10,
         marginRight: 25,
         textAlign: 'center'
 
     },
     Button: {
-        // flex: 1,
         backgroundColor: themes.colors.lightgray,
         height: 35,
         flexDirection: 'row',
@@ -478,7 +322,6 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         fontSize: 16,
         fontWeight: 'bold',
-        // width: '30%'
     },
     CommentInput: {
         width: '75%',
@@ -500,7 +343,6 @@ const styles = StyleSheet.create({
         width: 50
     },  
     RegisterButton: {
-        // backgroundColor: 'black',
         borderColor: 'gray',
         borderWidth: 1,
         width: '16%',
@@ -537,14 +379,7 @@ const styles = StyleSheet.create({
         paddingRight: 10
 
     }, 
-    // titleStyle: {
-    //     fontSize: theme.sizes.h4,
-    //     letterSpacing: -.72,
-    //     fontWeight: '500',
-    //     color: COLORS.black,
-    //     paddingVertical: 10,
-    //     marginHorizontal: 15
-    // },
+    
     badgePill: {
         fontSize: theme.sizes.h5,
         letterSpacing: -0.6,
@@ -557,10 +392,8 @@ const styles = StyleSheet.create({
         height: '100%', 
         resizeMode: 'stretch', 
         marginTop: 5, 
-        // marginRight: 5, 
         justifyContent: 'center', 
         alignItems: 'center',
-        // borderRadius: 100,
         opacity: 0.9
     },
     cardView: {
@@ -574,29 +407,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     }, 
     cardContent: {
-        // backgroundColor: COLORS.gray1,
         flex: 1,
         marginTop: 0,
-        // marginLeft: 10,
-        // marginRight: 10,
         width: '90%',
         height: 30,
         textAlign: 'left',
-        // justifyContent: 'center',
         alignItems: 'flex-start',
         fontWeight: 'bold',
         fontSize: themes.sizes.h3
     },
     cardDesc: {
         flex: 1,
-        // marginLeft: 10,
-        // marginRight: 10,
         width: '90%',
         height: 30,
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         textAlign: 'left',
-        // backgroundColor: COLORS.purple
     },  
     footer: {
         backgroundColor: COLORS.tertiary,

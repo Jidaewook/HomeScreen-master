@@ -89,7 +89,7 @@ const morePsat = () => {
                     //         </Text>
                     //     </ScrollView>
                     // }
-                    data={filteredData.length == 0 ? (psat) : (filteredData)}
+                    data={filteredData.length == 0 ? (psat) || (PSAT) : (filteredData)}
                     keyExtractor={(item) => item._id}
                     renderItem={({item}) => (
                         <View style={styles.cardView}>
@@ -102,7 +102,7 @@ const morePsat = () => {
                             </View>
                             <View>
                                 <Text style={styles.cardDesc}>
-                                    {item.desc.slice(0,20)}
+                                    {item.desc.slice(0,16)}
                                 </Text>
                             </View>
                             </ImageBackground>

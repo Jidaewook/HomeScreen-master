@@ -4,6 +4,7 @@ import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import {Text} from 'galio-framework';
 import themes from '../../config/themes';
 import {useNavigation} from '@react-navigation/native';
+import { COLORS } from '../../consts';
 
 
 const Section = ({title, horizontal=true, children, show=true}) => {
@@ -17,7 +18,7 @@ const Section = ({title, horizontal=true, children, show=true}) => {
                     {title}
                 </Text>
                 {/* 상황값 필요 */}
-                {title==="NCS" ? 
+                {title==="주목! NCS" ? 
                     <TouchableOpacity
                         onPress={() => navigation.navigate("moreNcs")}
                     >
@@ -66,7 +67,8 @@ const styles = StyleSheet.create({
     title: {
         paddingLeft: 10,
         marginBottom: 0,
-        width: '80%'
+        width: '80%',
+        color: COLORS.black
     },
     more: {
         paddingLeft: 15,

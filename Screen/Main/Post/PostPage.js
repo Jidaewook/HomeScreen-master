@@ -109,14 +109,7 @@ const PostPage = () => {
                         {active === '질문게시판' && <PostList datas={filteredData} /> }
                         {active === '합격수기' && <PostList datas={filteredData} /> }
                         {postModal && <PostModal />}
-                        {/* {postModal 
-                            ? 
-                                (<PostModal 
-                                    // visible={postModal} 
-                                    
-                                    // complete={() => setPostModal(false)}
-                                />) 
-                            : null} */}
+                       
                     </>
                 )}
                 
