@@ -1,13 +1,11 @@
 import React from 'react';
-import {Text, View, Image, StyleSheet} from 'react-native';
+import {Text, View, Image, StyleSheet, FlatList} from 'react-native';
+import ContentsList from '../../../component/common/ContentsList';
+
 
 const Notification = () => {
     return (
-        <View>
-            <Text>
-                Notification
-            </Text>
-        </View>
+        <ContentsList />
     );
 };
 
