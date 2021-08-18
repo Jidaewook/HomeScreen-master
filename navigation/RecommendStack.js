@@ -1,8 +1,9 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {Recommend} from '../Screen/Main/Recommend/index';
+// import {Recommend} from '../Screen/Main/Recommend/index';
 import RecDetail from '../Screen/Main/Recommend/RecDetail';
+import Recommend from '../Screen/Main/Recommend/Recommend';
 import RecommendPage from '../Screen/Main/Recommend/RecommendPage';
 import Detail from '../Screen/Detail';
 
@@ -13,7 +14,7 @@ export default () => {
         <RecommendStack.Navigator>
             <RecommendStack.Screen 
                 name={"RecommendPage"}
-                component={RecommendPage}
+                component={Recommend}
                 options={{headerShown: false}}
             />
            <RecommendStack.Screen 

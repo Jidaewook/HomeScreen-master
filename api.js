@@ -11,7 +11,6 @@ const getAnything = async (path, params = {}) => {
         } = await makeRequest(path, params);
         return [results || data, null];
     } catch (e) {
-        console.log(e);
         return [null, e];
     }
 };

@@ -48,7 +48,6 @@ const SigninScreen = ({navigation}) => {
         try {
             axios.post("https://hidden-earth-75958.herokuapp.com/auth/local/", loginData)
                 .then(data => {
-                    // console.log("logDATATATAT", data.data.jwt)
                     if(data.status === 200){
                         AsyncStorage.setItem('token', data.data.jwt)
                         setIsAuth(true)

@@ -61,16 +61,13 @@ const SignupScreen = ({navigation}) => {
         }
         setLoading(true);
         // alert('Email');
-        console.log("@@@@@@@")
 
         try {
             axios
             .post("https://hidden-earth-75958.herokuapp.com/auth/local/register", newData)
             .then(data => {
                 // Alert.alert(email)
-                console.log("msg::::::::::::::::::::::", data);
                 if(data.status===200){
-                    console.log("ALERTALERT")
                     Alert.alert(
                         '호갱님 감사합니다',
                         username,

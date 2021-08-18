@@ -23,20 +23,10 @@ const ForgotpasswordScreen = ({navigation}) => {
         setLoading(true);
 
         try {
-            // console.log("Starttttt", forgotData)
             axios
                 .post("https://hidden-earth-75958.herokuapp.com/auth/forgot-password", forgotData)
                 .then(data => {
                     console.log("data", data.status)
-                    // Alert.alert(
-                    //     "다음의 이메일로 인증정보가 전달되었습니다.",
-                    //     forgotData.email,
-                    //     [
-                    //         {
-                    //             text: "확인"
-                    //         }
-                    //     ]
-                    // )
                 })
                 .catch(err => {
                     console.log(err)

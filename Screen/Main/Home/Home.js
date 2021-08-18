@@ -28,13 +28,6 @@ const Home = () => {
     } catch (err) {
       console.log(err)
     }
-    // Axios.get("http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs")
-    //   .then(res => {
-    //     setNcs(res.data.results)
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //   });
   }
 
   const getPsat = async() => {
@@ -44,25 +37,13 @@ const Home = () => {
     } catch(err) {
       console.log(err)
     }
-    // Axios.get("http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/psat")
-    //   .then(res => {
-    //     console.log(res.data.results)
-    //     setPsat(res.data.results)
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //   })
   }
 
   useEffect(() => {
     getNcs()
     getPsat()
   }, []);
-  
-//   const navigation = useNavigation();
-//   const goToDetail = (id) => {
-//     navigation.navigate("Detail", {id})
-// };
+
 
   return (
     <View 
@@ -71,11 +52,7 @@ const Home = () => {
       
         <StatusBar 
           backgroundColor='black'
-          // translucent={true} 
-          // animated={true}
-          // hidden={false}
           barStyle={'light-content'}
-          
         />
       
       <View style={styles.header}>
@@ -141,10 +118,6 @@ const Home = () => {
 
       </ScrollView>
     </View>
-
-
-
-
   );
 };
 

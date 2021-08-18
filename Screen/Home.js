@@ -148,7 +148,6 @@ const Home = ({}) => {
     const navigation = useNavigation();
     const goToDetail = (id, genre) => {
         navigation.navigate("Detail", {id, genre})
-        console.log("112391283019283012983", genre)
     };
 
     const [searchModal, setSearchModal] = useState(false);

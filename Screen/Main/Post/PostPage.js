@@ -83,7 +83,6 @@ const PostPage = () => {
         const filtered = bbs.filter(item =>
             item.tag.includes(tab.toLowerCase())
         );
-        console.log(filtered)
         setActive(tab)
         setFilteredData(filtered)
 

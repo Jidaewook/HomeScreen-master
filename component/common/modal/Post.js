@@ -73,7 +73,6 @@ const Post = ({visible, close, complete}) => {
             desc: desc,
             tag: tag
         }
-        // console.log('!!!', userData);
         
         if(inquire === "게시판" || title === "" || desc === ""){
             return alert("빈 칸이 있으면 등록할 수 없습니다.")

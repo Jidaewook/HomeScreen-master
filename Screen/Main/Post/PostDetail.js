@@ -104,12 +104,9 @@ const PostDetail = ({
             data: qna,
             dataError: qnaError
         })
-
-        // console.log("getPostData", result.data)
     }
 
     useEffect(() => {
-        // console.log(result)   
         getPostData();
     }, {})
 
@@ -145,12 +142,6 @@ const PostDetail = ({
                 <Text>
                     {result.data.tag}
                 </Text>
-                {/* {console.log(result.data.tag.length)} */}
-                {/* {result.data.tag.map(t => (
-                    <Text>
-                        {t}
-                    </Text>
-                ))} */}
             </View>
             <View>
                 <View>

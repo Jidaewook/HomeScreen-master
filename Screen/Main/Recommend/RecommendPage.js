@@ -83,15 +83,6 @@ const RecommendPage = () => {
         } catch(err) {
             console.log(err)
         }
-        
-        // await axios.get('http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs')
-        //             .then(res => {
-        //                 setRecoms(res.data.results);
-        //                 console.log(res.data.results)
-        //             })
-        //             .catch(err => {
-        //                 console.log(err)
-        //             })
     };
 
     useEffect(() => {

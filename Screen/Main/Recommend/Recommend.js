@@ -1,119 +1,108 @@
-
-import * as React from 'react';
-import {
-  StatusBar,
-  Text,
-  View,
-  StyleSheet,
-  FlatList,
-  Image,
-  Dimensions,
-  Animated,
-  TouchableOpacity,
-  Platform,
-  Button
-} from 'react-native';
-const { width, height } = Dimensions.get('window');
-import { getMovies } from '../../../movieApi';
-import Genres from '../../../component/common/Genres';
-import Rating from '../../../component/common/Ratings';
-import {useNavigation} from '@react-navigation/native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Alert } from 'react-native';
-import themes from '../../../config/themes';
-import { theme } from 'galio-framework';
+/**
+ * Inspiration: https://dribbble.com/shots/8257559-Movie-2-0
+ *
+ */
+ import React, {useEffect, useState, useRef} from 'react';
+ import {
+   StatusBar,
+   Text,
+   View,
+   StyleSheet,
+   FlatList,
+   Image,
+   Dimensions,
+   Animated,
+   TouchableOpacity,
+   Platform,
+ } from 'react-native';
+ const { width, height } = Dimensions.get('window');
+ import { getMovies } from '../../../api2';
+ import BadgePill from '../../../component/common/BadgePill';
+ import themes from '../../../config/themes';
+ import {COLORS, theme} from '../../../consts';
+ import {useNavigation} from '@react-navigation/native'
  
-const SPACING = 10;
-const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.72 : width * 0.74;
-const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 2;
-const BACKDROP_HEIGHT = height * 0.65;
+ import Genres from '../../../component/common/Genres';
+//  import Rating from './Rating';
+ import { LinearGradient } from 'expo-linear-gradient';
+import axios from 'axios';
+ 
+ const SPACING = 10;
+ const ITEM_SIZE = Platform.OS === 'ios' ? width * 0.72 : width * 0.74;
+ const EMPTY_ITEM_SIZE = (width - ITEM_SIZE) / 2;
+ const BACKDROP_HEIGHT = height * 0.65;
+ 
 
-
-
-//  const Loading = () => (
-//    <View style={styles.loadingContainer}>
-//      <Text style={styles.paragraph}>Loading...</Text>
-//    </View>
-//  );
+ const Loading = () => (
+   <View style={styles.loadingContainer}>
+     <Text style={styles.paragraph}>Loading...</Text>
+   </View>
+ );
  
  const Backdrop = ({ movies, scrollX }) => {
-   return (
-     <View style={{ height: BACKDROP_HEIGHT, width, position: 'absolute' }}>
-       <FlatList
-         data={movies.reverse()}
-         keyExtractor={(item) => item.key + '-backdrop'}
-         removeClippedSubviews={false}
-         contentContainerStyle={{ width, height: BACKDROP_HEIGHT }}
-         renderItem={({ item, index }) => {
-           if (!item.backdrop) {
-             return null;
-           }
-           const translateX = scrollX.interpolate({
-             inputRange: [(index - 2) * ITEM_SIZE, (index - 1) * ITEM_SIZE],
-             outputRange: [0, width],
-             // extrapolate:'clamp'
-           });
-           return (
-             <Animated.View
-               removeClippedSubviews={false}
-               style={{
-                 position: 'absolute',
-                 width: translateX,
-                 height,
-                 overflow: 'hidden',
-               }}
-             >
-               <Image
-                //  source={item.backdrop}
-                source={require('../../../assets/bg1.png')}
-                 style={{
-                   width,
-                   height: BACKDROP_HEIGHT,
-                   position: 'absolute',
-                 }}
-               />
-               
-             </Animated.View>
-           );
-         }}
-       />
-       <LinearGradient
-         colors={['rgba(0, 0, 0, 0)', 'white']}
-         style={{
-           height: BACKDROP_HEIGHT,
-           width,
-           position: 'absolute',
-           bottom: 0,
-         }}
-       />
-     </View>
-   );
- };
+  return (
+    <View style={{ height: BACKDROP_HEIGHT, width, position: 'absolute' }}>
+      <FlatList
+        data={movies.reverse()}
+        keyExtractor={(item) => item.key + '-backdrop'}
+        removeClippedSubviews={false}
+        contentContainerStyle={{ width, height: BACKDROP_HEIGHT }}
+        renderItem={({ item, index }) => {
+          if (!item.poster) {
+            return null;
+          }
+          const translateX = scrollX.interpolate({
+            inputRange: [(index - 2) * ITEM_SIZE, (index - 1) * ITEM_SIZE],
+            outputRange: [0, width],
+            // extrapolate:'clamp'
+          });
+          return (
+            <Animated.View
+              removeClippedSubviews={false}
+              style={{
+                position: 'absolute',
+                width: translateX,
+                height,
+                overflow: 'hidden',
+              }}
+            >
+              <Image
+                source={{ uri: item.poster }}
+                style={{
+                  width,
+                  height: BACKDROP_HEIGHT,
+                  position: 'absolute',
+                }}
+              />
+            </Animated.View>
+          );
+        }}
+      />
+      <LinearGradient
+        colors={['rgba(0, 0, 0, 0)', 'white']}
+        style={{
+          height: BACKDROP_HEIGHT,
+          width,
+          position: 'absolute',
+          bottom: 0,
+        }}
+      />
+    </View>
+  );
+};
+
  
- export default function Recommmend() {
-  const [movies, setMovies] = React.useState([]);
-  const navigation = useNavigation();
-  const goToRecommendDetail = (id) => {
-    navigation.navigate("Detail", {id})
-    console.log("+++++++++++++", id)
-  };
+ export default function App() {
+   const [movies, setMovies] = useState([]);
+   const navigation = useNavigation();
 
-   const scrollX = React.useRef(new Animated.Value(0)).current;
-   React.useEffect(() => {
+    const goToDetail = (id) => {
+        navigation.navigate("Detail", {id, isNcs: true})
+    };
+   const scrollX = useRef(new Animated.Value(0)).current;
+   useEffect(() => {
      const fetchData = async () => {
-
-
-        //  await axios.get('https://api.themoviedb.org/3/movie/now_playing?api_key=8a919d63fb74ef8af3e7074f3f1ca20f&language=en-US&page=1')
-        //             .then(data => {
-        //                 setMovies(data.data.results)
-        //             })
-        //             .catch(err => {
-        //                 console.log(err)
-        //             });
        const movies = await getMovies();
-       console.log("++++++", movies)
-    //    // Add empty items to create fake space
-    //    // [empty_item, ...movies, empty_item]
        setMovies([{ key: 'empty-left' }, ...movies, { key: 'empty-right' }]);
      };
  
@@ -121,6 +110,10 @@ const BACKDROP_HEIGHT = height * 0.65;
        fetchData(movies);
      }
    }, [movies]);
+ 
+   if (movies.length === 0) {
+     return <Loading />;
+   }
  
    return (
      <View style={styles.container}>
@@ -143,9 +136,9 @@ const BACKDROP_HEIGHT = height * 0.65;
          )}
          scrollEventThrottle={16}
          renderItem={({ item, index }) => {
-          //  if (!item.poster) {
-          //    return <View style={{ width: EMPTY_ITEM_SIZE }} />;
-          //  }
+           if (!item.poster) {
+             return <View style={{ width: EMPTY_ITEM_SIZE }} />;
+           }
  
            const inputRange = [
              (index - 2) * ITEM_SIZE,
@@ -167,45 +160,29 @@ const BACKDROP_HEIGHT = height * 0.65;
                    padding: SPACING * 2,
                    alignItems: 'center',
                    transform: [{ translateY }],
-                   backgroundColor: themes.colors.table,
+                   backgroundColor: 'white',
                    borderRadius: 34,
                  }}
-                
                >
-                    <Image
-                      // source={item.poster}
-                      source={require('../../../assets/images/baked-fries.jpg')}
-                      style={styles.posterImage}
-                    />
-                    <Text onPress={() => Alert.alert('alertt')} style={{ fontSize: 16 }} numberOfLines={1}>
-                    {item.title}
-                    </Text>
-                    {/* <Rating rating={item.rating} /> */}
-                    {/* <Genres genres={item.genres} /> */}
-                    <Text>
-                      ***{item.genres}***
-                    </Text>
-                    <Text style={{ fontSize: 12, margin: 5 }} numberOfLines={3}>
-                    {item.description}
-                    </Text>
-                    <TouchableOpacity
-                      onPress={() => {
-                        goToRecommendDetail(item.key)
-                      }}
-                      
-                    >
-                      <TouchableOpacity 
-                        style={styles.showDetail}
-                        onPress={() => navigation.navigate("Detail")} 
-                      >
-                        <Text style={{color: themes.fontsColor.buttonText}}>
-                          자세히 보기
-                        </Text>
-                      </TouchableOpacity>
-                      
-                      
-                    </TouchableOpacity>
-                 
+                 <Image
+                   source={{ uri: item.poster }}
+                   style={styles.posterImage}
+                 />
+                 <Text style={{ fontSize: 24 }} numberOfLines={1}>
+                   {item.title}
+                 </Text>
+                 <Genres genres={item.genres} />
+                 <Text style={{ fontSize: 12 }} numberOfLines={3}>
+                   {item.description}
+                 </Text>
+                 <TouchableOpacity onPress={() => goToDetail(item.key)}>
+                   <View style={styles.button}>
+                     <Text style={styles.buttonText}>
+                      자세히 보기
+
+                     </Text>
+                   </View>
+                 </TouchableOpacity>
                </Animated.View>
              </View>
            );
@@ -223,7 +200,6 @@ const BACKDROP_HEIGHT = height * 0.65;
    },
    container: {
      flex: 1,
-     backgroundColor: themes.colors.background
    },
    paragraph: {
      margin: 24,
@@ -233,18 +209,32 @@ const BACKDROP_HEIGHT = height * 0.65;
    },
    posterImage: {
      width: '100%',
-     height: ITEM_SIZE * 1.2,
+     height: ITEM_SIZE * 1,
      resizeMode: 'cover',
      borderRadius: 24,
      margin: 0,
      marginBottom: 10,
    },
-   showDetail: {
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 20,
-    fontSize: 14,
-    backgroundColor: themes.colors.basic,
+   badgePill: {
+    fontSize: 10, 
+    letterSpacing: -0.6, 
+    color: themes.colors.darkgray, 
+    opacity: .5
+},
+  button: {
+    width: 120,
+    height: 30,
     marginTop: 15,
-   }
+    borderRadius: 24,
+    backgroundColor: COLORS.main4,
+    justifyContent: 'center'
+  },
+  buttonText: {
+    fontSize: 14,
+    color: COLORS.white,
+    textAlign: 'center',
+    fontWeight: 'bold'
+
+  }
  });
+ 

@@ -29,7 +29,6 @@ const moreNcs = () => {
     const getNcsData = async() => {
         await axios.get(`http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/ncs`)
                 .then(res => {
-                    console.log('$$$$$$$$$$$$$$$', res.data.results)
                     setNcs(res.data.results)
                     setLoading(false)
                 })
@@ -40,7 +39,6 @@ const moreNcs = () => {
 
     useEffect(() => {
         getNcsData();
-        console.log('!!!!!!!!', ncs)
     }, [])
 
     const renderCategory = (category) => {
@@ -62,7 +60,6 @@ const moreNcs = () => {
         const filtered = ncs.filter(item => 
             item.genres_ids.includes(category.toLowerCase())
         );
-        console.log("filtered", filtered)
         setActive(category)
         setFilteredData(filtered)
     }

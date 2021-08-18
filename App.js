@@ -35,7 +35,6 @@ export default function App() {
 
     useEffect(() => {
         checkAuth()
-        // console.log('TTTTTTTTTTTTT', AsyncStorage.getItem('token'))
     })
 
     const checkAuth = async () => {

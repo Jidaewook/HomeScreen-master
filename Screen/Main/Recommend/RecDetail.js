@@ -113,9 +113,6 @@ const RecDetail = ({route: {params: {id}}}) => {
 
     const getData = async () => {
         const filteredItem = articles.filter(i => i.id.includes(id))
-        
-        console.log("articles", filteredItem)
-
         if (category === "notice") {
             const [notice, noticeError] = await noticeApi.noticeDetail(id)
             setResult({
@@ -125,8 +122,6 @@ const RecDetail = ({route: {params: {id}}}) => {
             })
         } else if (category === "ncs") {
             const [ncs, ncsError] = await lectureApi.ncsDetail(id);
-            console.log("ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ", ncs)
-
             setResult({
                 loading: false,
                 data: ncs,

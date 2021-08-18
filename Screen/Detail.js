@@ -58,13 +58,7 @@ const Detail = ({route}) => {
     const navigation = useNavigation();
     
     const {id, isNcs} = route.params;
-    // console.log("isNCSisNCSisNCSisNCSisNCS", isNcs)
-
-    // console.log("route!!!!!!!", route.params.id)
-
     const [detail, setDetail] = useState({});
-    // const [detailPsat, setDetailPsat] = useState({});
-    // const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [text, onChangeText] = useState('Useless Text');
     const [playing, setPlaying] = useState(false);
@@ -87,18 +81,8 @@ const Detail = ({route}) => {
         }
     }
 
-    // const getData = async () => {
-    //     try {
-    //         const {data} = await axios.get(`${BASE_URL}/ncs`)
-    //         setData(data.results)
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // }
-
     useEffect(() => {
         getDetail(id);
-        // getData();
     }, {})
 
     const renderComment = ({item}) => {

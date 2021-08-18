@@ -20,7 +20,6 @@ const ContentsList = () => {
         try {
             const {data} = await axios.get(`${BASE_URL}/ncs`)
             setNotice(data.results)
-            console.log(data.results)
         } catch (err) {
             console.log(err)
         }

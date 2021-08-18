@@ -98,7 +98,6 @@ const Setting = () => {
     const headers = {
       'Authorization': 'Bearer ' + token
     }
-    console.log("HEADERS", headers)
 
     try {
       axios 
@@ -131,7 +130,6 @@ const Setting = () => {
             onPress: () => {
                 AsyncStorage.clear(),
                 navigation.navigate("AuthStack")
-                console.log("JJJJJJJJJ", AsyncStorage.getItem('token'))
             }
         },
         {

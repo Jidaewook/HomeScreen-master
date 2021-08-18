@@ -26,7 +26,6 @@ const morePsat = () => {
     const getPsatData = async() => {
         await axios.get(`http://passme-env.eba-fkpnrszj.us-east-2.elasticbeanstalk.com/psat`)
                 .then(res => {
-                    console.log('$$$$$$$$$$$$$$$', res.data.results)
                     setPsat(res.data.results)
                     setLoading(false)
                 })
@@ -37,7 +36,6 @@ const morePsat = () => {
 
     useEffect(() => {
         getPsatData();
-        console.log('!!!!!!!!', psat)
     }, [])
 
     const renderCategory = (category) => {
@@ -56,11 +54,9 @@ const morePsat = () => {
     }
 
     const handleCategory = category => {
-        console.log(category)
         const filtered = psat.filter(item => 
             item.genres_ids.includes(category.toLowerCase())  
         );
-        console.log("filtered", filtered)
         setActive(category)
         setFilteredData(filtered)
     }
