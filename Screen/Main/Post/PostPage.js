@@ -46,21 +46,21 @@ const PostPage = () => {
 
     const [postModal, setPostModal] = useState(false);
 
-    // useLayoutEffect(() => {
-    //     navigation.setOptions({
-    //       headerRight: () => (
-    //         <TouchableOpacity
-    //           onPress={() => setPostModal(true)}
-    //           style={{marginRight: 10}}>
-    //         <FontAwesome 
-    //             size={24}
-    //             color='black'
-    //             name='pencil-square-o'
-    //         />
-    //         </TouchableOpacity>
-    //       ),
-    //     });
-    //   }, [navigation]);
+    useLayoutEffect(() => {
+        navigation.setOptions({
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => setPostModal(true)}
+              style={{marginRight: 10}}>
+            <FontAwesome 
+                size={24}
+                color='black'
+                name='pencil-square-o'
+            />
+            </TouchableOpacity>
+          ),
+        });
+      }, [navigation]);
 
     const renderTab = (tab) => {
         const isActive = active === tab;

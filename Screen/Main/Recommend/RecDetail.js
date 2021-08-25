@@ -3,7 +3,7 @@ import {View, Image, Text, StatusBar, StyleSheet, Dimensions, TextInput, FlatLis
 import YoutubePlayer from 'react-native-youtube-iframe';
 import {useNavigation} from '@react-navigation/native';
 import {lectureApi, noticeApi} from '../../../api';
-import MovieApi, { getMovies } from '../../../movieApi';
+// import MovieApi, { getMovies } from '../../../movieApi';
 import Section from '../../../component/common/Section';
 import Card from '../../../component/common/Card';
 import themes from '../../../config/themes';

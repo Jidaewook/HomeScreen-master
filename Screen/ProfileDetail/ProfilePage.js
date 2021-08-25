@@ -1,8 +1,10 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useLayoutEffect, useState, useEffect} from 'react';
 import {View, Button, Text, Image, ScrollView, TouchableOpacity, StyleSheet, ImageBackground} from 'react-native';
 import {AntDesign} from '@expo/vector-icons';
 import themes from '../../config/themes';
 import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
+import { BASE_URL } from '../../constants';
 
 const viewItems = [
     {
@@ -24,9 +26,36 @@ const ProfilePage = () => {
     
     const navigation = useNavigation();
 
+    const [recent, setRecent] = useState([]);
+    const [like, setLike] = useState([]);
+
+    const getRecent = async() => {
+        try {
+            const {data} = await axios.get(`${BASE_URL}/ncs`)
+            setRecent(data.results)
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    const getLike = async() => {
+        try{
+            const {data} = await axios.get(`${BASE_URL}/ncs`)
+            setLike(data.results)
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
     const goToEdit = (screen) => {
         navigation.navigate(screen)
     }
+
+    useEffect(() => {
+        getRecent()
+        getLike()
+      }, []);
+    
 
     return (
         <View style={styles.profile}>
@@ -112,14 +141,14 @@ const ProfilePage = () => {
                                     </TouchableOpacity>
                                 </View>
                                 <ScrollView horizontal={true} style={{marginTop: 10}} showsHorizontalScrollIndicator={false}>
-                                    {viewItems.map(item => (
+                                    {recent.map(item => (
                                         <>
                                             <TouchableOpacity
                                                 onPress={() => navigation.navigate("Detail")} 
                                             >
                                                 <Image 
                                                     style={{width: 100, height: 100, borderRadius: 10, marginRight: 10, marginTop: 10}}
-                                                    source={item.image}
+                                                    source={{uri: item.poster}}
                                                 >
                                                 </Image>    
                                             </TouchableOpacity>
@@ -138,14 +167,14 @@ const ProfilePage = () => {
                                     </TouchableOpacity>
                                 </View>
                                 <ScrollView horizontal={true} style={{marginTop: 10}} showsHorizontalScrollIndicator={false}>
-                                    {viewItems.map(item => (
+                                    {like.map(item => (
                                         <TouchableOpacity
                                             onPress={() => navigation.navigate("Detail")} 
                                         >
                                             <Image 
                                                 style={{width: 100, height: 100, borderRadius: 10, marginRight: 10, marginTop: 10}}
-                                                source={item.image}
-                                            >
+                                                source={{uri: item.poster}}
+                                                >
                                             </Image>   
                                         </TouchableOpacity>
                                     ))} 

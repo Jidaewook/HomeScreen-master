@@ -17,7 +17,7 @@ import {H1} from '../config/Typography';
 import themes from '../config/themes';
 
 import {lectureApi, noticeApi} from '../api';
-import movieApi from '../movieApi';
+// import movieApi from '../movieApi';
 import Axios from 'axios';
 
 const Common = styled.SafeAreaView`

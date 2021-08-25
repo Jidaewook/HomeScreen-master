@@ -79,6 +79,16 @@ const Detail = ({route}) => {
         } catch (err) {
             console.log(err)
         }
+        // try{
+        //     const {data} = isNcs
+        //         ? await axios.get(`${BASE_URL}/ncs/${detailId}`)
+        //         : (isRec 
+        //             ? await axios.get(`${BASE_URL}/workbook/${detailId}`) 
+        //             : await axios.get(`${BASE_URL}/psat/${detailId}`)
+        //         )
+        // } catch(err) {
+        //     console.log(err)
+        // }
     }
 
     useEffect(() => {
